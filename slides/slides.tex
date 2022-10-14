@@ -7,6 +7,16 @@
 \usetheme[noto, showmaxslides, lightmode]{pureminimalistic}
 \graphicspath{{logos/}}
 
+% This will add an "Outline" Table of Contents for each section
+% uncomment if desired
+%\AtBeginSection[]{%
+%	\frame<beamer>{
+%		\frametitle{Outline \secname}
+%		\setcounter{tocdepth}{10}
+%		\tableofcontents[currentsubsection, sectionstyle=hide/hide, subsectionstyle=show/show/hide, subsubsectionstyle=show/show/show/hide] % Show current section and current section's subsections, but hide other section's section and subsections!
+%	}
+%}
+
 \usepackage[utf8]{inputenc}
 \usepackage{csquotes,xpatch}% recommended
 %\usepackage[english]{babel}
@@ -18,13 +28,14 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{bookmark}
+\usepackage{multicol} % for multicolumn Table of Contents
 
 % Hyperlinks
 \usepackage{hyperref}
 \hypersetup{%
 	colorlinks=true,
-	linkbordercolor=white,
-	allcolors=blue,
+	linkbordercolor=black,
+	allcolors=pureminimalistic@text@pumasblue,
 	pdfborderstyle={/S/U/W 1}% border style will be underline of width 1pt
 }
 
@@ -104,10 +115,11 @@
 	%    style=siam,
 	%    style=ieeetr,
 	%    style=plain,
-	style=vancouver,
+	%    style=vancouver,
+	style=apa,
 	doi=true,
 	eprint=false,
-	hyperref=true]
+	url=true]
 {biblatex}
 \addbibresource{references.bib}
 % biblatex
@@ -151,8 +163,11 @@
 %--- Table of Contents-------------------------------------------------%
 % For longer table of contents, I find it cleaner to
 % use no footline.
+\setcounter{tocdepth}{1}
 \begin{frame}[plain, noframenumbering]{Outline}
-	\tableofcontents
+	\begin{multicols}{2}
+		\tableofcontents
+	\end{multicols}
 \end{frame}
 
 %--- Distributions ----------------------------------------------------%
@@ -201,7 +216,7 @@
 
 \appendix % do not count the following slides for the total number
 \section*{Backup Slides}
-\begin{frame}[plain, noframenumbering]
+\begin{frame}[noframenumbering]
 	\centering
 	\vfill
 	{\fontsize{40}{50}\selectfont Backup Slides}
