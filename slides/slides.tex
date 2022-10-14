@@ -4,7 +4,7 @@
 % Load LaTeX packages
 \documentclass[aspectratio=169]{beamer}                    % supports floating text in any location
 %\usetheme[noto, showmaxslides, darkmode]{pureminimalistic}
-\usetheme[noto, showmaxslides, lightmode]{pureminimalistic}
+\usetheme[noto, lightmode]{pureminimalistic}
 \graphicspath{{logos/}}
 
 % This will add an "Outline" Table of Contents for each section
@@ -130,6 +130,7 @@
 %% this makes it possible to add backup slides, without counting them
 \usepackage{appendixnumberbeamer}
 \renewcommand{\appendixname}{\texorpdfstring{\translate{appendix}}{appendix}}
+\renewcommand{\inserttotalframenumber}{\pageref{lastslide}}
 % logos
 
 % footer page
@@ -208,12 +209,18 @@
 \include{12-Posterior_Postprocessing}
 \include{13-Model_Comparison_and_Cross-Validation}
 \include{14-Software-Comparison}
+\label{lastslide}
 
+%--- References ----------------------------------------------------------%
+\begingroup
+\renewcommand{\insertframenumber}{}
+\renewcommand{\pageword}{}
 \section{References}
 \begin{frame}[allowframebreaks, noframenumbering]{References}
 	\printbibliography
 \end{frame}
 
+%--- Appendix ----------------------------------------------------------%
 \appendix % do not count the following slides for the total number
 \section*{Backup Slides}
 \begin{frame}[noframenumbering]
@@ -222,7 +229,9 @@
 	{\fontsize{40}{50}\selectfont Backup Slides}
 	\vfill
 \end{frame}
+
 %--- Backup Files ----------------------------------------------------------%
 \include{backup-Statistical_Distributions}
+\endgroup
 
 \end{document}

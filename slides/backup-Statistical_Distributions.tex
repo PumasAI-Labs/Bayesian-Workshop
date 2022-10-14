@@ -1,7 +1,7 @@
 \section*{Probability Distributions}
 
 \subsection*{Recommended References}
-\begin{frame}{Probability Distributions - Recommended References}
+\begin{frame}[noframenumbering]{Probability Distributions - Recommended References}
 	\begin{vfilleditems}
 		\item \textcite{grimmettProbabilityRandomProcesses2020}
 		\begin{vfilleditems}
@@ -18,7 +18,7 @@
 \end{frame}
 
 %--- Intro -----------------------------------------------------------%
-\begin{frame}{Probability Distributions}
+\begin{frame}[noframenumbering]{Probability Distributions}
 	Bayesian statistics uses probability distributions as the inference
 	engine of the parameter and uncertainty estimates.
 	\vfill
@@ -30,7 +30,7 @@
 	using probability distributions and their relationships.
 \end{frame}
 
-\begin{frame}
+\begin{frame}[noframenumbering]
 	\begin{defn}[Probability Distribution Function]
 		A probability distribution function is a mathematical function
 		that outputs the probabilities for different results of an
@@ -44,7 +44,7 @@
 	\end{defn}
 \end{frame}
 
-\begin{frame}{Mathematical Notation}
+\begin{frame}[noframenumbering]{Mathematical Notation}
 	We use the notation
 	$$X \sim \text{Dist}(\theta_1, \theta_2, \dots)$$
 	where:
@@ -59,7 +59,7 @@
 	a specific goal.
 \end{frame}
 
-\begin{frame}{Probability Distribution Function}
+\begin{frame}[noframenumbering]{Probability Distribution Function}
 	\centering
 	\begin{tikzpicture}
 		\begin{axis}[every axis plot, line width=2pt,
@@ -76,7 +76,7 @@
 	\end{tikzpicture}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[noframenumbering]
 	\begin{defn}[Cumulative Distribution Function]
 		The cumulative distribution function (CDF) of a random variable
 		$X$ evaluated at $x$ is the probability that $X$ will take
@@ -85,7 +85,7 @@
 	\end{defn}
 \end{frame}
 
-\begin{frame}{Cumulative Distribution Function}
+\begin{frame}[noframenumbering]{Cumulative Distribution Function}
 	\centering
 	\begin{tikzpicture}
 		\begin{axis}[every axis plot, line width=2pt,
@@ -104,7 +104,7 @@
 
 %--- Discrete --------------------------------------------------------%
 \subsection*{Discrete Distributions}
-\begin{frame}
+\begin{frame}[noframenumbering]
 	\begin{defn}[Discrete Distributions]
 		Discrete probability distributions are distributions which the
 		results are a discrete number:
@@ -118,7 +118,7 @@
 \end{frame}
 
 \subsubsection*{Discrete Uniform}
-\begin{frame}{Discrete Uniform}
+\begin{frame}[noframenumbering]{Discrete Uniform}
 	The discrete uniform is a symmetric probability distribution in which
 	a finite number of values are equally likely of being observable.
 	Each one of the $n$ values have probability $\frac{1}{n}$.
@@ -133,11 +133,11 @@
 	Example: dice.
 \end{frame}
 
-\begin{frame}{Discrete Uniform}
+\begin{frame}[noframenumbering]{Discrete Uniform}
 	$$\text{Uniform}(a,b) = f(x, a, b) = \frac{1}{b-a+1} \text{ for $a \leq x \leq b$ and $x\in \{a,a+1,\dots ,b-1,b\}$}$$
 \end{frame}
 
-\begin{frame}{Discrete Uniform}
+\begin{frame}[noframenumbering]{Discrete Uniform}
 	\centering
 	\begin{tikzpicture}
 		\begin{axis}[every axis plot,
@@ -156,7 +156,7 @@
 \end{frame}
 
 \subsubsection*{Bernoulli}
-\begin{frame}{Bernoulli}
+\begin{frame}[noframenumbering]{Bernoulli}
 	Bernoulli distribution describes a binary event of the success of an experiment.
 	We represent $0$ as failure and $1$ as success, hence the result of a
 	Bernoulli distribution is a binary variable $Y \in \{0, 1\}$.
@@ -173,11 +173,11 @@
 	Example: If the patient survived or died or if the client purchased or not.
 \end{frame}
 
-\begin{frame}{Bernoulli}
+\begin{frame}[noframenumbering]{Bernoulli}
 	$$\text{Bernoulli}(p) = f(x, p)=p^{x}(1-p)^{1-x} \text{ for $x \in \{0,1\}$}$$ %
 \end{frame}
 
-\begin{frame}{Bernoulli}
+\begin{frame}[noframenumbering]{Bernoulli}
 	\centering
 	\begin{tikzpicture}
 		\begin{axis}[every axis plot,
@@ -200,7 +200,7 @@
 \end{frame}
 
 \subsubsection*{Binomial}
-\begin{frame}{Binomial}
+\begin{frame}[noframenumbering]{Binomial}
 	The binomial distribution describes an event in which the number of
 	successes in a sequence $n$ independent experiments,
 	each one making a yes--no question with probability of success $p$.
@@ -217,11 +217,11 @@
 	Example: number of heads in five coin throws.
 \end{frame}
 
-\begin{frame}{Binomial}
+\begin{frame}[noframenumbering]{Binomial}
 	$$\text{Binomial}(n,p) = f(x, n, p) = \binom{n}{x}p^{x}(1-p)^{n-x} \text{ for $x \in \{0, 1, \dots, n\}$}$$
 \end{frame}
 
-\begin{frame}{Binomial}
+\begin{frame}[noframenumbering]{Binomial}
 	\centering
 	\begin{tikzpicture}
 		\begin{axis}[every axis plot,
@@ -244,7 +244,7 @@
 \end{frame}
 
 \subsubsection*{Poisson}
-\begin{frame}{Poisson}
+\begin{frame}[noframenumbering]{Poisson}
 	Poisson distribution describes the probability of a certain number of
 	events occurring in a fixed time interval if these events
 	occur with a constant mean rate which is known and independent since
@@ -260,11 +260,11 @@
 	Example: number of e-mails that you receive daily or the number of the potholes you'll find in your commute.
 \end{frame}
 
-\begin{frame}{Poisson}
+\begin{frame}[noframenumbering]{Poisson}
 	$$\text{Poisson}(\lambda) = f(x, \lambda) = \frac{\lambda^x e^{-\lambda}}{x!} \text{ for $\lambda > 0$}$$
 \end{frame}
 
-\begin{frame}{Poisson}
+\begin{frame}[noframenumbering]{Poisson}
 	\centering
 	\begin{tikzpicture}
 		\begin{axis}[every axis plot,
@@ -285,7 +285,7 @@
 \end{frame}
 
 \subsubsection*{Negative Binomial}
-\begin{frame}{Negative Binomial\footnote{
+\begin{frame}[noframenumbering]{Negative Binomial\footnote{
 			any phenomena that can be modeles as a Poisson distribution can be
 			modeled also as negative binomial distribution
 			\parencite{gelman2013bayesian, gelman2020regression}.}}
@@ -310,7 +310,7 @@
 	Example: annual occurrence of tropical cyclones.
 \end{frame}
 
-\begin{frame}{Negative Binomial}
+\begin{frame}[noframenumbering]{Negative Binomial}
 	$$
 		\begin{aligned}
 			\text{Negative Binomial}(k, p) & = f(x, k, p) & = \binom{x + k - 1}{k - 1}p^{x}(1-p)^{k} \\
@@ -320,7 +320,7 @@
 	$$
 \end{frame}
 
-\begin{frame}{Negative Binomial}
+\begin{frame}[noframenumbering]{Negative Binomial}
 	\centering
 	\begin{tikzpicture}
 		\begin{axis}[every axis plot,
@@ -343,7 +343,7 @@
 %--- Continuous ------------------------------------------------------%
 
 \subsection*{Continuous Distributions}
-\begin{frame}
+\begin{frame}[noframenumbering]
 	\begin{defn}[Continuous Distributions]
 		\small
 		Continuous probability distributions are distributions which
@@ -363,7 +363,7 @@
 \end{frame}
 
 \subsubsection*{Continuous Uniform}
-\begin{frame}{Continuous Uniform}
+\begin{frame}[noframenumbering]{Continuous Uniform}
 	The continuous uniform distribution is a symmetric probability distribution
 	in which an infinite number of value intervals are equally likely of being observable.
 	Each one of the infinite $n$ intervals have probability $\frac{1}{n}$.
@@ -375,11 +375,11 @@
 	\end{vfilleditems}
 \end{frame}
 
-\begin{frame}{Continuous Uniform}
+\begin{frame}[noframenumbering]{Continuous Uniform}
 	$$\text{Uniform}(a,b) = f(x, a, b) = \frac{1}{b-a} \text{ for $a \leq x \leq b$ e $x \in [a, b]$}$$
 \end{frame}
 
-\begin{frame}{Continuous Uniform}
+\begin{frame}[noframenumbering]{Continuous Uniform}
 	\centering
 	\begin{tikzpicture}
 		\begin{axis}[every axis plot, line width=2pt,
@@ -397,7 +397,7 @@
 \end{frame}
 
 \subsubsection*{Normal}
-\begin{frame}{Normal}
+\begin{frame}[noframenumbering]{Normal}
 	This distribution is generally used in social and natural sciences to
 	represent continuous variables in which its underlying distribution are unknown.
 	This assumption is due to the central limit theorem (CLT) that,
@@ -411,7 +411,7 @@
 	distributions that are similar to normal distributions.
 \end{frame}
 
-\begin{frame}{Normal}
+\begin{frame}[noframenumbering]{Normal}
 	The normal distribution has two parameters and its notation is
 	$\text{Normal}(\mu, \sigma^2)$ or $\text{N}(\mu, \sigma^2)$:
 	\begin{vfilleditems}
@@ -423,13 +423,13 @@
 	Example: height, weight etc.
 \end{frame}
 
-\begin{frame}{Normal\footnote{
+\begin{frame}[noframenumbering]{Normal\footnote{
 			see how the normal distribution was derived from the binomial
 			distribution in the \hyperlink{appendixnormal}{backup slides}.}}
 	$$\text{Normal}(\mu,\sigma) = f(x, \mu, \sigma) = \frac{1}{\sigma{\sqrt{2\pi }}}e^{-{\frac{1}{2}}\left({\frac {x-\mu }{\sigma }}\right)^{2}} \text{ for $\sigma > 0$}$$
 \end{frame}
 
-\begin{frame}{Normal}
+\begin{frame}[noframenumbering]{Normal}
 	\centering
 	\begin{tikzpicture}
 		\begin{axis}[every axis plot, line width=2pt,
@@ -451,7 +451,7 @@
 \end{frame}
 
 \subsubsection*{Log-Normal}
-\begin{frame}{Log-Normal}
+\begin{frame}[noframenumbering]{Log-Normal}
 	The log-normal distribution is a continuous probability distribution of a
 	random variable which its natural logarithm is distributed as a normal distribution.
 	Thus, if the natural logarithm a random variable $X$, $\ln(X)$, is distributed
@@ -467,7 +467,7 @@
 	product of many independent positive random variables.
 \end{frame}
 
-\begin{frame}{Log-Normal}
+\begin{frame}[noframenumbering]{Log-Normal}
 	The log-normal distribution has two parameters and its notation is
 	$\text{Log-Normal}(\mu, \sigma^2)$:
 	\begin{vfilleditems}
@@ -476,11 +476,11 @@
 	\end{vfilleditems}
 \end{frame}
 
-\begin{frame}{Log-Normal}
+\begin{frame}[noframenumbering]{Log-Normal}
 	$$\text{Log-Normal}(\mu,\sigma) = f(x, \mu, \sigma) = \frac{1}{x \sigma{\sqrt{2\pi}}}e^{-\left({\frac {(\ln(x)-\mu)^2}{2 \sigma^2 }}\right)} \text{ for $\sigma > 0$}$$
 \end{frame}
 
-\begin{frame}{Log-Normal}
+\begin{frame}[noframenumbering]{Log-Normal}
 	\centering
 	\begin{tikzpicture}
 		\begin{axis}[every axis plot, line width=2pt,
@@ -502,7 +502,7 @@
 \end{frame}
 
 \subsubsection*{Exponential}
-\begin{frame}{Exponential}
+\begin{frame}[noframenumbering]{Exponential}
 	The exponential distribution is the probability distribution of the time
 	between events that occurs in a continuos manner, are independent,
 	and have constant mean rate of occurrence.
@@ -516,11 +516,11 @@
 	Example: How long until the next earthquake or how long until the next bus arrives.
 \end{frame}
 
-\begin{frame}{Exponential}
+\begin{frame}[noframenumbering]{Exponential}
 	$$\text{Exp}(\lambda) = f(x, \lambda) = \lambda e^{-\lambda x} \text{ for $\lambda > 0$}$$
 \end{frame}
 
-\begin{frame}{Exponential}
+\begin{frame}[noframenumbering]{Exponential}
 	\centering
 	\begin{tikzpicture}
 		\begin{axis}[every axis plot, line width=2pt,
@@ -544,7 +544,7 @@
 \subsubsection*{Gamma}
 
 \subsubsection*{Student's $t$}
-\begin{frame}{Student's $t$}
+\begin{frame}[noframenumbering]{Student's $t$}
 	Student's $t$ distribution arises by estimating the mean of a normally-distributed
 	population in situations where the sample size is small and the standard
 	deviation is known\footnote{this is where the ubiquitous Student's $t$ test.}.
@@ -560,7 +560,7 @@
 	which means that has more chance to produce values far away from its mean.
 \end{frame}
 
-\begin{frame}{Student's $t$}
+\begin{frame}[noframenumbering]{Student's $t$}
 	Student's $t$ distribution has one parameter and its notation is
 	$\text{Student}(\nu)$:
 	\begin{vfilleditems}
@@ -570,11 +570,11 @@
 	Example: a dataset full of outliers.
 \end{frame}
 
-\begin{frame}{Student's $t$}
+\begin{frame}[noframenumbering]{Student's $t$}
 	$$\text{Student}(\nu) = f(x, \nu) = \frac{\Gamma \left(\frac{\nu+1}{2} \right)} {\sqrt{\nu\pi}\,\Gamma \left(\frac{\nu}{2} \right)} \left(1+\frac{x^2}{\nu} \right)^{-\frac{\nu+1}{2}} \text{ for $\nu \geq 1$}$$
 \end{frame}
 
-\begin{frame}{Student's $t$}
+\begin{frame}[noframenumbering]{Student's $t$}
 	\centering
 	\begin{tikzpicture}
 		\begin{axis}[every axis plot, line width=2pt,
@@ -598,7 +598,7 @@
 \subsubsection*{Cauchy}
 
 \subsubsection*{Beta}
-\begin{frame}{Beta}
+\begin{frame}[noframenumbering]{Beta}
 	The beta distribution is a natural choice to model anything that is
 	restricted to values between $0$ e $1$.
 	Hence, it is a good candidate to model probabilities and proportions.
@@ -616,11 +616,11 @@
 	missed 3 in a total of 8 attempts -- $\text{Beta}(3, 5)$
 \end{frame}
 
-\begin{frame}{Beta}
+\begin{frame}[noframenumbering]{Beta}
 	$$\text{Beta} (\alpha, \beta) = f(x, \alpha, \beta) \frac{x^{\alpha-1}(1-x)^{\beta-1}} {\frac{\Gamma (\alpha )\Gamma (\beta )}{\Gamma (\alpha +\beta )}} \text{ for $\alpha,\beta > 0$ and $x \in [0, 1]$}$$
 \end{frame}
 
-\begin{frame}{Beta}
+\begin{frame}[noframenumbering]{Beta}
 	\centering
 	\begin{tikzpicture}
 		\begin{axis}[every axis plot, line width=2pt,
@@ -642,7 +642,7 @@
 \end{frame}
 
 \subsection*{Matrix-variate Distributions}
-\begin{frame}{Priors for Covariance Matrices}
+\begin{frame}[noframenumbering]{Priors for Covariance Matrices}
 	We can specify a prior for a covariance matrix
 	$\boldsymbol{\Sigma}$.
 	\vfill
@@ -658,7 +658,7 @@
 	$\boldsymbol{\Sigma}$ (is is the $\boldsymbol{\Sigma}$'s diagonal).
 \end{frame}
 
-\begin{frame}{Priors for Covariance Matrices}
+\begin{frame}[noframenumbering]{Priors for Covariance Matrices}
 	\small
 	Additionally, the correlation matrix $\mathbf{C}$
 	can be decomposed once more for greater computational efficiency.
