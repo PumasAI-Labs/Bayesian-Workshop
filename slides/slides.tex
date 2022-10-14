@@ -1,0 +1,114 @@
+% Packages
+% sudo tlmgr install silence appendixnumberbeamer fira fontaxes mwe noto csquotes babel helvet
+%--- Preamble ---------------------------------------------------------%
+% Load LaTeX packages
+\documentclass[aspectratio=169]{beamer}                    % supports floating text in any location
+%\usetheme[noto, showmaxslides, darkmode]{pureminimalistic}
+\usetheme[noto, showmaxslides, lightmode]{pureminimalistic}
+\graphicspath{{logos/}}
+
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes,xpatch}% recommended
+%\usepackage[english]{babel}
+\usepackage[american]{babel}
+\babelprovide[import, main]{english}
+\usepackage{tikz}
+
+% \renewcommand{\pageword}{}
+% \renewcommand{\logoheader}{\vspace{1.5em}}
+
+\usepackage[
+	%    natbib=true,
+	backend=biber,
+	%    style=abnt,
+	%    style=authoryear-comp,
+	%    style=authoryear,
+	%    style=ieee,
+	%    style=acm,
+	%    style=apalike,
+	%    style=siam,
+	%    style=ieeetr,
+	%    style=plain,
+	style=vancouver,
+	doi=true,
+	eprint=false,
+	hyperref=true]
+{biblatex}
+\addbibresource{references.bib}
+% biblatex
+\renewcommand*{\bibfont}{\footnotesize}
+% natbib
+%\def\bibfont{\footnotesize}
+
+%% this makes it possible to add backup slides, without counting them
+\usepackage{appendixnumberbeamer}
+\renewcommand{\appendixname}{\texorpdfstring{\translate{appendix}}{appendix}}
+% logos
+
+% footer page
+\renewcommand{\pageword}{Slide}
+
+% Math Font Default (Fira is strange)
+\renewcommand\mathfamilydefault{\rmdefault}
+
+% if loaded after begin{document} a warning will appear: "pdfauthor already used"
+\title[Short Title]{A long title}
+\author[\textcolor{pureminimalistic@text@pumasblue}{PumasAI}]{Jane Doe and John Doe \texttt{\{email1,email2\}@pumas.ai}}
+\institute{\textcolor{pureminimalistic@text@pumasblue}{PumasAI}}
+\date{\today}
+
+\begin{document}
+% has to be loaded outside of a frame to work!
+\maketitle
+
+% For longer table of contents, I find it cleaner to
+% use no footline.
+\begin{frame}[plain, noframenumbering]{Outline}
+	\tableofcontents
+\end{frame}
+
+\section{Pumas}
+\begin{frame}{What is Pumas?}
+	Pumas (\textbf{P}harmace\textbf{U}tical \textbf{M}odeling \textbf{A}nd \textbf{S}imulation)
+	\parencite{rackauckas2020accelerated}
+	is a suite of tools to perform quantitative analytics of various kinds
+	across the horizontal of pharmaceutical drug development.
+	The purpose of this framework is to bring efficient implementations of
+	all aspects of the analytics in this domain under one cohesive package.
+\end{frame}
+
+\begin{frame}{Pumas Features}
+	Pumas 2.0 currently includes:
+	\begin{vfilleditems}
+		\small
+		\item Non-compartmental Analysis
+		\item Specification of Nonlinear Mixed Effects (NLME) Models
+		\item Simulation of NLME model using differential equations or analytical solutions
+		\item Deep control over the differential equation solvers for high efficiency
+		\item Estimation of NLME parameters via Maximum Likelihood, Expectation Maximization and Bayesian methods
+		\item Parallelization capabilities for both simulation and estimation
+		\item Mixed analytical and numerical problems
+		\item Simulation and estimation diagnostics for model post-processing
+		\item Interactive model exploration and diagnostics tools through webapps
+		\item Automated report generation for models and non-compartmental analysis
+		\item Global and local sensitivity analysis routines for multi-scale models
+		\item Bioequivalence analysis
+		\item Optimal design of experiments
+	\end{vfilleditems}
+\end{frame}
+
+\section{References}
+\begin{frame}[allowframebreaks, noframenumbering]{References}
+	\printbibliography
+\end{frame}
+
+\appendix % do not count the following slides for the total number
+\section*{Backup Slides}
+\begin{frame}[plain, noframenumbering]
+	\centering
+	\vfill
+	{\fontsize{40}{50}\selectfont Backup Slides}
+	\vfill
+\end{frame}
+
+\end{document}
