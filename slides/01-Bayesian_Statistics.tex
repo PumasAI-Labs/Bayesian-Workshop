@@ -33,28 +33,21 @@
 \subsubsection{What changes from Frequentist Statistics?}
 \begin{frame}{What changes from Frequentist Statistics?}
 	\begin{vfilleditems}
-		\item \textbf{Flexibility} - probabilistic building blocks to
-		construct a model\footnote{like LEGO}:
+		\item \textbf{Domain knowledge}:
 		\begin{vfilleditems}
-			\item Probabilistic conjectures about parameters:
-			\begin{vfilleditems}
-				\item Prior
-				\item Likelihood
-			\end{vfilleditems}
+			\item You can incorporate knowledge and insights from previous studies using prior distributions on parameters
 		\end{vfilleditems}
-		\item Better \textbf{uncertainty} treatment:
+		\item \textbf{Epistemic uncertainty}:
 		\begin{vfilleditems}
-			\item Coherence
-			\item Propagation
-			\item We don't use \textit{``if we sampled infinite times
-				from a population that we do not observe...''}
+			\item You can quantify the epistemic uncertainty in the model parameters' values
+			\item Model identifiability not necessary
+			\item Works for small and large sample sizes
+			\item No Gaussian assumptions
 		\end{vfilleditems}
-		\item No \textbf{$p$-values}:
+		\item \textbf{Conceptually simpler and more general}:
 		\begin{vfilleditems}
-			\item All statistical intuitions makes \textbf{sense}
-			\item 95\% certainty that $\theta$'s parameter value is
-			between $x$ and $y$
-			\item Almost \textbf{impossible} to perform $p$-hacking
+			\item Uses probability theory instead of \textit{ad-hoc} methods
+			\item No $p$-values, $p$-hacking and \textit{ad-hoc} assumptions in hypothesis tests
 		\end{vfilleditems}
 	\end{vfilleditems}
 \end{frame}
@@ -73,6 +66,14 @@
 		\end{vfilleditems}
 		\item We also, implicitly, conditioned on the observed data from
 		any covariate $x$
+		\item Generally, we are interested in:
+		\begin{vfilleditems}
+			\item expected response of a new subject to a drug,
+			e.g. $\operatorname{E}[\hat{y} \mid y]$
+			\item the probability of drug effect is higher than zero,
+			e.g. $P(\theta > 0 \mid y) \geq 0.95$
+
+		\end{vfilleditems}
 	\end{vfilleditems}
 \end{frame}
 
@@ -82,96 +83,6 @@
 			parameters of interest $\theta$ or unobserved data $\tilde{y}$}.
 		\parencite{gelman2013bayesian}
 	\end{defn}
-\end{frame}
-
-\subsection{Probability}
-\begin{frame}{PROBABILITY DOES NOT EXIST!\footnote{\textcite{definettiTheoryProbability1974}}}
-	\begin{columns}
-		\begin{column}{0.8\textwidth}
-			\begin{vfilleditems}
-				\item Yes, probability does not exist ...
-				\item Or even better, probability as a physical quantity,
-				objective chance, \textbf{does NOT exist}
-				\item if we disregard objetive chance \textit{nothing is lost}
-				\item The math of inductive rationality remains
-				\textbf{exactly the same}
-			\end{vfilleditems}
-		\end{column}
-		\begin{column}{0.2\textwidth}
-			\centering
-			\includegraphics[width=0.9\columnwidth]{finetti.jpg}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}{PROBABILITY DOES NOT EXIST!\footnote{\textcite{definettiTheoryProbability1974}}}
-	\begin{columns}
-		\begin{column}{0.6\textwidth}
-			\begin{vfilleditems}
-				\small
-				\item Consider flipping a biased coin
-				\item The trials are considered independent and, as a result,
-				have an important property: \textbf{the order does not matter}
-				\item The frequency is considered a \textbf{sufficient statistic}
-				\item Saying that order does not matter or saying that the only thing that
-				matters is frequency are two ways of saying the same thing
-				\item We say that the probability is \textbf{invariant under permutations}
-			\end{vfilleditems}
-		\end{column}
-		\begin{column}{0.4\textwidth}
-			\begin{tikzpicture}[
-					scale=0.55,
-					transform shape, thick,
-					every node/.style = {draw, circle, minimum size = 10mm},
-					grow = down,  % alignment of characters
-					level 1/.style = {sibling distance=3cm},
-					level 2/.style = {sibling distance=1.5cm},
-					level 3/.style = {sibling distance=3cm},
-					level distance = 3cm,
-					head/.style = {fill = orange!90!blue,
-							label = center:\textsf{\Large H}},
-					tail/.style = {fill = blue!70!yellow, text = black,
-							label = center:\textsf{\Large T}}
-				]
-				\node[shape = circle split, draw, line width = 1pt,
-					minimum size = 10mm, inner sep = 0mm, font = \sffamily\large,
-					rotate=30] (Start)
-				{ \rotatebox{-30}{H} \nodepart{lower} \rotatebox{-30}{T}}
-				child {   node [head] (A) {}
-						child { node [head] (B) {}}
-						child { node [tail] (C) {}}
-					}
-				child {   node [tail] (D) {}
-						child { node [head] (E) {}}
-						child { node [tail] (F) {}}
-					};
-
-				% Filling the root (Start)
-				\begin{scope}[on background layer, rotate=30]
-					\fill[head] (Start.base) ([xshift = 0mm]Start.east) arc (0:180:5mm)
-					-- cycle;
-					\fill[tail] (Start.base) ([xshift = 0pt]Start.west) arc (180:360:5mm)
-					-- cycle;
-				\end{scope}
-
-				% Labels
-				\begin{scope}[nodes = {draw = none}]
-					\path (Start) -- (A) node [near start, left]  {$0.5$};
-					\path (A)     -- (B) node [near start, left]  {$0.5$};
-					\path (A)     -- (C) node [near start, right] {$0.5$};
-					\path (Start) -- (D) node [near start, right] {$0.5$};
-					\path (D)     -- (E) node [near start, left]  {$0.5$};
-					\path (D)     -- (F) node [near start, right] {$0.5$};
-					\begin{scope}[nodes = {below = 11pt}]
-						\node at (B) {$0.25$};
-						\node at (C) {$0.25$};
-						\node at (E) {$0.25$};
-						\node at (F) {$0.25$};
-					\end{scope}
-				\end{scope}
-			\end{tikzpicture}
-		\end{column}
-	\end{columns}
 \end{frame}
 
 \begin{frame}{Probability Interpretations}
@@ -209,12 +120,14 @@
 			\begin{vfilleditems}
 				\item \textbf{Non-negativity}: For every $A$:
 				$$P(A) \geq 0$$
+				\vspace{-0.65cm}
 				\item \textbf{Additivity}: For every two \textit{mutually exclusive}
 				$A$ and $B$:
 				$$P(A) = 1 - P(B) \text{ and } P(B) = 1 - P(A)$$
+				\vspace{-0.65cm}
 				\item \textbf{Normalization}: The probability of all possible
 				events $A_1, A_2, \dots$ must sum up to $1$:
-				$$\sum_{n \in \mathbb{N}} A_n = 1$$
+				$$\sum_{n \in \mathbb{N}} P(A_n) = 1$$
 			\end{vfilleditems}
 		\end{column}
 		\begin{column}{0.2\textwidth}
@@ -224,7 +137,7 @@
 	\end{columns}
 \end{frame}
 
-\begin{frame}{Sample Space}
+\begin{frame}{Sample Space\footnote{$\theta$ domain can be general, not restricted to these domains.}}
 	\begin{vfilleditems}
 		\item Discrete $$\Theta = \left\{1, 2, \ldots \right\}$$
 		\item Continuous $$\Theta \in \left(-\infty, \infty \right)$$
@@ -251,52 +164,52 @@
 		\centering
 		\subfigure{
 			\begin{tikzpicture}[scale=0.25, thick]
-				\draw[color=black] (-25, 0) to (10, 0);
+				\draw[color=white] (-25, 0) to (10, 0);
 				\node[] at (-15, 0) {The planet has a magnetic field};
 				\node[] at (7, 2) {$\theta \in E_{1}$};
 
-				\fill[color=gray60] (0, 0) circle (25pt) node[color=black] {$\mercury$};
-				\fill[color=blue] (2, 0) circle (25pt) node[color=black] {$\venus$};
-				\fill[color=blue] (4, 0) circle (25pt) node[color=black] {$\earth$};
-				\fill[color=gray60] (6, 0) circle (25pt) node[color=black] {$\mars$};
-				\fill[color=blue] (8, 0) circle (25pt) node[color=black] {$\jupiter$};
-				\fill[color=blue] (10, 0) circle (25pt) node[color=black] {$\saturn$};
-				\fill[color=blue] (12, 0) circle (25pt) node[color=black] {$\uranus$};
-				\fill[color=blue] (14, 0) circle (25pt) node[color=black] {$\neptune$};
+				\fill[color=gray60] (0, 0) circle (25pt) node[color=white] {$\mercury$};
+				\fill[color=blue] (2, 0) circle (25pt) node[color=white] {$\venus$};
+				\fill[color=blue] (4, 0) circle (25pt) node[color=white] {$\earth$};
+				\fill[color=gray60] (6, 0) circle (25pt) node[color=white] {$\mars$};
+				\fill[color=blue] (8, 0) circle (25pt) node[color=white] {$\jupiter$};
+				\fill[color=blue] (10, 0) circle (25pt) node[color=white] {$\saturn$};
+				\fill[color=blue] (12, 0) circle (25pt) node[color=white] {$\uranus$};
+				\fill[color=blue] (14, 0) circle (25pt) node[color=white] {$\neptune$};
 			\end{tikzpicture}
 		}
 		%
 		\subfigure{
 			\begin{tikzpicture}[scale=0.25, thick]
-				\draw[color=black] (-25, 0) to (10, 0);
+				\draw[color=white] (-25, 0) to (10, 0);
 				\node[] at (-15, 0) {The planet has moon(s)};
 				\node[] at (7, 2) {$\theta \in E_{2}$};
 
-				\fill[color=gray60] (0, 0) circle (25pt) node[color=black] {$\mercury$};
-				\fill[color=gray60] (2, 0) circle (25pt) node[color=black] {$\venus$};
-				\fill[color=blue] (4, 0) circle (25pt) node[color=black] {$\earth$};
-				\fill[color=blue] (6, 0) circle (25pt) node[color=black] {$\mars$};
-				\fill[color=blue] (8, 0) circle (25pt) node[color=black] {$\jupiter$};
-				\fill[color=blue] (10, 0) circle (25pt) node[color=black] {$\saturn$};
-				\fill[color=blue] (12, 0) circle (25pt) node[color=black] {$\uranus$};
-				\fill[color=blue] (14, 0) circle (25pt) node[color=black] {$\neptune$};
+				\fill[color=gray60] (0, 0) circle (25pt) node[color=white] {$\mercury$};
+				\fill[color=gray60] (2, 0) circle (25pt) node[color=white] {$\venus$};
+				\fill[color=blue] (4, 0) circle (25pt) node[color=white] {$\earth$};
+				\fill[color=blue] (6, 0) circle (25pt) node[color=white] {$\mars$};
+				\fill[color=blue] (8, 0) circle (25pt) node[color=white] {$\jupiter$};
+				\fill[color=blue] (10, 0) circle (25pt) node[color=white] {$\saturn$};
+				\fill[color=blue] (12, 0) circle (25pt) node[color=white] {$\uranus$};
+				\fill[color=blue] (14, 0) circle (25pt) node[color=white] {$\neptune$};
 			\end{tikzpicture}
 		}
 		%
 		\subfigure{
 			\begin{tikzpicture}[scale=0.25, thick]
-				\draw[color=black] (-25, 0) to (10, 0);
+				\draw[color=white] (-25, 0) to (10, 0);
 				\node[] at (-15, 0) {The planet has a magnetic field \textit{and} moon(s)};
 				\node[] at (7, 2) {$\theta \in E_{1} \cap E_{2}$};
 
-				\fill[color=gray60] (0, 0) circle (25pt) node[color=black] {$\mercury$};
-				\fill[color=gray60] (2, 0) circle (25pt) node[color=black] {$\venus$};
-				\fill[color=blue] (4, 0) circle (25pt) node[color=black] {$\earth$};
-				\fill[color=gray60] (6, 0) circle (25pt) node[color=black] {$\mars$};
-				\fill[color=blue] (8, 0) circle (25pt) node[color=black] {$\jupiter$};
-				\fill[color=blue] (10, 0) circle (25pt) node[color=black] {$\saturn$};
-				\fill[color=blue] (12, 0) circle (25pt) node[color=black] {$\uranus$};
-				\fill[color=blue] (14, 0) circle (25pt) node[color=black] {$\neptune$};
+				\fill[color=gray60] (0, 0) circle (25pt) node[color=white] {$\mercury$};
+				\fill[color=gray60] (2, 0) circle (25pt) node[color=white] {$\venus$};
+				\fill[color=blue] (4, 0) circle (25pt) node[color=white] {$\earth$};
+				\fill[color=gray60] (6, 0) circle (25pt) node[color=white] {$\mars$};
+				\fill[color=blue] (8, 0) circle (25pt) node[color=white] {$\jupiter$};
+				\fill[color=blue] (10, 0) circle (25pt) node[color=white] {$\saturn$};
+				\fill[color=blue] (12, 0) circle (25pt) node[color=white] {$\uranus$};
+				\fill[color=blue] (14, 0) circle (25pt) node[color=white] {$\neptune$};
 			\end{tikzpicture}
 		}
 		%
@@ -305,14 +218,14 @@
 				\node[] at (-15, 0) {The planet has a magnetic field \textit{or} moon(s)};
 				\node[] at (7, 2) {$\theta \in E_{1} \cup E_{2}$};
 
-				\fill[color=gray60] (0, 0) circle (25pt) node[color=black] {$\mercury$};
-				\fill[color=blue] (2, 0) circle (25pt) node[color=black] {$\venus$};
-				\fill[color=blue] (4, 0) circle (25pt) node[color=black] {$\earth$};
-				\fill[color=blue] (6, 0) circle (25pt) node[color=black] {$\mars$};
-				\fill[color=blue] (8, 0) circle (25pt) node[color=black] {$\jupiter$};
-				\fill[color=blue] (10, 0) circle (25pt) node[color=black] {$\saturn$};
-				\fill[color=blue] (12, 0) circle (25pt) node[color=black] {$\uranus$};
-				\fill[color=blue] (14, 0) circle (25pt) node[color=black] {$\neptune$};
+				\fill[color=gray60] (0, 0) circle (25pt) node[color=white] {$\mercury$};
+				\fill[color=blue] (2, 0) circle (25pt) node[color=white] {$\venus$};
+				\fill[color=blue] (4, 0) circle (25pt) node[color=white] {$\earth$};
+				\fill[color=blue] (6, 0) circle (25pt) node[color=white] {$\mars$};
+				\fill[color=blue] (8, 0) circle (25pt) node[color=white] {$\jupiter$};
+				\fill[color=blue] (10, 0) circle (25pt) node[color=white] {$\saturn$};
+				\fill[color=blue] (12, 0) circle (25pt) node[color=white] {$\uranus$};
+				\fill[color=blue] (14, 0) circle (25pt) node[color=white] {$\neptune$};
 			\end{tikzpicture}
 		}
 		%
@@ -321,14 +234,14 @@
 				\node[] at (-15, 0) {The planet does \textit{not} have a magnetic field};
 				\node[] at (7, 2) {$\theta \in \neg E_{1}$};
 
-				\fill[color=blue] (0, 0) circle (25pt) node[color=black] {$\mercury$};
-				\fill[color=gray60] (2, 0) circle (25pt) node[color=black] {$\venus$};
-				\fill[color=gray60] (4, 0) circle (25pt) node[color=black] {$\earth$};
-				\fill[color=blue] (6, 0) circle (25pt) node[color=black] {$\mars$};
-				\fill[color=gray60] (8, 0) circle (25pt) node[color=black] {$\jupiter$};
-				\fill[color=gray60] (10, 0) circle (25pt) node[color=black] {$\saturn$};
-				\fill[color=gray60] (12, 0) circle (25pt) node[color=black] {$\uranus$};
-				\fill[color=gray60] (14, 0) circle (25pt) node[color=black] {$\neptune$};
+				\fill[color=blue] (0, 0) circle (25pt) node[color=white] {$\mercury$};
+				\fill[color=gray60] (2, 0) circle (25pt) node[color=white] {$\venus$};
+				\fill[color=gray60] (4, 0) circle (25pt) node[color=white] {$\earth$};
+				\fill[color=blue] (6, 0) circle (25pt) node[color=white] {$\mars$};
+				\fill[color=gray60] (8, 0) circle (25pt) node[color=white] {$\jupiter$};
+				\fill[color=gray60] (10, 0) circle (25pt) node[color=white] {$\saturn$};
+				\fill[color=gray60] (12, 0) circle (25pt) node[color=white] {$\uranus$};
+				\fill[color=gray60] (14, 0) circle (25pt) node[color=white] {$\neptune$};
 			\end{tikzpicture}
 		}
 		%
@@ -343,7 +256,7 @@
 		\centering
 		\subfigure{
 			\begin{tikzpicture}[scale=0.25, thick]
-				\draw[color=black] (-27, 0) to (17, 0);
+				\draw[color=white] (-27, 0) to (17, 0);
 				\node[align=center] at (-15, 0) {The distance is less than five centimeters};
 				\node[] at (7.5, 2) {$\theta \in E_{1}$};
 
@@ -354,7 +267,7 @@
 		%
 		\subfigure{
 			\begin{tikzpicture}[scale=0.25, thick]
-				\draw[color=black] (-27, 0) to (17, 0);
+				\draw[color=white] (-27, 0) to (17, 0);
 				\node[align=center] at (-15, 0) {The distance is between three and seven centimeters};
 				\node[] at (7.5, 2) {$\theta \in E_{2}$};
 
@@ -366,7 +279,7 @@
 		%
 		\subfigure{
 			\begin{tikzpicture}[scale=0.25, thick]
-				\draw[color=black] (-27, 0) to (17, 0);
+				\draw[color=white] (-27, 0) to (17, 0);
 				\node[align=center] at (-15, 0) {The distance is less than five centimeters \\ \textit{and} e between three and seven centimeters};
 				\node[] at (7.5, 2) {$\theta \in E_{1} \cap E_{2}$};
 
@@ -377,7 +290,7 @@
 		%
 		\subfigure{
 			\begin{tikzpicture}[scale=0.25, thick]
-				\draw[color=black] (-27, 0) to (17, 0);
+				\draw[color=white] (-27, 0) to (17, 0);
 				\node[align=center] at (-15, 0) {The distance is less than five centimeters \\ \textit{or} between three and seven centimeters};
 				\node[] at (7.5, 2) {$\theta \in E_{1} \cup E_{2}$};
 
@@ -388,7 +301,7 @@
 		%		%
 		\subfigure{
 			\begin{tikzpicture}[scale=0.25, thick]
-				\draw[color=black] (-27, 0) to (17, 0);
+				\draw[color=white] (-27, 0) to (17, 0);
 				\node[align=center] at (-15, 0) {The distance is \textit{not} less than five centimeters};
 				\node[] at (7.5, 2) {$\theta \in \neg E_{1}$};
 
@@ -400,20 +313,11 @@
 \end{frame}
 
 \begin{frame}{Discrete versus Continuous Parameters}
-
-	Everything that has been exposed here was under the assumption that the
-	parameters are discrete.
-	This was done with the intent to provide an intuition what is probability.
-	Not always we work with discrete parameters.
 	Parameters can be continuous, such as: age, height, weight etc.
-	But don't despair!
+	\vfill
 	All probability rules and axioms are valid also for continuous parameters.
-	The only thing we have to do is to change all sum $\sum$ for integrals $\int$.
-	For example, the third axiom of \textbf{Normalization} for \textit{continuous}
-	random variables becomes:
-	$$
-		\int_{x \in X} p(x) dx = 1.
-	$$
+	\vfill
+	The only thing we have to do is to change all sums $\sum$ for integrals $\int$.
 \end{frame}
 
 
@@ -431,18 +335,6 @@
 		\newline \hspace{0.7\textwidth}
 		{\footnotesize assuming that $P(B) > 0$}.
 	\end{defn}
-\end{frame}
-
-\begin{frame}{Example of Conditional Probability}
-	\begin{example}[Poker Texas Hold'em]
-		\begin{vfilleditems}
-			\item \textbf{Sample Space}: $52$ cards in a deck, $13$ types of cards and $4$ types of suits.
-			\item $P(A)$: Probability of being dealt an Ace $\left( \frac{4}{52} = \frac{1}{13}\right)$
-			\item $P(K)$: Probability of being dealt a King $\left( \frac{4}{52} = \frac{1}{13} \right)$
-			\item $P(A \mid K)$: Probability of being dealt an Ace, given that you have already a King $\left( \frac{4}{51} \approx 0.078 \right)$
-			\item $P(K \mid A)$: Probability of being dealt a King, given that you have already an Ace $\left( \frac{4}{51} \approx 0.078 \right)$
-		\end{vfilleditems}
-	\end{example}
 \end{frame}
 
 \begin{frame}{Caution! Not always $P(A \mid B) = P(B \mid A)$}
@@ -469,162 +361,6 @@
 	\end{example}
 \end{frame}
 
-\begin{frame}{A Probability Textbook Classic}
-	\begin{columns}
-		\begin{column}{0.6\textwidth}
-			\begin{example}[Monty Hall]
-				\begin{vfilleditems}
-					\small
-					\item A TV presenter shows you 3 doors
-					\item One of them has a prize: a car!
-					The others have a goat
-					\item You must choose a door (that is not open or revealed)
-					\item In this moment, the presenter opens one of the other two doors
-					that you did not choose,
-					revealing one of the two goats
-					\item The presenter then asks you
-					``Do you want to change your door or stay with your choice?''
-				\end{vfilleditems}
-			\end{example}
-		\end{column}
-		\begin{column}{0.4\textwidth}
-			\begin{figure}
-				\centering
-				\def\svgwidth{\columnwidth}
-				\input{../images/monty_hall.pdf_tex}
-			\end{figure}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}{Solution for the Monty Hall Problem}
-	\begin{idea}[Probability of winning a car]
-		$$
-			\begin{aligned}
-				P(\text{car} \mid C_i) & = \frac{1}{3}                                                                                                                    \\
-				P(\text{car})          & = \frac{1}{3} \cdot P(\text{car} \mid C_1) + \frac{1}{3} \cdot P(\text{car} \mid C_2) + \frac{1}{3} \cdot P(\text{car} \mid C_3) \\
-				P(\text{car})          & = \frac{\sum^3_{i=1}P(\text{car} \mid C_i)}{3}                                                                                   \\
-				P(\text{car})          & = \frac{1}{3}
-			\end{aligned}
-		$$
-	\end{idea}
-	\vfill \vfill
-	$C_i$ is the event that the car is behind door $i$, $i=1,2,3$
-\end{frame}
-
-\begin{frame}[t]{Solution for the Monty Hall Problem}
-	\begin{columns}[t]
-		\begin{column}{0.5\textwidth}
-			{\Large \textbf{Scenario 1}: Don't change doors} \newline \newline
-			Simple: $$\frac{1}{3}$$
-		\end{column}
-		\begin{column}{0.5\textwidth}
-			{\Large \textbf{Scenario 2}: Change doors} \newline \newline
-			Choose any door $i$ to be $C_i = 0$
-			\vfill
-			$$
-				\begin{aligned}
-					P(\text{car}) & = 0 \cdot P(\text{car} \mid C_i) + \frac{1}{3} + \frac{1}{3} \\
-					P(\text{car}) & = \frac{2}{3}
-				\end{aligned}
-			$$
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}{Visualization of the Monty Hall Problem}
-	\begin{figure}
-		\centering
-		\subfigure{
-			\begin{tikzpicture}[
-					scale=0.55,
-					header/.style = {draw, rectangle, fill = blue!50!black, minimum size = 10mm},
-					level distance = 3.5cm,
-					transform shape, thick,
-					grow = right, sloped,
-				]
-				\node[header] {Your Choice}
-				child{
-						node[header] {Car is}
-						edge from parent[draw=none]
-						child{
-								node[header] {Monty opens}
-								edge from parent[draw=none]
-								child{
-										node[header] {result}
-										edge from parent[draw=none]
-									}
-							}
-					};
-			\end{tikzpicture}
-		}
-		%
-		\subfigure{
-			\begin{tikzpicture}[
-					scale=0.55,
-					door/.style = {draw, circle, minimum size = 10mm},
-					car/.style = {circle, fill = green!50!black, minimum size = 10mm},
-					goat/.style = {circle, fill = red!50!black, minimum size = 10mm},
-					level distance = 3.5cm,
-					transform shape, thick,
-					grow = right, sloped,
-					level 1/.style = {sibling distance=3.5cm},
-					level 2/.style = {sibling distance=2cm},
-					level 3/.style = {sibling distance=3cm}
-				]
-				\node[door] {Door 1}
-				child {
-				node[door] {Door 3}
-				child {
-				node[door] {Door 2}
-				child {
-				node[car, label=right:{\Large$\frac{1}{3}$}] {Car}
-				}
-				edge from parent
-				node[above] {\Large$1$}
-				}
-				edge from parent
-				node[below] {\Large$\frac{1}{3}$}
-				}
-				child {
-				node[door] {Door 2}
-				child {
-				node[door] {Door 3}
-				child {
-				node[car, label=right:{\Large$\frac{1}{3}$}] {Car}
-				}
-				edge from parent
-				node[above] {\Large$1$}
-				}
-				edge from parent
-				node[above] {\Large$\frac{1}{3}$}
-				}
-				child {
-				node[door] {Door 1}
-				child {
-				node[door] {Door 2}
-				child {
-				node[goat, label=right:{\Large$\frac{1}{6}$}] {Goat}
-				}
-				edge from parent
-				node[above]  {\Large$\frac{1}{2}$}
-				}
-				child {
-				node[door] {Door 3}
-				child {
-				node[goat, label=right:{\Large$\frac{1}{6}$}] {Goat}
-				}
-				edge from parent
-				node[above]  {\Large$\frac{1}{2}$}
-				}
-				edge from parent
-				node[above] {\Large$\frac{1}{3}$}
-				};
-			\end{tikzpicture}
-		}
-	\end{figure}
-\end{frame}
-
 \begin{frame}{Joint Probability}
 	\begin{defn}[Joint Probability]
 		Probability of two or more events occurring. \newline \newline
@@ -640,27 +376,17 @@
 	\end{defn}
 \end{frame}
 
-\begin{frame}{Example of Joint Probability}
-	\begin{example}[Revisiting Poker Texas Hold'em]
-		\begin{vfilleditems}
-			{\footnotesize
-				\item \textbf{Sample Space}: $52$ cards in a deck, $13$ types of cards and $4$ types of suits.
-				\item $P(A)$: Probability of being dealt an Ace $\left( \frac{4}{52} = \frac{1}{13}\right)$
-				\item $P(K)$: Probability of being dealt a King $\left( \frac{4}{52} = \frac{1}{13} \right)$
-				\item $P(A \mid K)$: Probability of being dealt an Ace, given that you have already a King $\left( \frac{4}{51} \approx 0.078 \right)$
-				\item $P(K \mid A)$: Probability of being dealt a King, given that you have already an Ace $\left( \frac{4}{51} \approx 0.078 \right)$
-			}
-			\item $P(A, K)$: Probability of being dealt an Ace \textit{and} being dealt a King
-			$$
-				\begin{aligned}
-					P(A, K)                         & = P(K, A)                         \\
-					P(A) \cdot P(K \mid A)          & = P(K) \cdot P(A \mid K)          \\
-					\frac{1}{13} \cdot \frac{4}{51} & = \frac{1}{13} \cdot \frac{4}{51} \\
-					                                & \approx 0.006
-				\end{aligned}
-			$$
-		\end{vfilleditems}
-	\end{example}
+\begin{frame}{Product Rule of Probability\footnote{also called the Product Rule of Probability.}}
+	\begin{defn}[Product Rule]
+		We can decompose a joint probability $P(A,B)$ into the
+		product of two probabilities:
+		$$
+			\begin{aligned}
+				P(A,B)                 & = P(B,A)                 \\
+				P(A) \cdot P(B \mid A) & = P(B) \cdot P(A \mid B)
+			\end{aligned}
+		$$
+	\end{defn}
 \end{frame}
 
 %% Bivariate Normal adapted from: https://github.com/walmes/Tikz/blob/master/src/bivariate-normal.pgf
@@ -995,7 +721,7 @@
 			The first mention of $p$-values was made by the statistician
 			Ronald Fischer in 1925 \parencite{fisher1925statistical}:
 			\begin{quotation}
-				[$p$-valor is a] measure of evidence against the null hypothesis
+				[$p$-value is a] measure of evidence against the null hypothesis
 			\end{quotation}
 			\begin{vfilleditems}
 				\item To quantify the strength of the evidence against the null hypothesis,
@@ -1091,64 +817,17 @@
 \subsubsection{Advantages of Bayesian Statistics}
 \begin{frame}{Bayesian vs Frequentist Stats}
 	%\begin{table}[h!]
+	\centering
 	\small
 	\begin{tabular}{|l|p{.3\textwidth}|p{.3\textwidth}|}
 		\toprule
-		                     & \textcolor{blue}{\textbf{Bayesian Statistics}} & \textcolor{red}{\textbf{Frequentist Statistics}}                       \\ \midrule
-		\textbf{Data}        & Fixed –- Non-random                            & Uncertain –- Random                                                    \\ \midrule
-		\textbf{Parameters}  & Uncertain –- Random                            & Fixed –- Non-random                                                    \\ \midrule
-		\textbf{Inference}   & Uncertainty regarding the parameter value      & Uncertainty regarding the sampling process from an infinite population \\ \midrule
-		\textbf{Probability} & Subjective                                     & Objective (but with several model assumptions)                         \\ \midrule
-		\textbf{Uncertainty} & Posterior Interval –- $P(\theta \mid y)$       & Confidence Interval –- $P(y \mid \theta)$                              \\
+		                     & \textcolor{blue}{\textbf{Bayesian Statistics}}       & \textcolor{red}{\textbf{Frequentist Statistics}}                       \\ \midrule
+		\textbf{Data}        & Fixed –- Non-random                                  & Uncertain –- Random                                                    \\ \midrule
+		\textbf{Parameters}  & Uncertain –- Random                                  & Fixed –- Non-random                                                    \\ \midrule
+		\textbf{Inference}   & Uncertainty regarding the parameter value            & Uncertainty regarding the sampling process from an infinite population \\ \midrule
+		\textbf{Probability} & Subjective\footnote{with highly informative priors.} & Objective (but with several model assumptions)                         \\ \midrule
+		\textbf{Uncertainty} & Posterior Interval –- $P(\theta \mid y)$             & Confidence Interval –- $P(y \mid \theta)$                              \\
 		\bottomrule
 	\end{tabular}
 	%\end{table}
-\end{frame}
-
-\begin{frame}{Advantages of Bayesian Statistics}
-	\begin{vfilleditems}
-		\item Natural approach to express uncertainty
-		\item Ability to incorporate previous information
-		\item Higher model flexibility
-		\item Full posterior distribution of the parameters
-		\item Natural propagation of uncertainty
-	\end{vfilleditems}
-	\small \textbf{Main disadvantage}: Slow model fitting procedure
-\end{frame}
-
-\begin{frame}{The beginning of the end of Frequentist Statistics}
-	\begin{vfilleditems}
-		\small
-		\item Know that you are in a very special moment in history of great changes in statistics
-		\item I believe that frequentist statistics, specially the way we qualify evidence and hypotheses with
-		$p$-values will transform in a ``significant''\footnote{pun intended ...} way.
-		\item 6 years ago, the \textit{American Statistical Association} (ASA) published a declaration about
-		$p$-values \parencite{Wasserstein2016}.
-		It states exactly what we exposed here:
-		The main concepts of the null hypothesis significant testing and,
-		in particular $p$-values, cannot provide what researchers demand of them.
-		Despite what says several textbooks, learning materials and published content,
-		$p$-values below $0.05$ doesn't ``prove'' anything.
-		Not, on the other way around, $p$-values higher than $0.05$ refute anything.
-		\item ASA statement has more than 4.700 citations with relevant impact.
-	\end{vfilleditems}
-\end{frame}
-
-\begin{frame}{The beginning of the end of Frequentist Statistics}
-	\begin{vfilleditems}
-		\small
-		\item An international symposium was promoted in 2017 which originated an open-access special edition of
-		\textit{The American Statistician} dedicated to practical ways to abandon $p < 0.05$
-		\parencite{wassersteinMovingWorld052019}.
-		\item Soon there were more attempts and claims.
-		In September 2017, \textit{Nature Human Behaviour} published an editorial proposing that the $p$-value's
-		significance level be decreased from $0.05$ to $0.005$ \parencite{benjaminRedefineStatisticalSignificance2018}.
-		Several authors, including highly important and influential statisticians argued that this simple step would
-		help to tackle the replication crisis problem in science, that many believe be the main consequence
-		of the abusive use of $p$-values \parencite{Ioannidis2019}.
-		\item Furthermore, many went a step ahead and suggested that science banish once for all $p$-values
-		\parencite{ItTimeTalk2019,lakensJustifyYourAlpha2018}.
-		Many suggest (including myself) that the main tool of statistical inference
-		be Bayesian statistics \parencite{amrheinScientistsRiseStatistical2019, Goodman1180, vandeschootBayesianStatisticsModelling2021}.
-	\end{vfilleditems}
 \end{frame}
