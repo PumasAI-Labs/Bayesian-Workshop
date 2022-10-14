@@ -542,6 +542,43 @@
 \end{frame}
 
 \subsubsection*{Gamma}
+\begin{frame}[noframenumbering]{Gamma}
+	The gammma distribution is a long-tailed distribution with support only for positive real numbers.
+	\vfill
+	The gamma distribution has two parameters and its notation is
+	$\text{Gamma}(\alpha, \theta)$:
+	\begin{vfilleditems}
+		\item $\alpha$ -- shape parameter
+		\item $\theta$ -- rate parameter
+	\end{vfilleditems}
+	\vfill
+	Example: Any waiting time can be modelled with a gamma distribution.
+\end{frame}
+
+\begin{frame}[noframenumbering]{Gamma}
+	$$\text{Gamma}(\alpha, \theta) = f(x, \alpha, \theta) = \frac{x^{\alpha-1} e^{-x/\theta}}{\Gamma(\alpha) \theta^\alpha} \text{ for $x,\alpha,\theta > 0$}$$
+\end{frame}
+
+\begin{frame}[noframenumbering]{Gamma}
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[every axis plot, line width=2pt,
+				ylabel=PDF,
+				domain=0:14,samples=200,
+				axis x line*=bottom, % no box around the plot, only x and y axis
+				axis y line*=left, % the * suppresses the arrow tips
+				enlarge x limits=true, % extend the axes a bit
+			]
+
+			\addplot [blue] {gammadist(1, 2)};
+			\addlegendentry{$\alpha=1, \theta=2$}
+			\addplot [red] {gammadist(2, 2)};
+			\addlegendentry{$\alpha=2, \theta=2$}
+			\addplot [yellow] {gammadist(3, 1)};
+			\addlegendentry{$\alpha=3, \theta=\frac{1}{2}$}
+		\end{axis}
+	\end{tikzpicture}
+\end{frame}
 
 \subsubsection*{Student's $t$}
 \begin{frame}[noframenumbering]{Student's $t$}
