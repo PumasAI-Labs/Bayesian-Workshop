@@ -34,6 +34,10 @@
 \usepackage{hyperref}
 \hypersetup{%
 	colorlinks=true,
+	bookmarks=true,
+	bookmarksdepth=4,
+	bookmarksnumbered=true,
+	bookmarksopen=true,
 	linkbordercolor=black,
 	allcolors=pureminimalistic@text@pumasblue,
 	pdfborderstyle={/S/U/W 1}% border style will be underline of width 1pt
@@ -119,6 +123,7 @@
 	style=apa,
 	doi=true,
 	eprint=false,
+	hyperref=true,
 	url=true]
 {biblatex}
 \addbibresource{references.bib}
@@ -215,7 +220,6 @@
 \begingroup
 \renewcommand{\insertframenumber}{}
 \renewcommand{\pageword}{}
-\section{References}
 \begin{frame}[allowframebreaks, noframenumbering]{References}
 	\printbibliography
 \end{frame}
