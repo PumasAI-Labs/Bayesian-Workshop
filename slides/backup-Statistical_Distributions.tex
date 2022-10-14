@@ -1,6 +1,6 @@
-\section{Probability Distributions}
+\section*{Probability Distributions}
 
-\subsection{Recommended References}
+\subsection*{Recommended References}
 \begin{frame}{Probability Distributions - Recommended References}
 	\begin{vfilleditems}
 		\item \textcite{grimmettProbabilityRandomProcesses2020}
@@ -103,7 +103,7 @@
 \end{frame}
 
 %--- Discrete --------------------------------------------------------%
-\subsection{Discrete Distributions}
+\subsection*{Discrete Distributions}
 \begin{frame}
 	\begin{defn}[Discrete Distributions]
 		Discrete probability distributions are distributions which the
@@ -117,7 +117,7 @@
 	\end{defn}
 \end{frame}
 
-\subsubsection{Discrete Uniform}
+\subsubsection*{Discrete Uniform}
 \begin{frame}{Discrete Uniform}
 	The discrete uniform is a symmetric probability distribution in which
 	a finite number of values are equally likely of being observable.
@@ -155,7 +155,7 @@
 	\end{tikzpicture}
 \end{frame}
 
-\subsubsection{Bernoulli}
+\subsubsection*{Bernoulli}
 \begin{frame}{Bernoulli}
 	Bernoulli distribution describes a binary event of the success of an experiment.
 	We represent $0$ as failure and $1$ as success, hence the result of a
@@ -199,7 +199,7 @@
 	\end{tikzpicture}
 \end{frame}
 
-\subsubsection{Binomial}
+\subsubsection*{Binomial}
 \begin{frame}{Binomial}
 	The binomial distribution describes an event in which the number of
 	successes in a sequence $n$ independent experiments,
@@ -243,7 +243,7 @@
 	\end{tikzpicture}
 \end{frame}
 
-\subsubsection{Poisson}
+\subsubsection*{Poisson}
 \begin{frame}{Poisson}
 	Poisson distribution describes the probability of a certain number of
 	events occurring in a fixed time interval if these events
@@ -284,7 +284,7 @@
 	\end{tikzpicture}
 \end{frame}
 
-\subsubsection{Negative Binomial}
+\subsubsection*{Negative Binomial}
 \begin{frame}{Negative Binomial\footnote{
 			any phenomena that can be modeles as a Poisson distribution can be
 			modeled also as negative binomial distribution
@@ -342,7 +342,7 @@
 
 %--- Continuous ------------------------------------------------------%
 
-\subsection{Continuous Distributions}
+\subsection*{Continuous Distributions}
 \begin{frame}
 	\begin{defn}[Continuous Distributions]
 		\small
@@ -362,7 +362,7 @@
 	\end{defn}
 \end{frame}
 
-\subsubsection{Continuous Uniform}
+\subsubsection*{Continuous Uniform}
 \begin{frame}{Continuous Uniform}
 	The continuous uniform distribution is a symmetric probability distribution
 	in which an infinite number of value intervals are equally likely of being observable.
@@ -396,7 +396,7 @@
 	\end{tikzpicture}
 \end{frame}
 
-\subsubsection{Normal}
+\subsubsection*{Normal}
 \begin{frame}{Normal}
 	This distribution is generally used in social and natural sciences to
 	represent continuous variables in which its underlying distribution are unknown.
@@ -450,7 +450,7 @@
 	\end{tikzpicture}
 \end{frame}
 
-\subsubsection{Log-Normal}
+\subsubsection*{Log-Normal}
 \begin{frame}{Log-Normal}
 	The log-normal distribution is a continuous probability distribution of a
 	random variable which its natural logarithm is distributed as a normal distribution.
@@ -501,7 +501,7 @@
 	\end{tikzpicture}
 \end{frame}
 
-\subsubsection{Exponential}
+\subsubsection*{Exponential}
 \begin{frame}{Exponential}
 	The exponential distribution is the probability distribution of the time
 	between events that occurs in a continuos manner, are independent,
@@ -541,7 +541,9 @@
 	\end{tikzpicture}
 \end{frame}
 
-\subsubsection{Student's $t$}
+\subsubsection*{Gamma}
+
+\subsubsection*{Student's $t$}
 \begin{frame}{Student's $t$}
 	Student's $t$ distribution arises by estimating the mean of a normally-distributed
 	population in situations where the sample size is small and the standard
@@ -593,7 +595,9 @@
 	\end{tikzpicture}
 \end{frame}
 
-\subsubsection{Beta}
+\subsubsection*{Cauchy}
+
+\subsubsection*{Beta}
 \begin{frame}{Beta}
 	The beta distribution is a natural choice to model anything that is
 	restricted to values between $0$ e $1$.
@@ -636,3 +640,46 @@
 		\end{axis}
 	\end{tikzpicture}
 \end{frame}
+
+\subsection*{Matrix-variate Distributions}
+\begin{frame}{Priors for Covariance Matrices}
+	We can specify a prior for a covariance matrix
+	$\boldsymbol{\Sigma}$.
+	\vfill
+	For computational efficiency,
+	we can make the covariance matrix $\boldsymbol{\Sigma}$ into a correlation matrix.
+	Every covariance matrix can be decomposed into:
+	$$
+		\boldsymbol{\Sigma}=\text{diag}_\text{matrix}(\boldsymbol{\tau}) \cdot \mathbf{C} \cdot \text{diag}_\text{matrix}(\boldsymbol{\tau})
+	$$
+	where $\mathbf{C}$ is a correlation matrix with
+	$1$s in the diagonal and the off-diagonal elements between -1 and 1 $\rho \in (-1, 1)$.
+	$\boldsymbol{\tau}$ is a vector composed of the variables' variances from
+	$\boldsymbol{\Sigma}$ (is is the $\boldsymbol{\Sigma}$'s diagonal).
+\end{frame}
+
+\begin{frame}{Priors for Covariance Matrices}
+	\small
+	Additionally, the correlation matrix $\mathbf{C}$
+	can be decomposed once more for greater computational efficiency.
+	Since all correlations matrices are symmetric and positive definite
+	(all of its eigenvalues are real numbers $\mathbb{R}$ and positive $>0$),
+	we can use the \href{https://en.wikipedia.org/wiki/Cholesky_decomposition}
+	{Cholesky Decomposition}
+	to decompose it into a triangular matrix
+	(which is much more computational efficient to handle):
+	$$
+		\mathbf{C} = \mathbf{L}_{\mathbf{C}} \mathbf{L}^T_{\mathbf{C}}
+	$$
+	where $\mathbf{L}_{\mathbf{C}}$ is a lower-triangular matrix.
+	\vfill
+	What we are missing is to define a prior for the correlation matrix $\mathbf{C}$.
+	Not a long time ago, we've used a Wishart distribution as a prior \parencite{gelman2013bayesian}.
+	But this has been abandoned after the proposal of the LKJ distribution by \textcite{lewandowski2009generating}
+	(LKJ are the authors' last name initials -- \textbf{L}ewandowski, \textbf{K}urowicka and \textbf{J}oe)
+	as a prior for correlation matrices.
+\end{frame}
+
+\subsubsection*{Inverse Wishart}
+
+\subsubsection*{LKJ}
