@@ -4,8 +4,18 @@
 % Load LaTeX packages
 \documentclass[aspectratio=169]{beamer}                    % supports floating text in any location
 %\usetheme[noto, showmaxslides, darkmode]{pureminimalistic}
-\usetheme[noto, showmaxslides, lightmode]{pureminimalistic}
+\usetheme[noto, lightmode]{pureminimalistic}
 \graphicspath{{logos/}}
+
+% This will add an "Outline" Table of Contents for each section
+% uncomment if desired
+%\AtBeginSection[]{%
+%	\frame<beamer>{
+%		\frametitle{Outline \secname}
+%		\setcounter{tocdepth}{10}
+%		\tableofcontents[currentsubsection, sectionstyle=hide/hide, subsectionstyle=show/show/hide, subsubsectionstyle=show/show/show/hide] % Show current section and current section's subsections, but hide other section's section and subsections!
+%	}
+%}
 
 \usepackage[utf8]{inputenc}
 \usepackage{csquotes,xpatch}% recommended
@@ -18,13 +28,18 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{bookmark}
+\usepackage{multicol} % for multicolumn Table of Contents
 
 % Hyperlinks
 \usepackage{hyperref}
 \hypersetup{%
 	colorlinks=true,
-	linkbordercolor=white,
-	allcolors=blue,
+	bookmarks=true,
+	bookmarksdepth=4,
+	bookmarksnumbered=true,
+	bookmarksopen=true,
+	linkbordercolor=black,
+	allcolors=pureminimalistic@text@pumasblue,
 	pdfborderstyle={/S/U/W 1}% border style will be underline of width 1pt
 }
 
@@ -104,10 +119,12 @@
 	%    style=siam,
 	%    style=ieeetr,
 	%    style=plain,
-	style=vancouver,
+	%    style=vancouver,
+	style=apa,
 	doi=true,
 	eprint=false,
-	hyperref=true]
+	hyperref=true,
+	url=true]
 {biblatex}
 \addbibresource{references.bib}
 % biblatex
@@ -118,6 +135,7 @@
 %% this makes it possible to add backup slides, without counting them
 \usepackage{appendixnumberbeamer}
 \renewcommand{\appendixname}{\texorpdfstring{\translate{appendix}}{appendix}}
+\renewcommand{\inserttotalframenumber}{\pageref{lastslide}}
 % logos
 
 % footer page
@@ -151,8 +169,11 @@
 %--- Table of Contents-------------------------------------------------%
 % For longer table of contents, I find it cleaner to
 % use no footline.
+\setcounter{tocdepth}{1}
 \begin{frame}[plain, noframenumbering]{Outline}
-	\tableofcontents
+	\begin{multicols}{2}
+		\tableofcontents
+	\end{multicols}
 \end{frame}
 
 %--- Distributions ----------------------------------------------------%
@@ -193,21 +214,28 @@
 \include{12-Posterior_Postprocessing}
 \include{13-Model_Comparison_and_Cross-Validation}
 \include{14-Software-Comparison}
+\label{lastslide}
 
-\section{References}
+%--- References ----------------------------------------------------------%
+\begingroup
+\renewcommand{\insertframenumber}{}
+\renewcommand{\pageword}{}
 \begin{frame}[allowframebreaks, noframenumbering]{References}
 	\printbibliography
 \end{frame}
 
+%--- Appendix ----------------------------------------------------------%
 \appendix % do not count the following slides for the total number
 \section*{Backup Slides}
-\begin{frame}[plain, noframenumbering]
+\begin{frame}[noframenumbering]
 	\centering
 	\vfill
 	{\fontsize{40}{50}\selectfont Backup Slides}
 	\vfill
 \end{frame}
+
 %--- Backup Files ----------------------------------------------------------%
 \include{backup-Statistical_Distributions}
+\endgroup
 
 \end{document}
