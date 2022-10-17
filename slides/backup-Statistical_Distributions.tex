@@ -717,9 +717,107 @@
 
 \subsection*{Matrix-variate Distributions}
 \begin{frame}[noframenumbering]{Matrix-variate Distributions}
+	So far we've seen random distributions that returns a \textbf{scalar value}.
+	That means a single number.
+	\vfill
+	But we can also return a \textbf{matrix} instead using a \textbf{Matrix-variate distribution}.
+	\vfill
+	There are several ways to generate random matrices.
+	But we'll focus on a special case of matrix: \textbf{positive semi-definite matrices}.
+\end{frame}
+
+\begin{frame}[noframenumbering]{Positive Semi-Definite Matrix}
+	\begin{defn}[Positive Semi-Definite Matrix]
+		A matrix $\mathbf{M}$ is positive-semidefinite if it satisfies the following equivalent conditions:
+		\begin{vfilleditems}
+			\item $\mathbf{M}$ is congruent with a diagonal matrix with positive real entries
+			\item $\mathbf{M}$ is symmetric or Hermitian, and all its eigenvalues are real and positive
+			\item $\mathbf{M}$ is symmetric or Hermitian, and all its leading principal minors are positive
+			\item There exists an invertible matrix $\mathbf{B}$ with conjugate transpose $\mathbf{B}^*$ such that $\mathbf{M} = \mathbf{B}^* \mathbf{B}$
+		\end{vfilleditems}
+	\end{defn}
+\end{frame}
+
+\begin{frame}[noframenumbering]{Covariance Matrices}
+	\begin{example}[Positive Semi-Definite Matrix]
+		The \textbf{covariance matrix} of a multivariate probability distribution is always \textbf{positive semi-definite}.
+
+		\vspace{0.5cm}
+
+		Conversely, \textbf{every positive semi-definite matrix is the covariance matrix} of some multivariate distribution.
+	\end{example}
+\end{frame}
+
+\subsubsection*{Inverse Wishart}
+\begin{frame}[noframenumbering]{Inverse Wishart}
+	The inverse Wishart was one of the first computationally-efficient distributions to model covariance matrices \parencite{gelman2013bayesian}.
+	It is being supplanted by more modern implementations.
+	\vfill
+	It is a generalization of the inverse gamma distribution to $p \times p$ positive definite matrices.
+\end{frame}
+
+\begin{frame}[noframenumbering]{Inverse Wishart}
+	$$\text{Inverse Wishart} (\nu, \boldsymbol{\Psi}) = \frac{\left|\boldsymbol{\Psi}\right|^{\nu/2}}{2^{\nu p/2}\Gamma_p(\frac{\nu}{2})} \left|\boldsymbol{\Sigma}\right|^{-(\nu+p+1)/2} e^{-\frac{1}{2}\operatorname{tr}(\boldsymbol{\Psi}\boldsymbol{\Sigma}^{-1})}$$
+
+	where:
+	\begin{vfilleditems}
+		\item $p$ dimensionality of the matrix-variate distribution
+		\item $\boldsymbol{\Sigma}$ is a $p \times p$ positive definite matrix
+		\item $\left| \cdot \right|$ is the determinant
+		\item $\operatorname{tr}$ is the trace
+		\item $\Gamma_P \left( \cdot \right)$ is the multivariate gamma function
+	\end{vfilleditems}
+	\vfill
+	Parameters:
+	\begin{vfilleditems}
+		\item $\nu > p-1$ is the degrees of freedom
+		\item $\boldsymbol{\Psi}$ scale matrix $p \times p$
+	\end{vfilleditems}
+\end{frame}
+
+\subsubsection*{LKJ}
+\begin{frame}[noframenumbering]{LKJ\footnote{
+			\textcite{lewandowski2009generating} --
+			LKJ are the authors' last name initials -- \textbf{L}ewandowski, \textbf{K}urowicka and \textbf{J}oe.
+		}}
+
+	LKJ is the go-to distribution for covariance matrices in a Bayesian framework.
+
+	$$
+		\text{LKJ} (\eta) = \left[\prod_{k=1}^{p-1}\pi^{\frac{k}{2}}
+			\frac{\Gamma\left(\eta+\frac{p-1-k}{2}\right)}{\Gamma\left(\eta+\frac{p-1}{2}\right)}\right]^{-1}
+		|\boldsymbol{\Sigma}|^{\eta-1}
+	$$
+	where:
+	\begin{vfilleditems}
+		\item $p$ dimensionality of the matrix-variate distribution
+		\item $\boldsymbol{\Sigma}$ is a $p \times p$ positive definite matrix
+		\item $\left| \cdot \right|$ is the determinant
+	\end{vfilleditems}
+	\vfill
+	LKJ has a single parameter $\eta > 0$ which acts as a shape parameter.
+\end{frame}
+
+\begin{frame}[noframenumbering]{LKJ}
+	One interesting property of the LKJ distribution is that
+	if we disregard the product over the beta functions\footnote{
+		generally the beta function can be expressed as a fraction of
+		two gamma functions.
+	},
+	then the PDF is proportional to the determinant exponentiated by $\eta - 1$:
+
+	$$
+		\text{LKJ} \propto \left|\boldsymbol{\Sigma}\right|^{\eta - 1}
+	$$
+	where:
+	\begin{vfilleditems}
+		\item $\boldsymbol{\Sigma}$ is a $p \times p$ positive definite matrix
+		\item $\left| \cdot \right|$ is the determinant
+	\end{vfilleditems}
 
 \end{frame}
 
+\subsubsection*{Priors for Covariance Matrices}
 \begin{frame}[noframenumbering]{Priors for Covariance Matrices}
 	We can specify a prior for a covariance matrix
 	$\boldsymbol{\Sigma}$.
@@ -752,18 +850,4 @@
 	where $\mathbf{L}_{\mathbf{C}}$ is a lower-triangular matrix.
 	\vfill
 	What we are missing is to define a prior for the correlation matrix $\mathbf{C}$.
-	Not a long time ago, we've used a Wishart distribution as a prior \parencite{gelman2013bayesian}.
-	But this has been abandoned after the proposal of the LKJ distribution by \textcite{lewandowski2009generating}
-	(LKJ are the authors' last name initials -- \textbf{L}ewandowski, \textbf{K}urowicka and \textbf{J}oe)
-	as a prior for correlation matrices.
-\end{frame}
-
-\subsubsection*{Inverse Wishart}
-\begin{frame}[noframenumbering]{Inverse Wishart}
-
-\end{frame}
-
-\subsubsection*{LKJ}
-\begin{frame}[noframenumbering]{LKJ}
-
 \end{frame}
