@@ -293,3 +293,7 @@ TSWLatexianTemp*
 
 # examples/ folder
 examples/
+
+# Pumas in the Cloud / JuliaHub
+Project.toml
+Manifest.toml
