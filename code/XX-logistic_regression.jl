@@ -24,7 +24,7 @@ logistic_model = @model begin
     @pre begin
         _AUC = AUC * βAUC
         _isF = isF * βisF
-        _RACE_Causasian = (RACE == "Caucasian" ? 1 : 0) * βRACE_Caucasian
+        _RACE_Causasian = (RACE == "Caucasian") * βRACE_Caucasian
         linear_pred = _AUC + _isF + _RACE_Causasian
     end
 
