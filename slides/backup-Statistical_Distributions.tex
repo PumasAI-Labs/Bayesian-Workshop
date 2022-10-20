@@ -343,7 +343,7 @@
 %--- Continuous ------------------------------------------------------%
 
 \subsection*{Continuous Distributions}
-\begin{frame}[noframenumbering]
+\begin{frame}[noframenumbering]{Continuous Distributions}
 	\begin{defn}[Continuous Distributions]
 		\small
 		Continuous probability distributions are distributions which
@@ -542,6 +542,43 @@
 \end{frame}
 
 \subsubsection*{Gamma}
+\begin{frame}[noframenumbering]{Gamma}
+	The gammma distribution is a long-tailed distribution with support only for positive real numbers.
+	\vfill
+	The gamma distribution has two parameters and its notation is
+	$\text{Gamma}(\alpha, \theta)$:
+	\begin{vfilleditems}
+		\item $\alpha$ -- shape parameter
+		\item $\theta$ -- rate parameter
+	\end{vfilleditems}
+	\vfill
+	Example: Any waiting time can be modelled with a gamma distribution.
+\end{frame}
+
+\begin{frame}[noframenumbering]{Gamma}
+	$$\text{Gamma}(\alpha, \theta) = f(x, \alpha, \theta) = \frac{x^{\alpha-1} e^{-x/\theta}}{\Gamma(\alpha) \theta^\alpha} \text{ for $x,\alpha,\theta > 0$}$$
+\end{frame}
+
+\begin{frame}[noframenumbering]{Gamma}
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[every axis plot, line width=2pt,
+				ylabel=PDF,
+				domain=0:14,samples=200,
+				axis x line*=bottom, % no box around the plot, only x and y axis
+				axis y line*=left, % the * suppresses the arrow tips
+				enlarge x limits=true, % extend the axes a bit
+			]
+
+			\addplot [blue] {gammadist(1, 2)};
+			\addlegendentry{$\alpha=1, \theta=2$}
+			\addplot [red] {gammadist(2, 2)};
+			\addlegendentry{$\alpha=2, \theta=2$}
+			\addplot [yellow] {gammadist(3, 1)};
+			\addlegendentry{$\alpha=3, \theta=\frac{1}{2}$}
+		\end{axis}
+	\end{tikzpicture}
+\end{frame}
 
 \subsubsection*{Student's $t$}
 \begin{frame}[noframenumbering]{Student's $t$}
@@ -596,6 +633,43 @@
 \end{frame}
 
 \subsubsection*{Cauchy}
+\begin{frame}[noframenumbering]{Cauchy}
+	The Cauchy distribution is bell-shaped distribution and a special case for Student's $t$ with $\nu=1$.
+	\vfill
+	But, differently than Student's $t$, the Cauchy distribution has two parameters and its notation is
+	$\text{Gamma}(\alpha, \theta)$:
+	\begin{vfilleditems}
+		\item $\mu$ -- location parameter
+		\item $\sigma$ -- scale parameter
+	\end{vfilleditems}
+	\vfill
+	Example: a dataset full of outliers.
+\end{frame}
+
+\begin{frame}[noframenumbering]{Cauchy}
+	$$\text{Cauchy}(\mu, \sigma) = \frac{1}{\pi \sigma \left(1 + \left(\frac{x - \mu}{\sigma} \right)^2 \right)} \text{ for $\sigma \geq 0$}$$
+\end{frame}
+
+\begin{frame}[noframenumbering]{Cauchy}
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[every axis plot, line width=2pt,
+				ylabel=PDF,
+				domain=-4:4,samples=200,
+				axis x line*=bottom, % no box around the plot, only x and y axis
+				axis y line*=left, % the * suppresses the arrow tips
+				enlarge x limits=true, % extend the axes a bit
+			]
+
+			\addplot [blue] {cauchy(0, 1)};
+			\addlegendentry{$\mu=0, \sigma=1$}
+			\addplot [red] {cauchy(0, 0.5)};
+			\addlegendentry{$\mu=0, \sigma=\frac{1}{2}$}
+			\addplot [yellow] {cauchy(-2, 1)};
+			\addlegendentry{$\mu=-2, \sigma=1$}
+		\end{axis}
+	\end{tikzpicture}
+\end{frame}
 
 \subsubsection*{Beta}
 \begin{frame}[noframenumbering]{Beta}
@@ -642,44 +716,103 @@
 \end{frame}
 
 \subsection*{Matrix-variate Distributions}
-\begin{frame}[noframenumbering]{Priors for Covariance Matrices}
-	We can specify a prior for a covariance matrix
-	$\boldsymbol{\Sigma}$.
+\begin{frame}[noframenumbering]{Matrix-variate Distributions}
+	So far we've seen random distributions that returns a \textbf{scalar value}.
+	That means a single number.
 	\vfill
-	For computational efficiency,
-	we can make the covariance matrix $\boldsymbol{\Sigma}$ into a correlation matrix.
-	Every covariance matrix can be decomposed into:
-	$$
-		\boldsymbol{\Sigma}=\text{diag}_\text{matrix}(\boldsymbol{\tau}) \cdot \mathbf{C} \cdot \text{diag}_\text{matrix}(\boldsymbol{\tau})
-	$$
-	where $\mathbf{C}$ is a correlation matrix with
-	$1$s in the diagonal and the off-diagonal elements between -1 and 1 $\rho \in (-1, 1)$.
-	$\boldsymbol{\tau}$ is a vector composed of the variables' variances from
-	$\boldsymbol{\Sigma}$ (is is the $\boldsymbol{\Sigma}$'s diagonal).
+	But we can also return a \textbf{matrix} instead using a \textbf{Matrix-variate distribution}.
+	\vfill
+	There are several ways to generate random matrices.
+	But we'll focus on a special case of matrix: \textbf{positive semi-definite matrices}.
 \end{frame}
 
-\begin{frame}[noframenumbering]{Priors for Covariance Matrices}
-	\small
-	Additionally, the correlation matrix $\mathbf{C}$
-	can be decomposed once more for greater computational efficiency.
-	Since all correlations matrices are symmetric and positive definite
-	(all of its eigenvalues are real numbers $\mathbb{R}$ and positive $>0$),
-	we can use the \href{https://en.wikipedia.org/wiki/Cholesky_decomposition}
-	{Cholesky Decomposition}
-	to decompose it into a triangular matrix
-	(which is much more computational efficient to handle):
-	$$
-		\mathbf{C} = \mathbf{L}_{\mathbf{C}} \mathbf{L}^T_{\mathbf{C}}
-	$$
-	where $\mathbf{L}_{\mathbf{C}}$ is a lower-triangular matrix.
-	\vfill
-	What we are missing is to define a prior for the correlation matrix $\mathbf{C}$.
-	Not a long time ago, we've used a Wishart distribution as a prior \parencite{gelman2013bayesian}.
-	But this has been abandoned after the proposal of the LKJ distribution by \textcite{lewandowski2009generating}
-	(LKJ are the authors' last name initials -- \textbf{L}ewandowski, \textbf{K}urowicka and \textbf{J}oe)
-	as a prior for correlation matrices.
+\begin{frame}[noframenumbering]{Positive Semi-Definite Matrix}
+	\begin{defn}[Positive Semi-Definite Matrix]
+		A matrix $\mathbf{M}$ is positive-semidefinite if it satisfies the following equivalent conditions:
+		\begin{vfilleditems}
+			\item $\mathbf{M}$ is congruent with a diagonal matrix with positive real entries
+			\item $\mathbf{M}$ is symmetric or Hermitian, and all its eigenvalues are real and positive
+			\item $\mathbf{M}$ is symmetric or Hermitian, and all its leading principal minors are positive
+			\item There exists an invertible matrix $\mathbf{B}$ with conjugate transpose $\mathbf{B}^*$ such that $\mathbf{M} = \mathbf{B}^* \mathbf{B}$
+		\end{vfilleditems}
+	\end{defn}
+\end{frame}
+
+\begin{frame}[noframenumbering]{Covariance Matrices}
+	\begin{example}[Positive Semi-Definite Matrix]
+		The \textbf{covariance matrix} of a multivariate probability distribution is always \textbf{positive semi-definite}.
+
+		\vspace{0.5cm}
+
+		Conversely, \textbf{every positive semi-definite matrix is the covariance matrix} of some multivariate distribution.
+	\end{example}
 \end{frame}
 
 \subsubsection*{Inverse Wishart}
+\begin{frame}[noframenumbering]{Inverse Wishart}
+	The inverse Wishart was one of the first computationally-efficient distributions to model covariance matrices \parencite{gelman2013bayesian}.
+	It is being supplanted by more modern implementations.
+	\vfill
+	It is a generalization of the inverse gamma distribution to $p \times p$ positive definite matrices.
+\end{frame}
+
+\begin{frame}[noframenumbering]{Inverse Wishart}
+	$$\text{Inverse Wishart} (\nu, \boldsymbol{\Psi}) = \frac{\left|\boldsymbol{\Psi}\right|^{\nu/2}}{2^{\nu p/2}\Gamma_p(\frac{\nu}{2})} \left|\boldsymbol{\Sigma}\right|^{-(\nu+p+1)/2} e^{-\frac{1}{2}\operatorname{tr}(\boldsymbol{\Psi}\boldsymbol{\Sigma}^{-1})}$$
+
+	where:
+	\begin{vfilleditems}
+		\item $p$ dimensionality of the matrix-variate distribution
+		\item $\boldsymbol{\Sigma}$ is a $p \times p$ positive definite matrix
+		\item $\left| \cdot \right|$ is the determinant
+		\item $\operatorname{tr}$ is the trace
+		\item $\Gamma_P \left( \cdot \right)$ is the multivariate gamma function
+	\end{vfilleditems}
+	\vfill
+	Parameters:
+	\begin{vfilleditems}
+		\item $\nu > p-1$ is the degrees of freedom
+		\item $\boldsymbol{\Psi}$ scale matrix $p \times p$
+	\end{vfilleditems}
+\end{frame}
 
 \subsubsection*{LKJ}
+\begin{frame}[noframenumbering]{LKJ\footnote{
+			\textcite{lewandowski2009generating} --
+			LKJ are the authors' last name initials -- \textbf{L}ewandowski, \textbf{K}urowicka and \textbf{J}oe.
+		}}
+
+	LKJ is the go-to distribution for covariance matrices in a Bayesian framework.
+
+	$$
+		\text{LKJ} (\eta) = \left[\prod_{k=1}^{p-1}\pi^{\frac{k}{2}}
+			\frac{\Gamma\left(\eta+\frac{p-1-k}{2}\right)}{\Gamma\left(\eta+\frac{p-1}{2}\right)}\right]^{-1}
+		|\boldsymbol{\Sigma}|^{\eta-1}
+	$$
+	where:
+	\begin{vfilleditems}
+		\item $p$ dimensionality of the matrix-variate distribution
+		\item $\boldsymbol{\Sigma}$ is a $p \times p$ positive definite matrix
+		\item $\left| \cdot \right|$ is the determinant
+	\end{vfilleditems}
+	\vfill
+	LKJ has a single parameter $\eta > 0$ which acts as a shape parameter.
+\end{frame}
+
+\begin{frame}[noframenumbering]{LKJ}
+	One interesting property of the LKJ distribution is that
+	if we disregard the product over the beta functions\footnote{
+		generally the beta function can be expressed as a fraction of
+		two gamma functions.
+	},
+	then the PDF is proportional to the determinant exponentiated by $\eta - 1$:
+
+	$$
+		\text{LKJ} \propto \left|\boldsymbol{\Sigma}\right|^{\eta - 1}
+	$$
+	where:
+	\begin{vfilleditems}
+		\item $\boldsymbol{\Sigma}$ is a $p \times p$ positive definite matrix
+		\item $\left| \cdot \right|$ is the determinant
+	\end{vfilleditems}
+
+\end{frame}
