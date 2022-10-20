@@ -816,38 +816,3 @@
 	\end{vfilleditems}
 
 \end{frame}
-
-\subsubsection*{Priors for Covariance Matrices}
-\begin{frame}[noframenumbering]{Priors for Covariance Matrices}
-	We can specify a prior for a covariance matrix
-	$\boldsymbol{\Sigma}$.
-	\vfill
-	For computational efficiency,
-	we can make the covariance matrix $\boldsymbol{\Sigma}$ into a correlation matrix.
-	Every covariance matrix can be decomposed into:
-	$$
-		\boldsymbol{\Sigma}=\text{diag}_\text{matrix}(\boldsymbol{\tau}) \cdot \mathbf{C} \cdot \text{diag}_\text{matrix}(\boldsymbol{\tau})
-	$$
-	where $\mathbf{C}$ is a correlation matrix with
-	$1$s in the diagonal and the off-diagonal elements between -1 and 1 $\rho \in (-1, 1)$.
-	$\boldsymbol{\tau}$ is a vector composed of the variables' variances from
-	$\boldsymbol{\Sigma}$ (is is the $\boldsymbol{\Sigma}$'s diagonal).
-\end{frame}
-
-\begin{frame}[noframenumbering]{Priors for Covariance Matrices}
-	\small
-	Additionally, the correlation matrix $\mathbf{C}$
-	can be decomposed once more for greater computational efficiency.
-	Since all correlations matrices are symmetric and positive definite
-	(all of its eigenvalues are real numbers $\mathbb{R}$ and positive $>0$),
-	we can use the \href{https://en.wikipedia.org/wiki/Cholesky_decomposition}
-	{Cholesky Decomposition}
-	to decompose it into a triangular matrix
-	(which is much more computational efficient to handle):
-	$$
-		\mathbf{C} = \mathbf{L}_{\mathbf{C}} \mathbf{L}^T_{\mathbf{C}}
-	$$
-	where $\mathbf{L}_{\mathbf{C}}$ is a lower-triangular matrix.
-	\vfill
-	What we are missing is to define a prior for the correlation matrix $\mathbf{C}$.
-\end{frame}
