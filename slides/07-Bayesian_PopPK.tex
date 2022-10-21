@@ -24,3 +24,31 @@
     \vfill
     Answer: \textbf{Mixed-Effects}/\textbf{Hierarchical} Models
 \end{frame}
+
+\begin{frame}{Adding Between-Subject Variability}
+    Here we introduce a ``random-effect'', $\eta$,
+    to capture the heterogeneity between subjects
+    while recognizing similarities.
+\end{frame}
+
+\subsubsection{1-Compartment Model with Between-Subject Variability}
+\begin{frame}{1-Compartment Model with Between-Subject Variability}
+    $$
+        \text{Central}^{\prime} = -\frac{CL}{V_C} \cdot \text{Central}
+    $$
+    where:
+    \begin{vfilleditems}
+        \item $CL = \theta_{CL} * e^{\eta_{CL}}$ is elimination clearance from the Central compartment,
+        decomposed onto:
+        \begin{vfilleditems}
+            \item $\theta_{CL}$ the typical value (population value) of the clearance parameter
+            \item $\eta_{CL}$ the random-effect value (subject value) of the clearance parameter
+        \end{vfilleditems}
+        \item $V_C = \theta_{V_C} * e^{\eta_{V_C}}$ is volume of the Central compartment,
+        decomposed onto:
+        \begin{vfilleditems}
+            \item $\theta_{V_C}$ the typical value (population value) of the volume parameter
+            \item $\eta_{V_C}$ the random-effect value (subject value) of the volume parameter
+        \end{vfilleditems}
+    \end{vfilleditems}
+\end{frame}
