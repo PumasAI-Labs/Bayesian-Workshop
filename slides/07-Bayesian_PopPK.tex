@@ -56,3 +56,16 @@
         \end{vfilleditems}
     \end{vfilleditems}
 \end{frame}
+
+\subsection{Bayesian PopPK Models}
+\begin{frame}{How to make it Bayesian?}
+    Just put \textbf{priors} in all random-effects parameters:
+    $$
+        \begin{aligned}
+            \omega   & \sim \text{Normal}^+(0, 2.5)  \\
+            \eta_{i} & \sim \text{Normal}(0, \omega)
+        \end{aligned}
+    $$
+    \vfill
+    where each subject $i$ has its own $\eta_i$.
+\end{frame}
