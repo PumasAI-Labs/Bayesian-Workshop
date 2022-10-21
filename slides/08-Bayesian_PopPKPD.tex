@@ -44,3 +44,63 @@
 \end{frame}
 
 \subsection{Compartment Models}
+\begin{frame}{PD Compartment Models}
+    There are several ways to specify (and characterize) PD compartmental models.
+    \vfill
+    Here we'll use the following characterization for the PD compartments:
+    \begin{vfilleditems}
+        \item \textbf{Impact}:
+        \begin{vfilleditems}
+            \item Production Rate
+            \item Degradation Rate
+        \end{vfilleditems}
+        \item \textbf{Rate}:
+        \begin{vfilleditems}
+            \item Stimulation
+            \item Inhibition
+        \end{vfilleditems}
+        \item \textbf{Effect}:
+        \begin{vfilleditems}
+            \item Emax
+            \item Linear
+            \item Sigmoid
+            \item $\ldots$
+        \end{vfilleditems}
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{PD Compartment Models}
+    $$
+        \text{Resp}^{\prime} = \text{Resp}_0 \cdot k_{\text{out}} \cdot \operatorname{Impact}(\operatorname{Rate}, \operatorname{Effect}, \text{PK compartment}) - k_{\text{out}} \cdot \text{Resp}
+    $$
+    \vfill
+    Example with Production Rate, Stimulation, Emax and Central PK compartment:
+    $$
+        \text{Resp}^{\prime} = \text{Resp}_0 \cdot k_{\text{out}} \cdot \left(1 + \frac{\text{Emax} * \text{Central}}{\text{EC}_{50} + \text{Central}} \right) - k_{\text{out}} \cdot \text{Resp}
+    $$
+\end{frame}
+
+\subsection{Bayesian PD Models}
+\begin{frame}{How to make it Bayesian?}
+    Just put \textbf{priors} in all parameters:
+    $$
+        \begin{aligned}
+            k_{\text{out}} & \sim \text{LogNormal}(\log{\mu_{k_{\text{out}}}}, \sigma_{k_{\text{out}}}) \\
+            \text{Resp}_0  & \sim \text{LogNormal}(\log{\mu_{\text{Resp}_0}}, \sigma_{\text{Resp}_0})   \\
+            \ldots
+        \end{aligned}
+    $$
+\end{frame}
+
+\subsection{Bayesian PopPD Models}
+\begin{frame}{How to make it Bayesian?}
+    Just put \textbf{priors} in all random-effects parameters:
+    $$
+        \begin{aligned}
+            \omega   & \sim \text{Normal}^+(0, 2.5)  \\
+            \eta_{i} & \sim \text{Normal}(0, \omega)
+        \end{aligned}
+    $$
+    \vfill
+    where each subject $i$ has its own $\eta_i$.
+\end{frame}
