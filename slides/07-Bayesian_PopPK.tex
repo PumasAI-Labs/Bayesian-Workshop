@@ -1,0 +1,71 @@
+\section{Bayesian Population Pharmacokinetic Modeling}
+
+\subsection{Recommended References}
+\begin{frame}{Bayesian Population Pharmacokinetic Modeling - Recommended References}
+    \begin{vfilleditems}
+        \item \textcite{Gabrielsson2006PKPDbook}:
+        \begin{vfilleditems}
+            \item Chapter 1: General Principles
+            \item Chapter 2: Pharmacokinetic Concepts
+        \end{vfilleditems}
+        \item \textcite{Owen2014PKPDbook}:
+        \begin{vfilleditems}
+            \item Chapter 10: PK/PD Models
+        \end{vfilleditems}
+        \item \textcite{Bonate2011PKPDbook}:
+        \begin{vfilleditems}
+            \item Chapter 10: Bayesian Modeling regression
+        \end{vfilleditems}
+        \item \textcite{margossian2022torsten}
+    \end{vfilleditems}
+\end{frame}
+
+\subsection{Population Pharmacokinetic Models}
+\begin{frame}{Population Pharmacokinetic Models}
+    Most of the Pharmacokinetic data comes from multiple subjects
+    \vfill
+    How do we incorporate \textbf{between-subject variability (BSV)} into our model?
+    \vfill
+    Answer: \textbf{Mixed-Effects}/\textbf{Hierarchical} Models
+\end{frame}
+
+\begin{frame}{Adding Between-Subject Variability}
+    Here we introduce a ``random-effect'', $\eta$,
+    to capture the heterogeneity between subjects
+    while recognizing similarities.
+\end{frame}
+
+\subsubsection{1-Compartment Model with Between-Subject Variability}
+\begin{frame}{1-Compartment Model with Between-Subject Variability}
+    $$
+        \text{Central}^{\prime} = -\frac{CL}{V_C} \cdot \text{Central}
+    $$
+    where:
+    \begin{vfilleditems}
+        \item $CL = \theta_{CL} * e^{\eta_{CL}}$ is elimination clearance from the Central compartment,
+        decomposed onto:
+        \begin{vfilleditems}
+            \item $\theta_{CL}$ the typical value (population value) of the clearance parameter
+            \item $\eta_{CL}$ the random-effect value (subject value) of the clearance parameter
+        \end{vfilleditems}
+        \item $V_C = \theta_{V_C} * e^{\eta_{V_C}}$ is volume of the Central compartment,
+        decomposed onto:
+        \begin{vfilleditems}
+            \item $\theta_{V_C}$ the typical value (population value) of the volume parameter
+            \item $\eta_{V_C}$ the random-effect value (subject value) of the volume parameter
+        \end{vfilleditems}
+    \end{vfilleditems}
+\end{frame}
+
+\subsection{Bayesian PopPK Models}
+\begin{frame}{How to make it Bayesian?}
+    Just put \textbf{priors} in all random-effects parameters:
+    $$
+        \begin{aligned}
+            \omega   & \sim \text{Normal}^+(0, 2.5)  \\
+            \eta_{i} & \sim \text{Normal}(0, \omega)
+        \end{aligned}
+    $$
+    \vfill
+    where each subject $i$ has its own $\eta_i$.
+\end{frame}
