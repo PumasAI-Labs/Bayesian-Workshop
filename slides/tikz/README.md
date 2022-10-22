@@ -1,0 +1,1 @@
+This directory is important to have otherwise Tikz externalize gives an error.

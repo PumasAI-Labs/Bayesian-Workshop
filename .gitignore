@@ -139,6 +139,8 @@ acs-*.bib
 # TODO Comment the next line if you want to keep your tikz graphics files
 *.tikz
 *-tikzDictionary
+*.dat
+*.script
 
 # listings
 *.lol
