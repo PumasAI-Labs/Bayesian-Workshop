@@ -7,15 +7,30 @@
 \usetheme[noto, lightmode]{pureminimalistic}
 \graphicspath{{logos/}}
 
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{subsection in toc}[subsections numbered]
+
 % This will add an "Outline" Table of Contents for each section
 % uncomment if desired
-%\AtBeginSection[]{%
-%	\frame<beamer>{
-%		\frametitle{Outline \secname}
-%		\setcounter{tocdepth}{10}
-%		\tableofcontents[currentsubsection, sectionstyle=hide/hide, subsectionstyle=show/show/hide, subsubsectionstyle=show/show/show/hide] % Show current section and current section's subsections, but hide other section's section and subsections!
-%	}
-%}
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \setcounter{tocdepth}{10}
+  \tableofcontents[currentsubsection, sectionstyle=hide/hide, subsectionstyle=show/show/hide, subsubsectionstyle=show/show/show/hide] % Show current section and current section's subsections, but hide other section's section and subsections!
+\end{frame}
+}
+% \AtBeginSection[]{%
+% 	\frame<beamer>{
+% 		\frametitle{\secname}
+% 		\setcounter{tocdepth}{10}
+% 		\tableofcontents[currentsubsection, sectionstyle=hide/hide, subsectionstyle=show/show/hide, subsubsectionstyle=show/show/show/hide] % Show current section and current section's subsections, but hide other section's section and subsections!
+% 	}
+% }
 
 \usepackage[utf8]{inputenc}
 \usepackage{csquotes,xpatch}% recommended
@@ -108,8 +123,8 @@
 
 % Bibliography
 \usepackage[
-	%    natbib=true,
-	backend=biber,
+	natbib=true,
+	% backend=biber,
 	%    style=abnt,
 	%    style=authoryear-comp,
 	%    style=authoryear,
@@ -205,8 +220,8 @@
 \include{01-Bayesian_Statistics}
 \include{02-Priors}
 \include{03-Pumas_Setup}
-\include{04-Bayesian_Logistic_Regression}
-\include{05-Bayesian_PK}
+\include{04-Bayesian_PK}
+\include{05-Bayesian_Logistic_Regression}
 \include{06-Hierarchical_Models}
 \include{07-Bayesian_PopPK}
 \include{08-Bayesian_PopPKPD}
