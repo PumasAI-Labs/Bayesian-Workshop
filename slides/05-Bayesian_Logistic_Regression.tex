@@ -146,7 +146,7 @@
     $$
         \begin{aligned}
             \mathbf{y}         & \sim \text{Bernoulli}\left( p\right)                                      \\
-            p                  & = \text{logistic/logit}(\alpha +  \mathbf{X} \boldsymbol{\beta})          \\
+            p                  & = \text{logistic/probit}(\alpha +  \mathbf{X} \boldsymbol{\beta})          \\
             \alpha             & \sim \text{Normal}(\mu_\alpha, \sigma_\alpha)                             \\
             \boldsymbol{\beta} & \sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
         \end{aligned}
@@ -156,7 +156,7 @@
         \item \small $\mathbf{y}$ - \textbf{dependent binary variable}.
         \item \small $p$ - probability of $\mathbf{y}$ taking value of $1$ --
         success in an independent Bernoulli trial.
-        \item \small $\text{logistic/logit}$ -- logistic or logit function.
+        \item \small $\text{logistic/probit}$ -- logistic or probit function.
         \item \small $\alpha$ -- intercept (also called constant).
         \item \small $\boldsymbol{\beta}$ -- coefficient vector.
         \item \small $\mathbf{X}$ -- data matrix.
