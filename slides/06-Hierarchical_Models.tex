@@ -1,3 +1,5 @@
+%!TEX root = slides.tex
+
 \section{Hierarchical Models}
 
 \subsection{Hierarchical Models - Recommended References}
@@ -49,7 +51,7 @@
 \begin{frame}{What are Hierarchical Models?\footnote{figure adapted from \href{https://betanalpha.github.io/assets/case_studies/hierarchical_modeling.html}{Michael Betancourt (CC-BY-SA-4.0)}}}
 	\small
 	Hyperparameter $\phi$ that parameterizes $\theta_1, \theta_2, \dots, \theta_K$,
-	that are used to infer the posterior density of some random variable
+	that are used to define the distribution of some observations
 	$\mathbf{y} = y_1, y_2, \dots, y_K$
 	\begin{adjustbox}{max width=1.0\textwidth}
 		\begin{tikzpicture}[scale=0.275, thick]
@@ -492,34 +494,33 @@
 	(which becomes a hiperprior) $\phi$.
 \end{frame}
 
-\subsection{Frequentist versus Bayesian Approaches}
-\begin{frame}{Frequentist versus Bayesian Approaches}
-	There are also hierarchical models in frequentist statistics.
-	They are mainly available in the \texttt{lme4} package \parencite{lme4},
-	and also in \texttt{MixedModels.jl} \parencite{MixedModels}.
-	\begin{vfilleditems}
-		\item \textbf{optimization of the likelihood function} versus \textbf{posterior approximation via MCMC}.
-		Almost always lead to convergence failure for models that are not extremely simple.
-		\item \textbf{frequentist hierarchical models do not compute $p$-values for the group-level effects}\footnote{
-			see \href{https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html}
-			{Douglas Bates, creator of the \texttt{lme4} package explanation}.}.
-		This is due to the underlying assumptions of the approximations that frequentist
-		statistics has to to do in order to calculate the group-level effects $p$-values.
-		The main one being that the groups must be balanced.
-		In other words, the groups must be homogeneous in size.
-		Hence, any unbalance in group compositions results in pathological $p$-values
-		that should not be trusted.
-	\end{vfilleditems}
-\end{frame}
+% \subsection{Frequentist versus Bayesian Approaches}
+% \begin{frame}{Frequentist versus Bayesian Approaches}
+% 	There are also hierarchical models in frequentist statistics.
+% 	They are available in the \texttt{lme4} package \parencite{lme4}, \texttt{MixedModels.jl} \parencite{MixedModels} and \texttt{Pumas.jl}.
+% 	\begin{vfilleditems}
+% 		\item \textbf{optimization of the likelihood function} versus \textbf{posterior approximation via MCMC}.
+% 		Almost always lead to convergence failure for models that are not extremely simple.
+% 		\item \textbf{frequentist hierarchical models do not compute $p$-values for the group-level effects}\footnote{
+% 			see \href{https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html}
+% 			{Douglas Bates, creator of the \texttt{lme4} package explanation}.}.
+% 		This is due to the underlying assumptions of the approximations that frequentist
+% 		statistics has to to do in order to calculate the group-level effects $p$-values.
+% 		The main one being that the groups must be balanced.
+% 		In other words, the groups must be homogeneous in size.
+% 		Hence, any unbalance in group compositions results in pathological $p$-values
+% 		that should not be trusted.
+% 	\end{vfilleditems}
+% \end{frame}
 
-\begin{frame}{Frequentist versus Bayesian Approaches}
-	To sum up, \textbf{frequentist approach for hierarchical models is not robust}
-	in both the \textbf{inference process}
-	(\textbf{convergence flaws} during the maximum likelihood estimation),
-	and also in the \textbf{results} from the inference process
-	(do not provide $p$-values due to
-	\textbf{strong assumptions that are almost always violated}).
-\end{frame}
+% \begin{frame}{Frequentist versus Bayesian Approaches}
+% 	To sum up, \textbf{frequentist approach for hierarchical models is not robust}
+% 	in both the \textbf{inference process}
+% 	(\textbf{convergence flaws} during the maximum likelihood estimation),
+% 	and also in the \textbf{results} from the inference process
+% 	(do not provide $p$-values due to
+% 	\textbf{strong assumptions that are almost always violated}).
+% \end{frame}
 
 \subsection{Approaches to Hierarchical Modeling}
 \begin{frame}{Approaches to Hierarchical Modeling}

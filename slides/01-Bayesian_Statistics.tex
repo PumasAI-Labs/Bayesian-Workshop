@@ -1,3 +1,5 @@
+%!TEX root = slides.tex
+
 \section{Bayesian Statistics}
 
 \subsection{Recommended References}
@@ -64,7 +66,7 @@
 			\item $P(\theta \mid y)$
 			\item $P(\tilde{y} \mid y)$
 		\end{vfilleditems}
-		\item We also, implicitly, conditioned on the observed data from
+		\item We also, implicitly, condition on the observed data from
 		any covariate $x$
 		\item Generally, we are interested in:
 		\begin{vfilleditems}
@@ -123,10 +125,9 @@
 				\vspace{-0.65cm}
 				\item \textbf{Additivity}: For every two \textit{mutually exclusive}
 				$A$ and $B$:
-				$$P(A) = 1 - P(B) \text{ and } P(B) = 1 - P(A)$$
+				$$P(A \cup B) = P(A) + P(B)$$
 				\vspace{-0.65cm}
-				\item \textbf{Normalization}: The probability of all possible
-				events $A_1, A_2, \dots$ must sum up to $1$:
+				\item \textbf{Normalization}: The probability of all possible \textit{mutually exclusive} events $A_1, A_2, \dots$ must sum up to $1$:
 				$$\sum_{n \in \mathbb{N}} P(A_n) = 1$$
 			\end{vfilleditems}
 		\end{column}
@@ -317,7 +318,13 @@
 	\vfill
 	All probability rules and axioms are valid also for continuous parameters.
 	\vfill
-	The only thing we have to do is to change all sums $\sum$ for integrals $\int$.
+	The only thing we have to do is to change all sums $\sum$ for integrals $\int$ and some probabilities $P$ with probability density (probability mass per unit measure) $p$, e.g.:
+	$$\begin{aligned}
+	  p(A)         & \geq 0 \\
+	  p(A)         & \in \mathbb{R} \\
+	  \int p(A) dA & = 1
+	\end{aligned}$$
+
 \end{frame}
 
 
@@ -338,7 +345,7 @@
 \end{frame}
 
 \begin{frame}{Caution! Not always $P(A \mid B) = P(B \mid A)$}
-	In the previous example we have the symmetry $P(A \mid K) = P(K \mid A)$,
+	In some cases, we have the symmetry $P(A \mid K) = P(K \mid A)$,
 	\textbf{but not always this is true}\footnote{
 		More specific, if the basal rates $P(A)$ and $P(B)$ aren't equal,
 		the symmetry is broken $P(A \mid B) \neq P(B \mid A)$}
@@ -352,7 +359,7 @@
 				Probability of some random person being catholic,
 				1.34 billion in 8 billion $\left( \frac{1.34}{8} \approx 0.17 \right)$
 				\item $P(\text{catholic} \mid \text{pope})$:
-				Probability of the Pope being catholic $\left( \frac{999}{1000} = 0.999 \right)$
+				Probability of the Pope being catholic $\left( \frac{1}{2} = 0.5 \right)$
 				\item $P(\text{pope} \mid \text{catholic})$:
 				Probability of a catholic person being the Pope $\left( \frac{1}{1.34 \cdot 10^9} \cdot 0.999 \approx 7.46 \cdot 10^{-10} \right)$
 			}
@@ -600,7 +607,7 @@
 
 \begin{frame}{The relationship between $p$-value and $H_0$}
 	To find out about any $p$-value, \textbf{find out what $H_0$ is behind it}.
-	It's definition will never change, since it is always $P(D \mid H_0)$:
+	Its definition will never change, since it is always $P(D \mid H_0)$:
 	\begin{vfilleditems}
 		\item \textbf{$t$-test}: $P(D \mid \text{the difference between the groups is zero})$
 		\item \textbf{ANOVA}: $P(D \mid \text{there is no difference between groups})$
@@ -643,7 +650,7 @@
 		will expect to find a result of the mean difference between groups
 		inside the confidence interval.
 	\end{example}
-	\footnotesize \textcolor{red}{Doesn't say anything about you \textbf{target population},
+	\footnotesize \textcolor{red}{Doesn't say anything about your \textbf{target population},
 		but about you \textbf{sample} in an insane process of \textbf{infinite sampling} ...}
 \end{frame}
 
@@ -763,7 +770,7 @@
 	\end{columns}
 \end{frame}
 
-\begin{frame}{Inside every nonBayesian, there is a Bayesian struggling to get out\footnote{
+\begin{frame}{Inside every non-Bayesian, there is a Bayesian struggling to get out\footnote{
 			quote from Dennis Lindley}}
 	\begin{columns}
 		\begin{column}{0.8\textwidth}
@@ -814,20 +821,20 @@
 	probability of these parameter's values.
 \end{frame}
 
-\subsubsection{Advantages of Bayesian Statistics}
-\begin{frame}{Bayesian vs Frequentist Stats}
-	%\begin{table}[h!]
-	\centering
-	\small
-	\begin{tabular}{|l|p{.3\textwidth}|p{.3\textwidth}|}
-		\toprule
-		                     & \textcolor{blue}{\textbf{Bayesian Statistics}}       & \textcolor{red}{\textbf{Frequentist Statistics}}                       \\ \midrule
-		\textbf{Data}        & Fixed –- Non-random                                  & Uncertain –- Random                                                    \\ \midrule
-		\textbf{Parameters}  & Uncertain –- Random                                  & Fixed –- Non-random                                                    \\ \midrule
-		\textbf{Inference}   & Uncertainty regarding the parameter value            & Uncertainty regarding the sampling process from an infinite population \\ \midrule
-		\textbf{Probability} & Subjective\footnote{with highly informative priors.} & Objective (but with several model assumptions)                         \\ \midrule
-		\textbf{Uncertainty} & Posterior Interval –- $P(\theta \mid y)$             & Confidence Interval –- $P(y \mid \theta)$                              \\
-		\bottomrule
-	\end{tabular}
-	%\end{table}
-\end{frame}
+% \subsubsection{Advantages of Bayesian Statistics}
+% \begin{frame}{Bayesian vs Frequentist Stats}
+% 	%\begin{table}[h!]
+% 	\centering
+% 	\small
+% 	\begin{tabular}{|l|p{.3\textwidth}|p{.3\textwidth}|}
+% 		\toprule
+% 		                     & \textcolor{blue}{\textbf{Bayesian Statistics}}       & \textcolor{red}{\textbf{Frequentist Statistics}}                       \\ \midrule
+% 		\textbf{Data}        & Fixed –- Non-random                                  & Uncertain –- Random                                                    \\ \midrule
+% 		\textbf{Parameters}  & Uncertain –- Random                                  & Fixed –- Non-random                                                    \\ \midrule
+% 		\textbf{Inference}   & Uncertainty regarding the parameter value            & Uncertainty regarding the sampling process from an infinite population \\ \midrule
+% 		\textbf{Probability} & Subjective\footnote{with highly informative priors.} & Objective (but with several model assumptions)                         \\ \midrule
+% 		\textbf{Uncertainty} & Posterior Interval –- $P(\theta \mid y)$             & Confidence Interval –- $P(y \mid \theta)$                              \\
+% 		\bottomrule
+% 	\end{tabular}
+% 	%\end{table}
+% \end{frame}
