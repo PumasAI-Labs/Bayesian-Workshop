@@ -150,8 +150,7 @@
 	\begin{columns}
 		\begin{column}{0.8\textwidth}
 			\begin{vfilleditems}
-				\item We proceed by defining an \textbf{ergodic Markov chain}\footnote{
-					meaning that there is an \textbf{unique stationary distribution}.}
+				\item We proceed by defining an \textbf{ergodic Markov chain}\footnotemark.
 				in which the set of possible states is the sample size and
 				the stationary distribution is the distribution to be \textit{approximated}
 				(or \textit{sampled}).
@@ -167,6 +166,7 @@
 			\includegraphics[width=0.9\columnwidth]{andrei_markov.jpg}
 		\end{column}
 	\end{columns}
+	\footnotetext{meaning that there is an \textbf{unique stationary distribution}}
 \end{frame}
 
 \begin{frame}{Markov Chains}
@@ -668,7 +668,7 @@
 			The problem is that Euler method, when applied to Hamiltonian dynamics,
 			\textbf{does not preserve volume}.
 			One of the fundamental properties of Hamiltonian dynamics if
-			\textbf{volume preservation}\footnote{a result called Liouville theorem.}.
+			\textbf{volume preservation}\footnotemark.
 			This makes the Euler method a bad choice as a HMC's numerical integrator.
 		\end{column}
 		\begin{column}{0.4\textwidth}
@@ -678,6 +678,7 @@
 			\end{figure}
 		\end{column}
 	\end{columns}
+	\footnotetext{a result called Liouville theorem.}
 \end{frame}
 
 \begin{frame}{An Interlude into Numerical Integration\footnote{

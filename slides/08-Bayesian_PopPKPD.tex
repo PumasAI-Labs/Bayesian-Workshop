@@ -96,9 +96,10 @@
 
 \subsection{Bayesian PopPD Models}
 \begin{frame}{How to make it Bayesian?}
-    Just put \textbf{priors} in all random-effects parameters:
+    Just put \textbf{priors} in all parameters:
     $$
         \begin{aligned}
+            \theta   & \sim \text{Normal}(0, 2.5)  \\
             \omega   & \sim \text{Normal}^+(0, 2.5)  \\
             \eta_{i} & \sim \text{Normal}(0, \omega)
         \end{aligned}

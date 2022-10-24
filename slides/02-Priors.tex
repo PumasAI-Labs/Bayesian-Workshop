@@ -36,7 +36,7 @@
 		\item Subjectivity is something unwanted in the ideal picture of the
 		scientist and the scientific method.
 	\end{vfilleditems}
-	Counter-arguments
+	\textbf{Counter-arguments}:
 	\begin{vfilleditems}
 		\item Very weak priors avoid subjectivity.
 		\item Anything that involves human action will never be free from
@@ -122,9 +122,9 @@
 	 \hline
 	 PD mats & \lstinline{Wishart}, \lstinline{InverseWishart} \\
 	 \hline
-	 Corr mats & \lstinline{LKJ} \\
+	 Corr mats & \lstinline{LKJ}, \lstinline{LKJCholesky} \\
 	 \hline
-	 Other & \lstinline{Constrained}, \lstinline{truncated}, \lstinline{LocationScale}, \lstinline{Uniform}, \lstinline{Arcsine}, \lstinline{Biweight}, \lstinline{Cosine}, \lstinline{Epanechnikov}, \lstinline{Semicircle}, \lstinline{SymTriangularDist}, \lstinline{Triweigh}, \lstinline{Pareto}, \lstinline{GeneralizedPareto}, \lstinline{GeneralizedExtremeValue}, \lstinline{Levy} \\ [1ex] 
+	 Other & \lstinline{Constrained}, \lstinline{truncated}, \lstinline{LocationScale}, \lstinline{Uniform}, \lstinline{Arcsine}, \lstinline{Biweight}, \lstinline{Cosine}, \lstinline{Epanechnikov}, \lstinline{Semicircle}, \lstinline{SymTriangularDist}, \lstinline{Triweight}, \lstinline{Pareto}, \lstinline{GeneralizedPareto}, \lstinline{GeneralizedExtremeValue}, \lstinline{Levy} \\ [1ex] 
 	 \hline
 	\end{tabular}
 	\end{center}
@@ -132,13 +132,13 @@
 
 \begin{frame}{Prior Selection}
   \vfill
-  Check similar models from literature. If you really have to choose a new prior, follow the following process:
+  Check \textbf{similar} models from literature. If you really have to choose a new prior, follow the following process:
   \vfill
   \begin{vfilleditems}
-	 \item Decide the support of the prior. The support of the prior distribution must match the the domain of the parameter.
-	 \item Decide the center of the prior, e.g. mean, median or mode.
-	 \item Decide the strength of the prior. This is often controlled by a standard deviation or scale parameter in the distribution constructor.
-	 \item Decide the shape of the probability density function (PDF) of the prior. Left skewed, right skewed, centered, heavy tail, etc.
+	 \item Decide the \textbf{support} of the prior. The support of the prior distribution must match the the domain of the parameter.
+	 \item Decide the \textbf{center} of the prior, e.g. mean, median or mode.
+	 \item Decide the \textbf{strength} of the prior. This is often controlled by a standard deviation or scale parameter in the distribution constructor.
+	 \item Decide the \textbf{shape} of the probability density function (PDF) of the prior. Left skewed, right skewed, centered, heavy tail, etc.
   \end{vfilleditems}
 \end{frame}
 
