@@ -20,17 +20,37 @@
 	\end{vfilleditems}
 \end{frame}
 
-\begin{frame}{Monte Carlo Methods}
+% \begin{frame}{Monte Carlo Methods}
+% 	\begin{columns}
+% 		\begin{column}{0.8\textwidth}
+% 			\begin{vfilleditems}
+% 				\item \href{http://mc-stan.org/}{\texttt{Stan}} is named after the mathematician Stanislaw Ulam,
+% 				who was involved in the Manhattan project,
+% 				and while trying to calculate the neutron diffusion process for the hydrogen bomb
+% 				ended up creating a whole class of methods called \textbf{Monte Carlo} \parencite{eckhardtStanUlamJohn1987}.
+% 				\item Monte Carlo methods employ randomness to solve problems in principle are deterministic in nature.
+% 				They are frequently used in physics and mathematical problems,
+% 				and very useful when it is difficult or impossible to use other approaches.
+% 			\end{vfilleditems}
+% 		\end{column}
+% 		\begin{column}{0.2\textwidth}
+% 			\centering
+% 			\includegraphics[width=0.9\columnwidth]{stanislaw.jpg}
+% 		\end{column}
+% 	\end{columns}
+% \end{frame}
+
+\begin{frame}{History Behind the Monte Carlo Methods\footnote{those who are interested, should read \textcite{eckhardtStanUlamJohn1987}.}}
 	\begin{columns}
 		\begin{column}{0.8\textwidth}
 			\begin{vfilleditems}
-				\item \href{http://mc-stan.org/}{\texttt{Stan}} is named after the mathematician Stanislaw Ulam,
-				who was involved in the Manhattan project,
-				and while trying to calculate the neutron diffusion process for the hydrogen bomb
-				ended up creating a whole class of methods called \textbf{Monte Carlo} \parencite{eckhardtStanUlamJohn1987}.
-				\item Monte Carlo methods employ randomness to solve problems in principle are deterministic in nature.
-				They are frequently used in physics and mathematical problems,
-				and very useful when it is difficult or impossible to use other approaches.
+				\item The idea came when Ulam was playing Solitaire while recovering from surgery.
+				Ulam was trying to calculate the deterministic, i.e. analytical solution,
+				of the probability of being dealt an already-won game.
+				The calculations where almost impossible.
+				So, he thought that he could play hundreds of games to statistically estimate,
+				i.e. numerical solution, the probability of this result.
+				\item Ulam described the idea to John von Neumann in 1946.
 			\end{vfilleditems}
 		\end{column}
 		\begin{column}{0.2\textwidth}
@@ -44,14 +64,7 @@
 	\begin{columns}
 		\begin{column}{0.8\textwidth}
 			\begin{vfilleditems}
-				\item The idea came when Ulam was playing Solitaire while recovering from surgery.
-				Ulam was trying to calculate the deterministic, i.e. analytical solution,
-				of the probability of being dealt an already-won game.
-				The calculations where almost impossible.
-				So, he thought that he could play hundreds of games to statistically estimate,
-				i.e. numerical solution, the probability of this result.
-				\item Ulam described the idea to John von Neumann in 1946.
-				\item \small Due to the secrecy, von Neumann and Ulam's work demanded a code name.
+				\item Due to the secrecy, von Neumann and Ulam's work demanded a code name.
 				Nicholas Metropolis suggested using ``Monte Carlo'',
 				a homage to the ``Casino Monte Carlo'' in Monaco,
 				where Ulam's uncle would ask relatives for money to play.
@@ -71,31 +84,38 @@
 	$$
 		P(\theta \mid \text{data})=\frac{P(\theta) \cdot P(\text{data} \mid \theta)}{P(\text{data})}
 	$$
-	In discrete cases, we can turn the denominator into a sum over all parameters
-	using the \textbf{chain rule} of probability:
+	In finite, discrete cases, we can turn the denominator into a sum over a finite number of combinations of parameters.
+	Let $N$ resemble the number of combinations of parameter values and let $\theta_i$ resemble a particular vector of such combination. Using the \textbf{chain rule} of probability:
 	$$
-		P(A,B \mid C)=P(A \mid B,C) \times P(B \mid C)
-	$$
-	This is also known as \textbf{marginalization}:
-	$$
-		P(\text{data})=\sum_{\theta} P(\text{data} \mid \theta) \times P(\theta)
+		P(\text{data}, \theta_1) = P(\theta_1) \cdot P(\text{data} \mid \theta_1)
 	$$
 \end{frame}
 
 \begin{frame}{Why Do We Need MCMC?}
-	However, in the case of continuous values,
-	the denominator $P(\text{data})$
-	turns into a very big and nasty integral:
+	We can then \textbf{marginalize} the random variable $\theta$ using:
+	$$
+		P(\text{data}) = \sum_{i}^N P(\text{data}, \theta_i) = \sum_{i}^N P(\theta_i) \cdot P(\text{data} \mid \theta_i)
+	$$
+	\vfill
+	In the non-finite cases (domains are not compact, e.g. they go to $\infty$ or $-\infty$), this turns into an infinite series which can still be tractable (computationally feasible) sometimes.
+	\vfill
+	In the continuous case, this turns into an integral over all values of $\theta$.
 	$$
 		P(\text{data})=\int_{\theta} P(\text{data} \mid \theta) \times P(\theta)d \theta
 	$$
-	In many cases the integral is intractable
-	(not possible of being deterministic evaluated) and,
-	thus, we must find other ways to compute the posterior
+\end{frame}
+
+\begin{frame}{Why Do We Need MCMC?}
+	$$
+		P(\text{data})=\int_{\theta} P(\text{data} \mid \theta) \times P(\theta)d \theta
+	$$
+	In many cases, e.g. if $\theta$ is high dimensional, this integral (or sum in the discrete case) is intractable.
+	That is, it is not feasible to deterministically evaluate or even approximate it to a known residual error.
+	Therefore, we must find other ways to compute and use the posterior
 	$P(\theta \mid \text{data})$ without using the denominator
 	$P(\text{data})$.
 	\vfill
-	\Large \textbf{This is where Monte Carlo methods comes into play!}
+	\Large \textbf{This is where Monte Carlo methods come into play!}
 \end{frame}
 
 \begin{frame}{Why Do We Need the Denominator $P(\text{data})$?}
@@ -111,16 +131,50 @@
 			\int_{\theta} P(\theta \mid \text{data})d \theta = 1
 		$$
 	\end{vfilleditems}
+	$P(\text{data})$ also gives us a measure of the total likelihood of a model class. This is useful when considering and comparing multiple models.
+\end{frame}
+
+\begin{frame}{Why Do We Need the Denominator $P(\text{data})$?}
+	\begin{vfilleditems}
+		\item After evaluating $P(\text{data})$, we still need to evaluate more integrals over $\theta$.
+		\item A lot of useful questions can be formulated as such integrals.
+		\item The probablity $P(\theta > 0 | \text{data})$ according to the posterior is:
+		$$
+			\int_{\theta} 1_{\theta > 0} \, P(\theta \mid \text{data}) d\theta
+		$$
+		where $1_{\theta > 0}$ is 1 if $\theta > 0$ and 0 otherwise.
+		\item The expected prediction $y(\theta)$ which is a function of the parameters $\theta$ given the posterior distribution is:
+		$$
+			\int_{\theta} y(\theta) \, P(\theta \mid \text{data}) d\theta
+		$$
+		\item All those integrals are typically intractable for high dimensional $\theta$.
+	\end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Sampling from the posterior}
+	\begin{vfilleditems}
+		\item What if we have a way to sample from the posterior distribution $P(\theta \mid \text{data})$ without evaluating $P(\text{data})$ or any of the above integrals?
+		\item Can we answer our useful questions?
+		\item Let the number of samples from the posterior be $N$ and let $\theta_i$ be the $i^{th}$ sample from the posterior.
+		$$
+			\int_{\theta} 1_{\theta > 0} \, P(\theta \mid \text{data}) d\theta \approx \frac{1}{N} \sum_i^N 1_{\theta_i > 0}
+		$$
+		$$
+			\int_{\theta} y(\theta) \, P(\theta \mid \text{data}) d\theta \approx \frac{1}{N} \sum_i^N y(\theta_i)
+		$$
+		\item These are all tractable sums!
+	\end{vfilleditems}
 \end{frame}
 
 \begin{frame}{What If We Remove the Denominator $P(\text{data})$?}
-	By removing the denominator $(\text{data})$,
+	By removing the denominator $P(\text{data})$,
 	we conclude that the posterior
+
 	$P(\theta \mid \text{data})$ is \textbf{proportional} to the
 	product of the prior and the likelihood
 	$P(\theta) \cdot P(\text{data} \mid \theta)$:
 	$$
-		P(\theta \mid \text{data}) \propto P(\theta) \cdot P(\text{data} \mid \theta)
+		P(\theta \mid \text{data}) \propto P(\theta, \text{data}) = P(\theta) \cdot P(\text{data} \mid \theta)
 	$$
 \end{frame}
 
@@ -130,7 +184,7 @@
 	\vfill
 	MCMC is an ample class of computational tools to approximate integrals
 	and generate samples from a posterior probability
-	\parencite{brooksHandbookMarkovChain2011}.
+	\parencite{brooksHandbookMarkovChain2011} using nothing but the un-normalized probability $P(\theta, \text{data})$.
 	\vfill
 	MCMC is used when it is not possible to sample $\boldsymbol{\theta}$
 	directly from the posterior probability
@@ -142,8 +196,7 @@
 	$P(\boldsymbol{\theta} \mid \text{data})$.
 	\vfill
 	All of this is to \textbf{eliminate the evaluation}
-	(often impossible) of the \textbf{denominator}
-	$P(\text{data})$.
+	(often impossible) of the intractable integrals.
 \end{frame}
 
 \begin{frame}{Markov Chains}
@@ -242,40 +295,17 @@
 \end{frame}
 
 \subsection{MCMC Algorithms}
-\begin{frame}{MCMC Algorithms}
-	We have \textbf{TONS} of MCMC algorithms\footnote{see the \href{https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo}
-		{Wikipedia page for a full list}.}.
+\begin{frame}{MCMC Algorithms}\
+	MCMC algorithms\footnote{see the \href{https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo}{Wikipedia page for a full list}.} use a Markov chain that's guaranteed to converge to the target posterior distribution $P(\theta \mid \text{data}$ using nothing but the un-normalized probability $P(\theta, \text{data})$.
+	\vfill
+	We have \textbf{TONS} of MCMC algorithms.
 	Here we are going to cover two classes of MCMC algorithms:
 	\begin{vfilleditems}
 		\item Metropolis-Hastings \parencite{metropolisEquationStateCalculations1953, hastingsMonteCarloSampling1970}.
-
 		\item Hamiltonian Monte Carlo\footnote{sometimes called Hybrid Monte Carlo, specially in the physics literature.} \parencite{neal2011mcmc, betancourtConceptualIntroductionHamiltonian2017}.
 	\end{vfilleditems}
 \end{frame}
 
-\begin{frame}{MCMC Algorithms -- Metropolis-Hastings}
-	These are the first MCMC algorithms.
-	They use an \textbf{acceptance/rejection rule for the proposals}.
-	They are characterized by proposals originated from a random walk in the parameter space.
-	The \textbf{Gibbs algorithm} can be seen as a \textbf{special case} of MH
-	because all proposals are automatically accepted \parencite{gelmanIterativeNonIterativeSimulation1992}
-	\vfill
-	Asymptotically, they have an acceptance rate of 23.4\%,
-	and the computational cost of every iteration is $\mathcal{O}(d)$,
-	where $d$ is the number of dimension in the parameter space \parencite{beskosOptimalTuningHybrid2013}.
-\end{frame}
-
-\begin{frame}{MCMC Algorithms -- Hamiltonian Monte Carlo}
-	The current most efficient MCMC algorithms.
-	They try to \textbf{avoid the random walk behavior by introducing an auxiliary vector of momenta
-		using Hamiltonian dynamics}.
-	The proposals are ``guided'' to higher density regions of the sample space.
-	This makes \textbf{HMC more efficient in orders of magnitude when compared to MH and Gibbs}.
-	\vfill
-	Asymptotically, they have an acceptance rate of 65.1\%,
-	and the computational cost of every iteration is $\mathcal{O}(d^{\frac{1}{4}})$,
-	where $d$ is the number of dimension in the parameter space \parencite{beskosOptimalTuningHybrid2013}.
-\end{frame}
 
 \subsubsection{Metropolis}
 \begin{frame}{Metropolis Algorithm}
@@ -411,7 +441,7 @@
 			$
 				\boldsymbol{\theta}^{(t)} =
 				\begin{cases}
-					\boldsymbol{\theta}^{(*)}   & \text{with probability} \\
+					\boldsymbol{\theta}^{(*)}   & \text{with probability $\min(r,1)$} \\
 					\boldsymbol{\theta}^{(t-1)} & \text{otherwise}
 				\end{cases}
 			$\;
@@ -433,102 +463,127 @@
 		it can take a large number of iterations for the
 		Markov chain to enter higher posterior densities spaces.
 		\item even highly-efficient MH algorithms sometimes accept less than
-		25\% of the proposals \parencite{robertsWeakConvergenceOptimal1997, beskosOptimalTuningHybrid2013}.
+		25\% of the proposals \parencite{robertsWeakConvergenceOptimal1997, beskosOptimalTuningHybrid2013} for small and moderate sized problems.
 		\item in lower-dimensional contexts, higher computational power can compensate the low efficiency up to a point.
 		But in higher-dimensional (and higher-complexity) modeling situations,
 		higher computational power alone are rarely sufficient to overcome the low efficiency.
 	\end{vfilleditems}
 \end{frame}
 
-\subsubsection{Gibbs}
-\begin{frame}{Gibbs Algorithm}
-	\begin{columns}
-		\begin{column}{0.8\textwidth}
-			To circumvent Metropolis' low acceptance rate, the Gibbs algorithm was conceived.
-			Gibbs \textbf{do not have an acceptance/rejection rule} for the Markov chain state change:
-			\textbf{all proposals are accepted!}
-			\vfill
-			Gibbs algorithm was originally conceived by the physicist Josiah Willard Gibbs
-			while referencing an analogy between a sampling algorithm and
-			statistical physics (a physics field that originates from statistical mechanics).
-			The algorithm was described by the Geman brothers in 1984
-			\parencite{gemanStochasticRelaxationGibbs1984},
-			about 8 decades after Gibbs death.
-		\end{column}
-		\begin{column}{0.2\textwidth}
-			\includegraphics[width=0.9\columnwidth]{josiah_gibbs.jpg}
-		\end{column}
-	\end{columns}
+% \begin{frame}{MCMC Algorithms -- Metropolis-Hastings}
+% 	These are the first MCMC algorithms.
+% 	They use an \textbf{acceptance/rejection rule for the proposals}.
+% 	They are characterized by proposals originated from a random walk in the parameter space.
+
+% 	The \textbf{Gibbs algorithm} can be seen as a \textbf{special case} of MH
+% 	because all proposals are automatically accepted \parencite{gelmanIterativeNonIterativeSimulation1992}
+% 	\vfill
+% 	Asymptotically, they have an acceptance rate of 23.4\%,
+% 	and the computational cost of every iteration is $\mathcal{O}(d)$,
+% 	where $d$ is the number of dimension in the parameter space \parencite{beskosOptimalTuningHybrid2013}.
+% \end{frame}
+
+\begin{frame}{Hamiltonian Monte Carlo (HMC)}
+	The current most efficient MCMC algorithms for continuous parameters.
+	They try to \textbf{avoid the entirely random walk behavior by introducing an auxiliary vector of random momenta
+		using Hamiltonian dynamics}.
+	The proposals (albeit still random) are then ``guided'' to higher density regions of the sample space.
+	This makes \textbf{HMC more efficient by multiple orders of magnitude when compared to MH}.
+	% \vfill
+	% Asymptotically, they have an acceptance rate of 65.1\%,
+	% and the computational cost of every iteration is $\mathcal{O}(d^{\frac{1}{4}})$,
+	% where $d$ is the number of dimension in the parameter space \parencite{beskosOptimalTuningHybrid2013}.
 \end{frame}
 
-\begin{frame}{Gibbs Algorithm}
-	The Gibbs algorithm is very useful in multidimensional sample spaces.
-	It is also known as \textbf{alternating conditional sampling},
-	because we always sample a parameter \textbf{conditioned} on the probability of the other model's parameters.
-	\vfill
-	The Gibbs algorithm can be seen as a \textbf{special case} of the Metropolis-Hastings algorithm,
-	because all proposals are accepted
-	\parencite{gelmanIterativeNonIterativeSimulation1992}.
-	\vfill
-	The essence of the Gibbs algorithm is the sampling of parameters conditioned in other parameters:
-	$$P(\theta_1 \mid \theta_2, \dots \theta_p)$$
-\end{frame}
+% \subsubsection{Gibbs}
+% \begin{frame}{Gibbs Algorithm}
+% 	\begin{columns}
+% 		\begin{column}{0.8\textwidth}
+% 			To circumvent Metropolis' low acceptance rate, the Gibbs algorithm was conceived.
+% 			Gibbs \textbf{do not have an acceptance/rejection rule} for the Markov chain state change:
+% 			\textbf{all proposals are accepted!}
+% 			\vfill
+% 			Gibbs algorithm was originally conceived by the physicist Josiah Willard Gibbs
+% 			while referencing an analogy between a sampling algorithm and
+% 			statistical physics (a physics field that originates from statistical mechanics).
+% 			The algorithm was described by the Geman brothers in 1984
+% 			\parencite{gemanStochasticRelaxationGibbs1984},
+% 			about 8 decades after Gibbs death.
+% 		\end{column}
+% 		\begin{column}{0.2\textwidth}
+% 			\includegraphics[width=0.9\columnwidth]{josiah_gibbs.jpg}
+% 		\end{column}
+% 	\end{columns}
+% \end{frame}
 
-\begin{frame}[fragile]{Gibbs Algorithm}
-	\SetAlCapFnt{\normalsize}
-	\SetAlCapNameFnt{\normalsize}
-	\begin{algorithm}[H]
-		\DontPrintSemicolon
-		\SetAlgoNoEnd
-		\SetAlgoLined
-		Define an initial set $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ that $P\left(\boldsymbol{\theta}^{(0)} \mid \mathbf{y} \right) > 0$\;
-		\For{$t = 1, 2, \dots$}{
-			Assign:
-			$ \boldsymbol{\theta}^{(t)} =
-				\begin{cases}
-					\theta^{(t)}_1 & \sim P \left(\theta_1 \mid \theta^{(0)}_2, \dots, \theta^{(0)}_p \right)         \\
-					\theta^{(t)}_2 & \sim P \left(\theta_2 \mid \theta^{(t-1)}_1, \dots, \theta^{(0)}_p \right)       \\
-					               & \vdots                                                                           \\
-					\theta^{(t)}_p & \sim P \left(\theta_p \mid \theta^{(t-1)}_1, \dots, \theta^{(t-1)}_{p-1} \right)
-				\end{cases}
-			$\;
-		}
-		\caption{Gibbs}
-	\end{algorithm}
-\end{frame}
+% \begin{frame}{Gibbs Algorithm}
+% 	The Gibbs algorithm is very useful in multidimensional sample spaces.
+% 	It is also known as \textbf{alternating conditional sampling},
+% 	because we always sample a parameter \textbf{conditioned} on the probability of the other model's parameters.
+% 	\vfill
+% 	The Gibbs algorithm can be seen as a \textbf{special case} of the Metropolis-Hastings algorithm,
+% 	because all proposals are accepted
+% 	\parencite{gelmanIterativeNonIterativeSimulation1992}.
+% 	\vfill
+% 	The essence of the Gibbs algorithm is the sampling of parameters conditioned in other parameters:
+% 	$$P(\theta_1 \mid \theta_2, \dots \theta_p)$$
+% \end{frame}
 
-\begin{frame}{Gibbs Animation\footnote{see Gibbs in action at \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=GibbsSampling&target=banana}{\texttt{chi-feng/mcmc-demo}}.}}
-	\centering
-	\movie[loop, width=9cm, height=6cm]{Gibbs Animation}{animations/gibbs.m4v}
-\end{frame}
+% \begin{frame}[fragile]{Gibbs Algorithm}
+% 	\SetAlCapFnt{\normalsize}
+% 	\SetAlCapNameFnt{\normalsize}
+% 	\begin{algorithm}[H]
+% 		\DontPrintSemicolon
+% 		\SetAlgoNoEnd
+% 		\SetAlgoLined
+% 		Define an initial set $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ that $P\left(\boldsymbol{\theta}^{(0)} \mid \mathbf{y} \right) > 0$\;
+% 		\For{$t = 1, 2, \dots$}{
+% 			Assign:
+% 			$ \boldsymbol{\theta}^{(t)} =
+% 				\begin{cases}
+% 					\theta^{(t)}_1 & \sim P \left(\theta_1 \mid \theta^{(0)}_2, \dots, \theta^{(0)}_p \right)         \\
+% 					\theta^{(t)}_2 & \sim P \left(\theta_2 \mid \theta^{(t-1)}_1, \dots, \theta^{(0)}_p \right)       \\
+% 					               & \vdots                                                                           \\
+% 					\theta^{(t)}_p & \sim P \left(\theta_p \mid \theta^{(t-1)}_1, \dots, \theta^{(t-1)}_{p-1} \right)
+% 				\end{cases}
+% 			$\;
+% 		}
+% 		\caption{Gibbs}
+% 	\end{algorithm}
+% \end{frame}
 
-\subsubsection{Limitations of the Gibbs Algorithm}
-\begin{frame}{Limitations of the Gibbs Algorithm}
-	The main limitation of Gibbs algorithm is with relation to
-	\textbf{alternating conditional sampling}:
-	\begin{vfilleditems}
-		\item In Metropolis, the parameters' random proposals are sampled
-		\textbf{unconditionally}, \textbf{jointly}, and \textbf{simultaneous}.
-		The Markov chain state changes are executed in a
-		\textbf{multidimensional} manner.
-		This makes \textbf{multidimensional diagonal movements}.
-		\item In the case of the Gibbs algorithm,
-		this movement only happens one parameter at a time,
-		because we sample parameters in a
-		\textbf{conditional} and \textbf{sequential} manner with respect
-		to other parameters.
-		This makes \textbf{unidimensional horizontal/vertical movements},
-		and never multidimensional diagonal movements.
-	\end{vfilleditems}
-\end{frame}
+% \begin{frame}{Gibbs Animation\footnote{see Gibbs in action at \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=GibbsSampling&target=banana}{\texttt{chi-feng/mcmc-demo}}.}}
+% 	\centering
+% 	\movie[loop, width=9cm, height=6cm]{Gibbs Animation}{animations/gibbs.m4v}
+% \end{frame}
+
+% \subsubsection{Limitations of the Gibbs Algorithm}
+% \begin{frame}{Limitations of the Gibbs Algorithm}
+% 	The main limitation of Gibbs algorithm is with relation to
+% 	\textbf{alternating conditional sampling}:
+% 	\begin{vfilleditems}
+% 		\item In Metropolis, the parameters' random proposals are sampled
+% 		\textbf{unconditionally}, \textbf{jointly}, and \textbf{simultaneous}.
+% 		The Markov chain state changes are executed in a
+% 		\textbf{multidimensional} manner.
+% 		This makes \textbf{multidimensional diagonal movements}.
+% 		\item In the case of the Gibbs algorithm,
+% 		this movement only happens one parameter at a time,
+% 		because we sample parameters in a
+% 		\textbf{conditional} and \textbf{sequential} manner with respect
+% 		to other parameters.
+% 		This makes \textbf{unidimensional horizontal/vertical movements},
+% 		and never multidimensional diagonal movements.
+% 	\end{vfilleditems}
+% \end{frame}
 
 \subsubsection{Hamiltonian Monte Carlo (HMC)}
 \begin{frame}{Hamiltonian Monte Carlo (HMC)}
 	\begin{columns}
 		\begin{column}{0.8\textwidth}
-			Metropolis' low acceptance rate and Gibbs' low performance in multidimensional problems
+			Metropolis' low acceptance rate in multidimensional problems
 			(where the posterior geometry is highly complex)
-			made a new class of MCMC algorithms to emerge.
+			made a new class of MCMC algorithms emerge.
 			These are called Hamiltonian Monte Carlo (HMC),
 			because they incorporate Hamiltonian dynamics
 			(in honor of Irish physicist
@@ -573,8 +628,8 @@
 	a posterior probability geometry,
 	while also being robust to complex posterior's geometries.
 	\vfill
-	Besides that, HMC is much more efficiently than Metropolis and
-	does \textit{not} suffer Gibbs' parameters correlation issues
+	Besides that, HMC is much more efficient than Metropolis
+	% and does \textit{not} suffer Gibbs' parameters correlation issues
 \end{frame}
 
 \begin{frame}{Intuition Behind the HMC Algorithm}
@@ -650,48 +705,12 @@
 	\movie[loop, width=9cm, height=6cm]{HMC Animation}{animations/hmc.m4v}
 \end{frame}
 
-\begin{frame}{An Interlude into Numerical Integration}
-	In the field of ordinary differential equations (ODE),
-	we have the idea of ``discretizing'' a system of ODEs by applying a
-	small step-size $\epsilon$\footnote{sometimes also called $h$}.
-	Such approaches are called \textbf{numerical integrators} and are composed by
-	an ample class of tools.
-	\vfill
-	The most famous and simple of these numerical integrators is the Euler method,
-	where we use a step-size $\epsilon$ to compute a numerical solution of system
-	in a future time $t$ from specific initial conditions.
-\end{frame}
-
-\begin{frame}{An Interlude into Numerical Integration}
+\begin{frame}{HMC Stepping Algorithm}
 	\begin{columns}
 		\begin{column}{0.6\textwidth}
-			The problem is that Euler method, when applied to Hamiltonian dynamics,
-			\textbf{does not preserve volume}.
-			One of the fundamental properties of Hamiltonian dynamics if
-			\textbf{volume preservation}\footnotemark.
-			This makes the Euler method a bad choice as a HMC's numerical integrator.
-		\end{column}
-		\begin{column}{0.4\textwidth}
-			\begin{figure}
-				\includegraphics[width=0.8\columnwidth]{euler_0_3.jpg}
-				\caption{HMC numerically integrated using Euler with $\epsilon = 0.3$ and $L = 20$}
-			\end{figure}
-		\end{column}
-	\end{columns}
-	\footnotetext{a result called Liouville theorem.}
-\end{frame}
-
-\begin{frame}{An Interlude into Numerical Integration\footnote{
-			An excellent textbook for numerical and symplectic integrator is
-			\textcite{irseles2008numericalanalysis}.}}
-	\begin{columns}
-		\begin{column}{0.6\textwidth}
-			To preserve volume, we need a numerical \textbf{symplectic integrator}.
-			Symplectic integrators are at most second-order
-			and demands a constant step-size $\epsilon$.
-			One of the main numerical symplectic integrator used
-			in Hamiltonian dynamics is the \textbf{Störmer–Verlet integrator},
-			also known as \textbf{leapfrog integrator}.
+			The main stepping algorithm used in HMC is the \textbf{Störmer–Verlet integrator}, also known as \textbf{leapfrog integrator}.
+			\vfill
+			The stepping of the proposal is mathematically equivalent to solving a numerical integration problem, hence the use of integrators.
 		\end{column}
 		\begin{column}{0.4\textwidth}
 			\begin{figure}
@@ -702,10 +721,62 @@
 	\end{columns}
 \end{frame}
 
+% \begin{frame}{An Interlude into Numerical Integration}
+% 	In the field of ordinary differential equations (ODE),
+% 	we have the idea of ``discretizing'' a system of ODEs by applying a
+% 	small step-size $\epsilon$\footnote{sometimes also called $h$}.
+% 	Such approaches are called \textbf{numerical integrators} and are composed by
+% 	an ample class of tools.
+% 	\vfill
+% 	The most famous and simple of these numerical integrators is the Euler method,
+% 	where we use a step-size $\epsilon$ to compute a numerical solution of system
+% 	in a future time $t$ from specific initial conditions.
+% \end{frame}
+
+% \begin{frame}{An Interlude into Numerical Integration}
+% 	\begin{columns}
+% 		\begin{column}{0.6\textwidth}
+% 			The problem is that Euler method, when applied to Hamiltonian dynamics,
+% 			\textbf{does not preserve volume}.
+% 			One of the fundamental properties of Hamiltonian dynamics if
+% 			\textbf{volume preservation}\footnotemark.
+% 			This makes the Euler method a bad choice as a HMC's numerical integrator.
+% 		\end{column}
+% 		\begin{column}{0.4\textwidth}
+% 			\begin{figure}
+% 				\includegraphics[width=0.8\columnwidth]{euler_0_3.jpg}
+% 				\caption{HMC numerically integrated using Euler with $\epsilon = 0.3$ and $L = 20$}
+% 			\end{figure}
+% 		\end{column}
+% 	\end{columns}
+% 	\footnotetext{a result called Liouville theorem.}
+% \end{frame}
+
+% \begin{frame}{An Interlude into Numerical Integration\footnote{
+% 			An excellent textbook for numerical and symplectic integrator is
+% 			\textcite{irseles2008numericalanalysis}.}}
+% 	\begin{columns}
+% 		\begin{column}{0.6\textwidth}
+% 			To preserve volume, we need a numerical \textbf{symplectic integrator}.
+% 			Symplectic integrators are at most second-order
+% 			and demands a constant step-size $\epsilon$.
+% 			One of the main numerical symplectic integrator used
+% 			in Hamiltonian dynamics is the \textbf{Störmer–Verlet integrator},
+% 			also known as \textbf{leapfrog integrator}.
+% 		\end{column}
+% 		\begin{column}{0.4\textwidth}
+% 			\begin{figure}
+% 				\includegraphics[width=0.8\columnwidth]{leapfrog_0_3.jpg}
+% 				\caption{HMC numerically integrated using leapfrog with $\epsilon = 0.3$ and $L = 20$}
+% 			\end{figure}
+% 		\end{column}
+% 	\end{columns}
+% \end{frame}
+
 \begin{frame}{Limitations of the HMC Algorithm}
 	\begin{columns}
 		\begin{column}{0.6\textwidth}
-			As you can see, HMC algorithm is highly sensible to the choice of
+			As you can see, HMC algorithm is highly sensitive to the choice of
 			leapfrog steps $L$ and step-size $\epsilon$,
 			More specific, the leapfrog integrator allows only a constant $\epsilon$.
 			There is a delicate balance between $L$ and $\epsilon$,
@@ -834,12 +905,12 @@
 
 \begin{frame}{NUTS Animation\footnote{see NUTS in action at \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=EfficientNUTS&target=banana}{\texttt{chi-feng/mcmc-demo}}.}}
 	\centering
-	\movie[loop, width=9cm, height=6cm]{Animação NUTS}{animations/nuts.m4v}
+	\movie[loop, width=9cm, height=6cm]{NUTS Animation}{animations/nuts.m4v}
 \end{frame}
 
 \subsubsection{Limitations of HMC and NUTS}
 \begin{frame}{Limitations of HMC and NUTS Algorithms -- \textcite{nealSliceSampling2003}'s Funnel}
-	The famous ``Devil's Funnel''\footnote{very common em hierarchical models.}.
+	The famous ``Devil's Funnel''\footnote{very common in hierarchical models.}.
 	Here we see that HMC and NUTS, during the exploration of the posterior,
 	have to change often $L$ and $\epsilon$ values\footnote{
 		remember that $L$ and $\epsilon$ are defined in the warmup phase and kept fixed during sampling.}.
@@ -912,6 +983,123 @@
 	$$
 \end{frame}
 
+\subsection{More Intuition}
+\begin{frame}{More Intuition - Step Size and Acceptance Ratio}
+	\begin{vfilleditems}
+		\item The NUTS algorithm adapts its stepping algorithm to encourage a certain fraction of the proposals to get accepted on average.
+		\item A value of 0.99 means that we want to accept 99\% of the proposals the sampler makes.
+		\item This will generally lead to small step sizes between the proposal and the current sample since this increases the chance of accepting such a proposal.
+	\end{vfilleditems}
+\end{frame}
+
+\begin{frame}{More Intuition - Step Size and Acceptance Ratio}
+	\begin{vfilleditems}
+		\item On the other hand, a target acceptance fraction of 0.2 means that we want to only accept 20\% of the proposals made on average.
+		\item The NUTS algorithm will therefore attempt larger step sizes to ensure it rejects 80\% of the proposals.
+		\item In general, a target acceptance ratio value of 0.6-0.8 is recommended to use.
+	\end{vfilleditems}
+\end{frame}
+
+\begin{frame}{More Intuition - Exploration vs Exploitation}
+	\begin{vfilleditems}
+		\item In sampling, there is usually a tradeoff between exploration and exploitation.
+		\item If the sampler is too "adventurous", trying aggressive proposals that are far from the previous sample in each step, the sampler would be more likely to explore the full posterior and not get stuck sampling near a local mode of the posterior.
+		\item However on the flip side, too much exploration will often lead to many sample rejections due to low joint probability of the data and the adventurous proposals. This can decrease the ratio of the effective sample size (ESS) to the total number of samples (aka relative ESS) since a number of samples will be mere copies of each other due to rejections.
+	\end{vfilleditems}
+\end{frame}
+
+\begin{frame}{More Intuition - Exploration vs Exploitation}
+	On the other hand if we do less exploration, there are 2 possible scenarios:
+	\begin{vfilleditems}
+		\item The first scenario is if we initialize the sampler from a mode of the posterior.
+			\begin{vfilleditems}
+				\item Making proposals only near the previous sample will ensure that we accept most of the samples.
+				\item Proposals near a mode of the posterior are likely to be good parameter values.
+				\item This local sampling behavior around known good parameter values is what we call exploitation.
+				\item While the samples generated via high exploitation around a mode may not be representative of the whole posterior distribution, they might still give a satisfactory approximation of the posterior predictive distributions.
+			\end{vfilleditems}
+	\end{vfilleditems}
+\end{frame}
+\begin{frame}{More Intuition - Exploration vs Exploitation}
+	\begin{vfilleditems}
+		\item The second scenario is if we initialize the sampler from bad parameter values.
+			\begin{vfilleditems}
+				\item Bad parameter values and low exploration often lead to optimization-like behavior where the sampler spends a considerable number of iterations moving towards a mode in a noisy fashion.
+				\item This optimization-like, mode-seeking behavior causes a high auto-correlation in the samples since the sampler is mostly moving in the same direction (towards the mode).
+				\item A high auto-correlation means a low ESS because the samples would be less independent from each other.
+				\item Also until the sampler reaches parameter values that actually fit the data well, it's unlikely these samples will lead to a good posterior predictive distribution.
+			\end{vfilleditems}
+	\end{vfilleditems}
+\end{frame}
+\begin{frame}{More Intuition - Exploration vs Exploitation}
+	\begin{vfilleditems}
+		\item The second scenario is if we initialize the sampler from bad parameter values.
+			\begin{vfilleditems}
+				\item This is a fairly common failure mode of MCMC algorithms when the adaptation algorithm fails to find a good stepping algorithm that properly explores the posterior distribution due to bad initial parameters and the model being too complicated and difficult to optimize, let alone sample from its posterior.
+				\item In this case, all the samples may look auto-correlated and the step sizes between samples will likely be very small (low exploration).
+				\item It's often helpful to detect such a failure mode early in the sampling and kill the sampling early.
+			\end{vfilleditems}
+	\end{vfilleditems}
+\end{frame}
+\begin{frame}{More Intuition - Mass Matrix, Adaptation and U-Turn}
+	\begin{vfilleditems}
+		\item The NUTS algorithm adapts the level of exploration in its proposal mechanism to achieve the target acceptance ratio.
+		\item However, the definition of an "exploratory" proposal may be different depending on the parameter values of the current sample.
+		\item For relatively flat regions of the posterior where a lot of parameter values are almost equally likely (i.e. they all the fit the data well and are almost equally probable according to the prior), proposals far away from the current sample may still be accepted most of the time.
+		\item This is especially likely in the parts of the posterior where the model is non-identifiable or there are high parameter correlations, and the prior is indiscriminate (e.g. due to being a weak prior).
+	\end{vfilleditems}
+\end{frame}
+
+\begin{frame}{More Intuition - Mass Matrix, Adaptation and U-Turn}
+	\begin{vfilleditems}
+		\item On the other hand, regions of the posterior that are heavily concentrated around a mode with a high curvature often require a smaller step size to achieve reasonable acceptance ratios.
+		\item Proposals that are even slightly far from the current sample may be extremely improbable according to the prior or may lead to very bad predictions.
+		\item This is especially likely in regions of the posterior where the model is highly sensitive to the parameter values or if the prior is too strongly concentrated around specific parameter values.
+	\end{vfilleditems}
+\end{frame}
+
+\begin{frame}{More Intuition - Mass Matrix, Adaptation and U-Turn}
+	\begin{vfilleditems}
+		\item To account for such variation in curvature (wrt the same parameter in different regions), the NUTS algorithm uses a multi-step proposal mechanism with a fixed step size (determined during adaptation and then fixed) and a dynamic number of steps (dynamic in both adaptation and regular sampling).
+		\item In other words, the sampler follows a trajectory of length $L \geq 1$ steps before proposing a new sample to move to, where $L$ is different in each proposal.
+		\item This proposal then gets tested and is either accepted or rejected by comparing it to the previous sample.
+	\end{vfilleditems}
+\end{frame}
+
+\begin{frame}{More Intuition - Mass Matrix, Adaptation and U-Turn}
+	\begin{vfilleditems}
+		\item The exact trajectory length taken by the NUTS sampler to propose a new sample is obtained by a binary tree search procedure with the maximum depth of the tree being a hyper-parameter of the algorithm.
+		\item The goal of the tree search is to look for a point in the trajectory where a U-Turn happens, i.e. the sampler is beginning to trace back its steps.
+		\item Once a U-turn is found, a point (randomly chosen) before the U-Turn becomes the next proposal and the search is terminated.
+		\item This is typically considered a sign of successful exploration.
+	\end{vfilleditems}
+\end{frame}
+
+\begin{frame}{More Intuition - Mass Matrix, Adaptation and U-Turn}
+	\begin{vfilleditems}
+		\item For some complicated models, the adaptation can often result in a step size that is too small.
+		\item In such a case, no U-Turn may be found early and the tree search may have to run to completion before making a single proposal.
+		\item If this happens in almost every iteration of the MCMC sampling, this will be bad for performance because the number of model evaluations required by a complete search tree of depth $d$ is $2^d - 1$.
+	\end{vfilleditems}
+\end{frame}
+
+\begin{frame}{More Intuition - Mass Matrix, Adaptation and U-Turn}
+	\begin{vfilleditems}
+		\item The step size and trajectory length are not the only ways which the NUTS algorithm uses to adapt the level of exploration in the sampling.
+		\item The so-called mass matrix (determined during adaptation and then fixed afterwards) allows the sampler to adapt the amount of exploration differently for different directions.
+		\item This is especially important for models where parameters are on different scales so variables smaller in magnitude should generally be changing less between samples than variables larger in magnitude.
+	\end{vfilleditems}
+\end{frame}
+
+\begin{frame}{More Intuition - Mass Matrix, Adaptation and U-Turn}
+	\begin{vfilleditems}
+		\item In Pumas, we use a diagonal mass matrix in \lstinline{BayesMCMC} where different exploration levels are used for different model parameters.
+		\item If the mass matrix is dense (e.g. in \lstinline{MarginalMCMC}), the exploration level can be different along arbitrary directions and not just along the parameters' axes.
+		\item This tends to help when the parameters are heavily correlated in the posterior.
+		\item The reason why it's called the mass matrix is an analogy to Hamiltonian dynamics that the HMC and NUTS algorithms were inspired from.
+	\end{vfilleditems}
+\end{frame}
+
 \begin{frame}{\texttt{Stan} and NUTS}
 	\texttt{Stan} was the first MCMC sampler to implement NUTS.
 	Besides that, it has an automatic optimized adjustment routine for values of $L$ and $\epsilon$ during warmup.
@@ -921,19 +1109,16 @@
 			Section 15.2 of the \texttt{Stan} Reference Manual}.}:
 	\begin{vfilleditems}
 		\item \textbf{target acceptance rate of Metropolis proposals}: 0.8
-		\item \textbf{max tree depth} (in powers of $2$): 10 (which means $2^{10} = 1024$)
+		\item \textbf{max tree depth}: 10
 	\end{vfilleditems}
 \end{frame}
 
-\begin{frame}{\texttt{Turing.jl} and NUTS}
-	\texttt{Turing.jl} also implements NUTS which lives, along with other MCMC samplers, inside the package \texttt{AdvancedHMC.jl}.
-	It also has an automatic optimized adjustment routine for values of $L$ and $\epsilon$ during warmup.
-	It has the same default NUTS hyperparameters' values\footnote{
-		for more information about how to change those values, see \href{
-			https://turing.ml/dev/docs/library}{
-			\texttt{Turing.jl} Documentation}.}:
+\begin{frame}{\texttt{Pumas} and NUTS}
+	\texttt{Pumas} also uses a NUTS implementation from the package \texttt{AdvancedHMC.jl}.
+	It also has an automatic optimized adjustment routine for values of $L$ and $\epsilon$ during warmup that's identical to Stan's.
+	It has the same default NUTS hyperparameters' values:
 	\begin{vfilleditems}
-		\item \textbf{target acceptance rate of Metropolis proposals}: 0.65
-		\item \textbf{max tree depth} (in powers of $2$): 10 (which means $2^{10} = 1024$)
+		\item \textbf{target acceptance rate of Metropolis proposals}: 0.8
+		\item \textbf{max tree depth}: 10
 	\end{vfilleditems}
 \end{frame}
