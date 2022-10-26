@@ -139,9 +139,59 @@
 % \end{frame}
 
 \begin{frame}{Geweke Diagnostic}
+    \begin{vfilleditems}
+        \item The Geweke diagnostic compares the sample means of two disjoint sub-chains $X_1$ and $X_2$ of the entire chain.
+        \item It uses a difference of means hypothesis test where the null and alternative hypotheses are:
+            \begin{vfilleditems}
+                \item $H_0: \mu_1 = \mu_2$
+                \item $H_1: \mu_1 \neq \mu_2$
+            \end{vfilleditems}
+        where $\mu_1$ and $\mu_2$ are the means of $X_1$ and $X_2$ respectively.
+    \end{vfilleditems}
 \end{frame}
 
-\begin{frame}{Hiedelberger Diagnostic}
+\begin{frame}{Geweke Diagnostic}
+    \begin{vfilleditems}
+        \item The first sub-chain $X_1$ is taken as the first $(\text{first} \times 100)\%$ of the samples in the chain. The second sub-chain $X_2$ is taken as the last $(\text{last} \times 100)\%$ of the samples in the chain.
+        \item The test statistic used is: $z_0 = (\bar{x}_1 - \bar{x}_2) / \sqrt{s_1^2 + s_2^2}$ where $\bar{x}_1$ and $\bar{x}_2$ are the sample means of $X_1$ and $X_2$ respectively, and $s_1$ and $s_2$ are the Markov Chain standard error (MCSE) estimates of $X_1$ and $X_2$ respectively.
+        \item Auto-correlation is assumed within the samples of each individual sub-chain, but the samples in $X_1$ are assumed to be independent of the samples in $X_2$.
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Geweke Diagnostic}
+    \begin{vfilleditems}
+        \item The p-value output is an estimate of $P(|z| > |z_0|)$, where $z$ is a standard normally distributed random variable.
+        \item Low p-values indicate one of the following:
+            \begin{vfilleditems}
+                \item The first and last parts of the chain are sampled from distributions with different means, i.e. non-convergence,
+                \item The need to discard some initial samples as burn-in, or
+                \item The need to run the sampling for longer due to lack of samples or high auto-correlation.
+            \end{vfilleditems}
+        \item High p-values (desirable) indicate the inability to conclude that the means of the first and last parts of the chain are different with statistical significance.
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Geweke Diagnostic}
+    \begin{vfilleditems}
+        \item However, this alone does not guarantee convergence to a fixed posterior distribution because:
+            \begin{vfilleditems}
+                \item Either the standard deviations or higher moments of $X_1$ and $X_2$ may be different, or
+                \item The independence assumption between $X_1$ and $X_2$ may not be satisfied when high auto-correlation exists.
+            \end{vfilleditems}
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Heidelberger and Welch Diagnostic}
+    The Heidelberger diagnostic attempts to:
+        \begin{enumerate}
+            \item Identify a cutoff point for the initial transient phase for each parameter, after which the samples can be assumed to come from a steady-state posterior distribution. Can be treated as burn-in.
+            \item Estimate the relative confidence interval for the mean of the steady-state posterior distribution of each parameter, assuming such steady-state distribution exists in the samples. A large confidence interval implies either the lack of convergence to a stationary distribution or lack of samples.
+            \item Quantify the extent to which the distribution of the samples is stationary using a hypothesis test. The returned p-value can be considered a measure of mean stationarity. A p-value lower than $\alpha$ (e.g. $\alpha = 0.05$) implies lack of stationarity of the mean.
+        \end{enumerate}
+\end{frame}
+
+\begin{frame}{Heidelberger and Welch Diagnostic}
+    The Heidelberger diagnostic only tests for the mean of the distribution. Therefore, it can only be used to detect lack of convergence and not to prove convergence. In other words, even if all the numbers seem normal, one cannot conclude that the chain converged to a stationary distribution or that it converged to the true posterior.
 \end{frame}
 
 \begin{frame}{Raftery Diagnostic}
