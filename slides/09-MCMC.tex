@@ -1003,7 +1003,7 @@
 \begin{frame}{More Intuition - Exploration vs Exploitation}
 	\begin{vfilleditems}
 		\item In sampling, there is usually a tradeoff between exploration and exploitation.
-		\item If the sampler is too "adventurous", trying aggressive proposals that are far from the previous sample in each step, the sampler would be more likely to explore the full posterior and not get stuck sampling near a local mode of the posterior.
+		\item If the sampler is too ``adventurous'', trying aggressive proposals that are far from the previous sample in each step, the sampler would be more likely to explore the full posterior and not get stuck sampling near a local mode of the posterior.
 		\item However on the flip side, too much exploration will often lead to many sample rejections due to low joint probability of the data and the adventurous proposals. This can decrease the ratio of the effective sample size (ESS) to the total number of samples (aka relative ESS) since a number of samples will be mere copies of each other due to rejections.
 	\end{vfilleditems}
 \end{frame}
