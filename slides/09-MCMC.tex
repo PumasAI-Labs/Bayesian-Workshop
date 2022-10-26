@@ -1044,7 +1044,7 @@
 \begin{frame}{More Intuition - Mass Matrix, Adaptation and U-Turn}
 	\begin{vfilleditems}
 		\item The NUTS algorithm adapts the level of exploration in its proposal mechanism to achieve the target acceptance ratio.
-		\item However, the definition of an "exploratory" proposal may be different depending on the parameter values of the current sample.
+		\item However, the definition of an ``exploratory'' proposal may be different depending on the parameter values of the current sample.
 		\item For relatively flat regions of the posterior where a lot of parameter values are almost equally likely (i.e. they all the fit the data well and are almost equally probable according to the prior), proposals far away from the current sample may still be accepted most of the time.
 		\item This is especially likely in the parts of the posterior where the model is non-identifiable or there are high parameter correlations, and the prior is indiscriminate (e.g. due to being a weak prior).
 	\end{vfilleditems}
