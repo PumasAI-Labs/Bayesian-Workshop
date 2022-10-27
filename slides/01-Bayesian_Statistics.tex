@@ -320,10 +320,10 @@
 	\vfill
 	The only thing we have to do is to change all sums $\sum$ for integrals $\int$ and some probabilities $P$ with probability density (probability mass per unit measure) $p$, e.g.:
 	$$\begin{aligned}
-			p(A)         & \geq 0         \\
-			p(A)         & \in \mathbb{R} \\
-			\int p(A) dA & = 1
-		\end{aligned}$$
+	  	p(A)         & \geq 0 \\
+	  	p(A)         & \in \mathbb{R} \\
+	  	\int p(A) dA & = 1
+	\end{aligned}$$
 
 \end{frame}
 
@@ -803,7 +803,7 @@
 		\item \footnotesize \textbf{Priori}: prior probability of the parameter(s) value(s)
 		\item \footnotesize \textbf{Likelihood}: probability of the observed data given the parameter(s) value(s)
 		\item \footnotesize \textbf{Posterior}: posterior probability of the parameter(s) value(s) after we observed data $y$
-		\item \footnotesize \textbf{Normalizing Constant}\footnote{sometimes also called \textit{evidence}.}: $P(y)$ does not make any intuitive sense.
+		\item \footnotesize \textbf{Normalizing Constant}\footnote{sometimes also called \textit{evidence}.}: $P(y)$ gives a measure of the likelihood of the entire model class which is useful when considering multiple models.
 		This probability is transformed and can be interpreted as something that only exists so that the result $P(y \mid \theta) P(\theta)$ be constrained between $0$ e $1$
 		-- a valid probability.
 	\end{vfilleditems}
