@@ -107,3 +107,60 @@
 	\end{tabular}
 \end{frame}
 
+\begin{frame}{Example: Rare Disease Modelling}
+	\begin{vfilleditems}
+		\item \textbf{Question}: Can we use prior information to reduce the number of subjects needed in a rare diseases study?
+		\item \textbf{Experiment}:
+			\begin{vfilleditems}
+				\item Given a drug model for a rare disease with long-term disease progression effects and short-term symptomatic effects.
+				\item Simulate 2 population arms in a study – placebo and treatment (trt = 0/1).
+				\item Simulate clinical outcomes for each arm under the assumption that the drug has both long- and short-term effects.
+				\item Run frequentist and Bayesian analysis to infer the drug effects given the synthetic data.
+				\item Identify confidence and credible intervals for parameters.
+			\end{vfilleditems}
+	\end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Example: Rare Disease Modelling}
+	\centering
+	\includegraphics[width=0.35\columnwidth]{rare_disease.png}
+\end{frame}
+
+\begin{frame}{Example: Rare Disease Modelling}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\centering
+			\includegraphics[width=\columnwidth]{marginal_mcmc_1.jpg}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\centering
+			\includegraphics[width=\columnwidth]{marginal_mcmc_2.jpg}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Example: Rare Disease Modelling}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\centering
+			\includegraphics[width=\columnwidth]{marginal_mcmc_3.jpg}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\centering
+			\includegraphics[width=\columnwidth]{marginal_mcmc_4.jpg}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Example: Rare Disease Modelling}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\centering
+			\includegraphics[width=\columnwidth]{rare_disease_intervals_1.jpg}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\centering
+			\includegraphics[width=\columnwidth]{rare_disease_intervals_2.jpg}
+		\end{column}
+	\end{columns}
+\end{frame}
