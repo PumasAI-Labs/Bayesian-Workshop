@@ -38,7 +38,170 @@
     \end{vfilleditems}
 \end{frame}
 
-\subsection{Diagnostics}
+\subsection{Diagnostic Plots}
+
+\begin{frame}{Trace Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{trace_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            The trace plot of a parameter shows the value of the parameter in each iteration of the MCMC algorithm.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Trace Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{trace_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            A good trace plot is one that:
+            \vfill
+            \begin{vfilleditems}
+                \item Is noisy, not an increasing or decreasing line for example.
+                \item Has a fixed mean.
+                \item Has a fixed variance.
+                \item Shows all chains overlapping with each other, aka chain mixing.
+            \end{vfilleditems}
+            \vfill
+            This is an example of somewhat well mixed chains that don't indicate non-convergence.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Cumulative Mean Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{cummean_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            The cumulative mean plot of a parameter shows the mean of the parameter value in each MCMC chain up to a certain iteration.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Cumulative Mean Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{cummean_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            An MCMC chain converging to a stationary posterior distribution should have the cumulative mean of each parameter converge to a fixed value.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Cumulative Mean Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{cummean_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            All the chains should be converging to the same mean for a given parameter, the posterior mean.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Density Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{density_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{vfilleditems}
+                \item The density plot of a parameter shows a smoothed version of the histogram of the parameter values, giving an approximate probability density function for the marginal posterior of the parameter considered.
+                \item This helps us visualize the shape of the marginal posterior of each parameter.
+            \end{vfilleditems}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Auto-correlation Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{corplot_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{vfilleditems}
+                \item MCMC chains are prone to auto-correlation between the samples because each sample in the chain is a function of the previous sample.
+                \item The auto-correlation plot shows the correlation between every sample with index $s$ and the corresponding sample with index $s + \text{lag}$ for all $s \in 1:N-\text{lag}$ where $N$ is the total number of samples.
+            \end{vfilleditems}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Auto-correlation Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{corplot_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{vfilleditems}
+                \item For each value of $\text{lag}$, we can compute a correlation measure between the samples and their $\text{lag}$-steps-ahead counterparts.
+                \item The correlation is usually a value between 0 and 1 but can sometimes be between -1 and 0 as well.
+            \end{vfilleditems}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Auto-correlation Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{corplot_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{vfilleditems}
+                \item The auto-correlation plot shows the $\text{lag}$ on the x-axis and the correlation value on the y-axis.
+                \item For well behaving MCMC chains when $\text{lag}$ increases, the corresponding correlation gets closer to 0.
+            \end{vfilleditems}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Auto-correlation Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{corplot_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{vfilleditems}
+                \item This means that there is less and less correlation between any 2 samples further away from each other.
+                \item The value of $\text{lag}$ where the correlation becomes close to 0 can be used to guide the thinning of the MCMC samples to extract mostly independent samples from the auto-correlated samples.
+            \end{vfilleditems}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Ridge Line Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{ridge_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            The ridge line plot shows similar information as the density plot in addition to the credible interval and quantile information.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Corner Plot}
+    \centering
+    \includegraphics[width=0.6\textwidth]{corner_1.png}
+\end{frame}
+
+\subsection{Other Diagnostics}
 \begin{frame}{Convergence Metrics}
     There are a few metrics and diagnostics usually used to assess and diagnose the Markov chains:
     \begin{vfilleditems}
@@ -74,23 +237,23 @@
     you need to worry because probably the chains have not converged adequate.
 \end{frame}
 
-% plots taken from script:
-% slides/images/bad_chains_traceplot.tex
-\begin{frame}{Traceplot -- Convergent Markov Chains}
-    \begin{figure}
-        \centering
-        \resizebox{.4\linewidth}{!}{\input{images/good_chains_traceplot.tex}}
-        \caption{A convergent Markov chains traceplot}
-    \end{figure}
-\end{frame}
+% % plots taken from script:
+% % slides/images/bad_chains_traceplot.tex
+% \begin{frame}{Traceplot -- Convergent Markov Chains}
+%     \begin{figure}
+%         \centering
+%         \resizebox{.4\linewidth}{!}{\input{images/good_chains_traceplot.tex}}
+%         \caption{A convergent Markov chains traceplot}
+%     \end{figure}
+% \end{frame}
 
-\begin{frame}{Traceplot -- Divergent Markov Chains}
-    \begin{figure}
-        \centering
-        \resizebox{.4\linewidth}{!}{\input{images/bad_chains_traceplot.tex}}
-        \caption{A divergent Markov chains traceplot}
-    \end{figure}
-\end{frame}
+% \begin{frame}{Traceplot -- Divergent Markov Chains}
+%     \begin{figure}
+%         \centering
+%         \resizebox{.4\linewidth}{!}{\input{images/bad_chains_traceplot.tex}}
+%         \caption{A divergent Markov chains traceplot}
+%     \end{figure}
+% \end{frame}
 
 % \subsubsection{What To Do If the Markov Chains Do Not Converge?}
 % \begin{frame}[fragile]{\texttt{Stan}'s Warning Messages\footnote{also see \href{https://mc-stan.org/misc/warnings.html}{\texttt{Stan}'s \textcolor{red}{warnings} guide}.}}
@@ -194,7 +357,12 @@
     The Heidelberger diagnostic only tests for the mean of the distribution. Therefore, it can only be used to detect lack of convergence and not to prove convergence. In other words, even if all the numbers seem normal, one cannot conclude that the chain converged to a stationary distribution or that it converged to the true posterior.
 \end{frame}
 
-\begin{frame}{Raftery Diagnostic}
+\begin{frame}{Raftery and Lewis Diagnostic}
+    \begin{vfilleditems}
+        \item This diagnostic is used to determine the number of iterations required to estimate a specified quantile $q$ within a desired degree of accuracy.
+        \item The diagnostic is designed to determine the number of autocorrelated samples required to estimate a specified quantile $\theta_q$, such that $\Pr(\theta \le \theta_q) = q$, within a desired degree of accuracy.
+        \item In particular, if $\hat{\theta}_q$ is the estimand and $\Pr(\theta \le \hat{\theta}_q) = \hat{P}_q$ the estimated cumulative probability, then accuracy is specified in terms of $r$ and $s$, where $\Pr(q - r < \hat{P}_q < q + r) = s$. Sample sizes estimated by the diagnostic tend to be conservative (too large).
+    \end{vfilleditems}
 \end{frame}
 
 \subsection{What To Do If the Markov Chains Do Not Converge?}
@@ -282,7 +450,7 @@
 
 \begin{frame}{What To Do If the Markov Chains Do Not Converge?}
     \begin{vfilleditems}
-        \item Lower the \lstinline{target_accept} option. This may alleviate the need for a small step size and a full tree exploration.
+        \item Lower the target acceptance ratio. This may alleviate the need for a small step size and a full tree exploration.
         \item Re-parameterize your model to have less parameter dependence.
         \item Fix some parameter values to known good values, e.g. values obtained by maximum-a-posteriori (MAP) optimization.
         \item Initialize the sampling from good parameter values.
