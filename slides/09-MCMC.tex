@@ -1021,33 +1021,33 @@
 	On the other hand if we do less exploration, there are 2 possible scenarios:
 	\begin{vfilleditems}
 		\item The first scenario is if we initialize the sampler from a mode of the posterior.
-			\begin{vfilleditems}
-				\item Making proposals only near the previous sample will ensure that we accept most of the samples.
-				\item Proposals near a mode of the posterior are likely to be good parameter values.
-				\item This local sampling behavior around known good parameter values is what we call exploitation.
-				\item While the samples generated via high exploitation around a mode may not be representative of the whole posterior distribution, they might still give a satisfactory approximation of the posterior predictive distributions.
-			\end{vfilleditems}
+		\begin{vfilleditems}
+			\item Making proposals only near the previous sample will ensure that we accept most of the samples.
+			\item Proposals near a mode of the posterior are likely to be good parameter values.
+			\item This local sampling behavior around known good parameter values is what we call exploitation.
+			\item While the samples generated via high exploitation around a mode may not be representative of the whole posterior distribution, they might still give a satisfactory approximation of the posterior predictive distributions.
+		\end{vfilleditems}
 	\end{vfilleditems}
 \end{frame}
 \begin{frame}{More Intuition - Exploration vs Exploitation}
 	\begin{vfilleditems}
 		\item The second scenario is if we initialize the sampler from bad parameter values.
-			\begin{vfilleditems}
-				\item Bad parameter values and low exploration often lead to optimization-like behavior where the sampler spends a considerable number of iterations moving towards a mode in a noisy fashion.
-				\item This optimization-like, mode-seeking behavior causes a high auto-correlation in the samples since the sampler is mostly moving in the same direction (towards the mode).
-				\item A high auto-correlation means a low ESS because the samples would be less independent from each other.
-				\item Also until the sampler reaches parameter values that actually fit the data well, it's unlikely these samples will lead to a good posterior predictive distribution.
-			\end{vfilleditems}
+		\begin{vfilleditems}
+			\item Bad parameter values and low exploration often lead to optimization-like behavior where the sampler spends a considerable number of iterations moving towards a mode in a noisy fashion.
+			\item This optimization-like, mode-seeking behavior causes a high auto-correlation in the samples since the sampler is mostly moving in the same direction (towards the mode).
+			\item A high auto-correlation means a low ESS because the samples would be less independent from each other.
+			\item Also until the sampler reaches parameter values that actually fit the data well, it's unlikely these samples will lead to a good posterior predictive distribution.
+		\end{vfilleditems}
 	\end{vfilleditems}
 \end{frame}
 \begin{frame}{More Intuition - Exploration vs Exploitation}
 	\begin{vfilleditems}
 		\item The second scenario is if we initialize the sampler from bad parameter values.
-			\begin{vfilleditems}
-				\item This is a fairly common failure mode of MCMC algorithms when the adaptation algorithm fails to find a good stepping algorithm that properly explores the posterior distribution due to bad initial parameters and the model being too complicated and difficult to optimize, let alone sample from its posterior.
-				\item In this case, all the samples may look auto-correlated and the step sizes between samples will likely be very small (low exploration).
-				\item It's often helpful to detect such a failure mode early in the sampling and kill the sampling early.
-			\end{vfilleditems}
+		\begin{vfilleditems}
+			\item This is a fairly common failure mode of MCMC algorithms when the adaptation algorithm fails to find a good stepping algorithm that properly explores the posterior distribution due to bad initial parameters and the model being too complicated and difficult to optimize, let alone sample from its posterior.
+			\item In this case, all the samples may look auto-correlated and the step sizes between samples will likely be very small (low exploration).
+			\item It's often helpful to detect such a failure mode early in the sampling and kill the sampling early.
+		\end{vfilleditems}
 	\end{vfilleditems}
 \end{frame}
 \begin{frame}{More Intuition - Mass Matrix, Adaptation and U-Turn}
