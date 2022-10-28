@@ -466,8 +466,8 @@
 		\item with the proposals randomly generated,
 		it can take a large number of iterations for the
 		Markov chain to enter higher posterior densities spaces.
-		\item even highly-efficient MH algorithms sometimes accept less than
-		25\% of the proposals \parencite{robertsWeakConvergenceOptimal1997, beskosOptimalTuningHybrid2013} for small and moderate sized problems.
+		\item even highly-efficient MH algorithms sometimes accept \textbf{less than}
+		25\% of the proposals in the Gaussian case \parencite{robertsWeakConvergenceOptimal1997, beskosOptimalTuningHybrid2013}, often much less in complicated models.
 		\item in lower-dimensional contexts, higher computational power can compensate the low efficiency up to a point.
 		But in higher-dimensional (and higher-complexity) modeling situations,
 		higher computational power alone are rarely sufficient to overcome the low efficiency.
@@ -704,9 +704,10 @@
 	\end{algorithm}
 \end{frame}
 
-\begin{frame}{HMC Animation\footnote{see HMC in action at \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=HamiltonianHMC&target=banana}{\texttt{chi-feng/mcmc-demo}}.}}
-	\centering
-	\movie[loop, width=9cm, height=6cm]{HMC Animation}{animations/hmc.m4v}
+\begin{frame}{HMC Animation}
+	See HMC in action at \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=HamiltonianHMC&target=banana}{\texttt{chi-feng/mcmc-demo}}.
+	% \centering
+	% \movie[loop, width=9cm, height=6cm]{HMC Animation}{animations/hmc.m4v}
 \end{frame}
 
 \begin{frame}{HMC Stepping Algorithm}
@@ -839,11 +840,11 @@
 	($t+1$) as well as a backward ($t-1$) path in a determined fictitious time $t$.
 	The growing of the leaf nodes are \textbf{interrupted} when an u-turn is detected,
 	both forward or backward.
-	\begin{figure}
-		\centering
-		\includegraphics[width=0.6\textwidth]{nuts.jpg}
-		\caption{NUTS growing leaf nodes forward}
-	\end{figure}
+	% \begin{figure}
+	% 	\centering
+	% 	\includegraphics[width=0.6\textwidth]{nuts.jpg}
+	% 	\caption{NUTS growing leaf nodes forward}
+	% \end{figure}
 \end{frame}
 
 \begin{frame}{\textbf{N}o-\textbf{U}-\textbf{T}urn-\textbf{S}ampler (NUTS)}
