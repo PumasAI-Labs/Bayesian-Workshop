@@ -8,7 +8,7 @@
 		\item In regular MCMC, we sample from the joint posterior of all the population and subject-specific parameters.
 		\item Assume there are 3 subjects with subject parameters $\eta_1$, $\eta_2$ and $\eta_3$.
 		\item Let the population parameters be $\theta$.
-		\item \lstinline{BayesMCMC} samples from the joint posteior:
+		\item Joint MCMC samples from the joint posteior:
 		$$
 			P(\theta, \eta_1, \eta_2, \eta_3 \mid \text{data})
 		$$
@@ -34,7 +34,7 @@
 		\item There are 2 ways to marginalize out the subject-specific parameters:
 			\begin{vfilleditems}
 				\item Sample from the joint posterior and then ignore the subject-specific parameters. You can easily do this using \lstinline{BayesMCMC}.
-				\item Integrate the subject-specific parameters out and then sample from the conditional posterior only. This is what \lstinline{MarginalMCMC} does.
+				\item Integrate the subject-specific parameters out and then sample from the conditional posterior only. This is what \lstinline{MarginalMCMC} does in \lstinline{Pumas}.
 			\end{vfilleditems}
 		\item The marginal posterior probability is proprotional to:
 		$$
@@ -96,7 +96,7 @@
 	\small
 	\begin{tabular}{|l|p{.3\textwidth}|p{.3\textwidth}|}
 		\toprule
-        & \textcolor{blue}{\textbf{MarginalMCMC}} & \textcolor{red}{\textbf{BayesMCMC}} \\ \midrule
+        & \textcolor{blue}{\textbf{Marginal MCMC}} & \textcolor{red}{\textbf{Joint MCMC}} \\ \midrule
 		\textbf{Number of parameters} & Low & High \\ \midrule
 		\textbf{Accuracy} & Approximate even for infinite samples unless the conditional posterior $P(\eta_i \mid \theta, \text{data}_i)$ is Gaussian & Exact with infinite samples \\ \midrule
 		\textbf{Cost per HMC step} & High & Low \\ \midrule

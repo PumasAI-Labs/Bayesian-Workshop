@@ -1102,8 +1102,8 @@
 
 \begin{frame}{More Intuition - Mass Matrix, Adaptation and U-Turn}
 	\begin{vfilleditems}
-		\item In Pumas, we use a diagonal mass matrix in \lstinline{BayesMCMC} where different exploration levels are used for different model parameters.
-		\item If the mass matrix is dense (e.g. in \lstinline{MarginalMCMC}), the exploration level can be different along arbitrary directions and not just along the parameters' axes.
+		\item In Pumas, we use a diagonal mass matrix in \lstinline{BayesMCMC} (joint MCMC) where different exploration levels are used for different model parameters.
+		\item If the mass matrix is dense (e.g. in \lstinline{MarginalMCMC}) (marginal MCMC), the exploration level can be different along arbitrary directions and not just along the parameters' axes.
 		\item This tends to help when the parameters are heavily correlated in the posterior.
 		\item The reason why it's called the mass matrix is an analogy to Hamiltonian dynamics that the HMC and NUTS algorithms were inspired from.
 	\end{vfilleditems}
