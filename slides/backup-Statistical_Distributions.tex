@@ -1,3 +1,5 @@
+%!TEX root = slides.tex
+
 \section*{Probability Distributions}
 
 \subsection*{Recommended References}
@@ -132,9 +134,14 @@
 	\vfill
 	Example: dice.
 \end{frame}
-
+ 
 \begin{frame}[noframenumbering]{Discrete Uniform}
-	$$\text{Uniform}(a,b) = f(x, a, b) = \frac{1}{b-a+1} \text{ for $a \leq x \leq b$ and $x\in \{a,a+1,\dots ,b-1,b\}$}$$
+	$$
+	\begin{aligned}
+		\text{Uniform}(a,b) & = f(x, a, b) \\
+		& = \frac{1}{b-a+1} \text{ for $a \leq x \leq b$ and $x\in \{a,a+1,\dots ,b-1,b\}$}
+	\end{aligned}
+	$$
 \end{frame}
 
 \begin{frame}[noframenumbering]{Discrete Uniform}
@@ -194,7 +201,7 @@
 			\addplot [fill=blue] coordinates {
 					(0, 0.6)
 					(1, 0.4)};
-			\addlegendentry{$p=\frac{1}{3}$}
+			\addlegendentry{$p=0.4$}
 		\end{axis}
 	\end{tikzpicture}
 \end{frame}
@@ -285,35 +292,22 @@
 \end{frame}
 
 \subsubsection*{Negative Binomial}
-\begin{frame}[noframenumbering]{Negative Binomial\footnote{
-			any phenomena that can be modeles as a Poisson distribution can be
-			modeled also as negative binomial distribution
-			\parencite{gelman2013bayesian, gelman2020regression}.}}
+\begin{frame}[noframenumbering]{Negative Binomial}
 	\small
-	The binomial distribution describes an event in which the number of
-	successes in a sequence $n$ independent experiments,
-	each one making a yes--no question with probability of success $p$
-	until $k$ successes.
-	Notice that it becomes the Poisson distribution in the limit as $k \to \infty$.
-	This makes it a robust option to replace a Poisson distribution to model
-	phenomena with overdispersion
-	(presence of greater variability in data than would be expected).
+	The negative binomial distribution describes the distribution of the number of failures before the $r^{th}$ success in a sequence of independent Bernoulli (yes/no) trials with the probability of success is $p$.
 	\vfill \small
-	The negative binomial has two parameters and its notation is
-	$\text{Negative Binomial}(k, p)$:
-	\begin{vfilleditems}
-		\small
-		\item $k$ -- number of successes
-		\item $p$ -- probability of success
-	\end{vfilleditems}
-	\vfil \small
+	The negative binomial has two parameters $r$ and $p$ and its notation is
+	$\text{Negative-Binomial}(r, p)$:
+	\vfill \small
 	Example: annual occurrence of tropical cyclones.
+	\vfill 
+	Any phenomena that can be modeled as a Poisson distribution can be modeled also as negative binomial distribution \parencite{gelman2013bayesian, gelman2020regression}.
 \end{frame}
 
 \begin{frame}[noframenumbering]{Negative Binomial}
 	$$
 		\begin{aligned}
-			\text{Negative Binomial}(k, p) & = f(x, k, p) & = \binom{x + k - 1}{k - 1}p^{x}(1-p)^{k} \\
+			\text{Negative Binomial}(k, p) & = f(x, r, p) & = \binom{x + r - 1}{r - 1}p^{r}(1-p)^{x} \\
 			\\
 			                               & ~            & \text{for $x \in \{0, 1, \dots, n\}$}
 		\end{aligned}
@@ -454,7 +448,7 @@
 \begin{frame}[noframenumbering]{Log-Normal}
 	The log-normal distribution is a continuous probability distribution of a
 	random variable which its natural logarithm is distributed as a normal distribution.
-	Thus, if the natural logarithm a random variable $X$, $\ln(X)$, is distributed
+	Thus, if the natural logarithm of a random variable $X$, $\ln(X)$, is distributed
 	as a normal distribution, then $Y = \ln(X)$ is normally distributed and
 	$X$ is log-normally distributed.
 	\vfill
@@ -504,7 +498,7 @@
 \subsubsection*{Exponential}
 \begin{frame}[noframenumbering]{Exponential}
 	The exponential distribution is the probability distribution of the time
-	between events that occurs in a continuos manner, are independent,
+	between events that occurs in a continuous manner, are independent,
 	and have constant mean rate of occurrence.
 	\vfill
 	The exponential distribution has one parameter and its notation is
@@ -637,7 +631,7 @@
 	The Cauchy distribution is bell-shaped distribution and a special case for Student's $t$ with $\nu=1$.
 	\vfill
 	But, differently than Student's $t$, the Cauchy distribution has two parameters and its notation is
-	$\text{Gamma}(\alpha, \theta)$:
+	$\text{Cauchy}( \mu , \sigma)$:
 	\begin{vfilleditems}
 		\item $\mu$ -- location parameter
 		\item $\sigma$ -- scale parameter
@@ -674,7 +668,7 @@
 \subsubsection*{Beta}
 \begin{frame}[noframenumbering]{Beta}
 	The beta distribution is a natural choice to model anything that is
-	restricted to values between $0$ e $1$.
+	restricted to values between $0$ and $1$.
 	Hence, it is a good candidate to model probabilities and proportions.
 	\vfill
 	The beta distribution has two parameters and its notations is
@@ -717,34 +711,28 @@
 
 \subsection*{Matrix-variate Distributions}
 \begin{frame}[noframenumbering]{Matrix-variate Distributions}
-	So far we've seen random distributions that returns a \textbf{scalar value}.
+	So far we've seen random distributions that return a \textbf{scalar value}.
 	That means a single number.
 	\vfill
 	But we can also return a \textbf{matrix} instead using a \textbf{Matrix-variate distribution}.
 	\vfill
 	There are several ways to generate random matrices.
-	But we'll focus on a special case of matrix: \textbf{positive semi-definite matrices}.
+	But we'll focus on a special case of matrix: \textbf{positive (semi-)definite matrices}.
 \end{frame}
 
-\begin{frame}[noframenumbering]{Positive Semi-Definite Matrix}
-	\begin{defn}[Positive Semi-Definite Matrix]
-		A matrix $\mathbf{M}$ is positive-semidefinite if it satisfies the following equivalent conditions:
-		\begin{vfilleditems}
-			\item $\mathbf{M}$ is congruent with a diagonal matrix with positive real entries
-			\item $\mathbf{M}$ is symmetric or Hermitian, and all its eigenvalues are real and positive
-			\item $\mathbf{M}$ is symmetric or Hermitian, and all its leading principal minors are positive
-			\item There exists an invertible matrix $\mathbf{B}$ with conjugate transpose $\mathbf{B}^*$ such that $\mathbf{M} = \mathbf{B}^* \mathbf{B}$
-		\end{vfilleditems}
+\begin{frame}[noframenumbering]{Positive (Semi-)Definite Matrix}
+	\begin{defn}[Positive (Semi-)Definite Matrix]
+		A matrix $\mathbf{M}$ is positive (semi-)definite if it is symmetric or Hermitian, and all its eigenvalues are real and positive (non-negative).
 	\end{defn}
 \end{frame}
 
 \begin{frame}[noframenumbering]{Covariance Matrices}
-	\begin{example}[Positive Semi-Definite Matrix]
-		The \textbf{covariance matrix} of a multivariate probability distribution is always \textbf{positive semi-definite}.
+	\begin{example}[Positive (Semi-)Definite Matrix]
+		The \textbf{covariance matrix} of a multivariate probability distribution is always \textbf{positive definite}.
 
 		\vspace{0.5cm}
 
-		Conversely, \textbf{every positive semi-definite matrix is the covariance matrix} of some multivariate distribution.
+		Conversely, \textbf{every positive definite matrix is the covariance matrix} of some multivariate distribution.
 	\end{example}
 \end{frame}
 

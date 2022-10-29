@@ -163,7 +163,7 @@
 		p(y_i \mid y_{-i}) = \int p(y_i \mid \theta) p(\theta \mid y_{-i}) d \theta
 	$$
 	which is the predictive density conditioned on the data without a single observation $i$ ($y_{-i}$).
-	Almost always we use the PSIS-LOO\footnote{upcoming...} approximation
+	Almost always we use the PSIS-LOO approximation
 	due to its robustness and low computational cost.
 \end{frame}
 
@@ -200,8 +200,7 @@
 	\vfill
 	Contrary to LOO, we cannot approximate the actual $\operatorname{elpd}$
 	using $K$-fold CV,
-	and we need to compute the actual $\operatorname{elpd}$ over $K$ partitions,
-	which almost involves a \textbf{high computational cost}.
+	and we need to compute the actual $\operatorname{elpd}$ over $K$ partitions.
 \end{frame}
 
 \subsection{Pareto Smoothed Importance Sampling LOO (PSIS-LOO)}
