@@ -21,7 +21,7 @@ poppk2cpt_cp = @model begin
     end
 
     @random begin
-        η ~ MvNormal(ω .* C .* ω)
+        η ~ MvNormal(ω .* C .* ω')
     end
 
     @pre begin
