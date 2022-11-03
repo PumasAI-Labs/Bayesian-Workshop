@@ -1,5 +1,3 @@
-# TODO: rename me with an appropriate numbering system instead of `XX`
-
 using Pumas
 using PharmaDatasets
 using DataFramesMeta
