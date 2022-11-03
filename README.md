@@ -1,6 +1,6 @@
 # Pumas Bayesian Workshop
 
-These are the slides for the Pumas Bayesian Workshop.
+These are the slides and code for the Pumas Bayesian Workshop.
 
 Double your think time!
 
