@@ -8,7 +8,7 @@
 		\item In regular MCMC, we sample from the joint posterior of all the population and subject-specific parameters.
 		\item Assume there are 3 subjects with subject parameters $\eta_1$, $\eta_2$ and $\eta_3$.
 		\item Let the population parameters be $\theta$.
-		\item Joint MCMC samples from the joint posteior:
+		\item Joint MCMC samples from the joint posterior:
 		$$
 			P(\theta, \eta_1, \eta_2, \eta_3 \mid \text{data})
 		$$
@@ -18,7 +18,7 @@
 
 \begin{frame}{Marginal Posterior}
 	\begin{vfilleditems}
-		\item When there are many subjects and high correlation in the parameters in the posterior, the NUTS algorithm can often struggle to find good adpatation parameters.
+		\item When there are many subjects and high correlation in the parameters in the posterior, the NUTS algorithm can often struggle to find good adaptation parameters.
 		\item This is common if there are model identifiability issues and/or the priors are too weak compared to the likelihood.
 		\item This is not uncommon in hierarchical models.
 		\item After sampling from the joint posterior, we are often only interested in population parameters, e.g. to estimate a drug effect.
@@ -36,7 +36,7 @@
 				\item Sample from the joint posterior and then ignore the subject-specific parameters. You can easily do this using \lstinline{BayesMCMC}.
 				\item Integrate the subject-specific parameters out and then sample from the conditional posterior only. This is what \lstinline{MarginalMCMC} does in \lstinline{Pumas}.
 			\end{vfilleditems}
-		\item The marginal posterior probability is proprotional to:
+		\item The marginal posterior probability is proportional to:
 		$$
 			P(\theta \mid \text{data}) \propto P(\theta, \text{data}) = \int_{\eta_3} \int_{\eta_2} \int_{\eta_1} P(\theta, \eta_1, \eta_2, \eta_3, \text{data}) d\eta_1 d\eta_2 d\eta_3
 		$$
