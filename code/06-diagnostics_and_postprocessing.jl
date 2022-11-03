@@ -50,7 +50,7 @@ poppk2cpt = @model begin
 end
 
 df = CSV.read("data/poppk2cpt.csv", DataFrame)
-pop = read_pumas(df)[1:3]
+pop = read_pumas(df)[1:5]
 
 # Prior predictive check
 prior_sims = simobs(poppk2cpt, pop[2]; samples = 200, simulate_error = true)
