@@ -99,10 +99,10 @@ iv_2cmt_ir_fit = fit(
     pop,
     iparams,
     Pumas.BayesMCMC(
-        nsamples=500,
-        nadapts=250,
+        nsamples=100,
+        nadapts=50,
         target_accept=0.5,
     )
 )
 
-Pumas.truncate(iv_2cmt_ir_fit; burnin=10)
+Pumas.truncate(iv_2cmt_ir_fit; burnin=50)

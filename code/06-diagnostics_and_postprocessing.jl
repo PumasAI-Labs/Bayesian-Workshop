@@ -113,6 +113,18 @@ sim_plot(post_sims)
 
 # Posterior predictive check
 post_sims = simobs(poppk2cpt_tfit; samples = 100, simulate_error = false)
-postprocess(post_sims, stat = mean) do sim, data
+ps = postprocess(post_sims) do sim, data
     mean(sim.dv .> data.dv)
 end
+mean(ps)
+
+# Simulate for new subject with new dose
+subj_df = copy(df[df.id .== 1, :])
+subj_df[1, :amt] = subj_df[1, :amt] * 3.0
+new_subj = read_pumas(subj_df)[1]
+new_sims = simobs(poppk2cpt_tfit, new_subj, samples = 100)
+sim_plot(new_sims)
+max_concs = postprocess(new_sims) do sim, data
+    maximum(sim.dv)
+end
+mean(max_concs)
