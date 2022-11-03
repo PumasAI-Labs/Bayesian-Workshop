@@ -1,65 +1,130 @@
 using Pumas
 using DataFrames
-using StableRNGs
-using AlgebraOfGraphics
-using CairoMakie
+using CSV
 
-# Generate funnel data
-function simulate_data(; nsamples=100, rng=StableRNG(123))
-    x = rand(rng, Normal(), nsamples)
-    y = rand.(rng, Normal.(0, exp.(x ./ 2)))
-    return DataFrame(; id=1:nsamples, x, y, time=0, amt=0)
-end
-
-df = simulate_data()
-
-# Plot the funnel
-data(df) *
-mapping(:y, :x) *
-visual(Scatter) |> draw
-
-# Pumas
-pop = read_pumas(df; observations=[:y], covariates=[:x], event_data=false)
-
-cp = @model begin
+# CP
+poppk2cpt_cp = @model begin
     @param begin
-        x ~ Normal()
+        tvcl ~ LogNormal(log(10), 0.25)
+        tvq ~ LogNormal(log(15), 0.5)
+        tvvc ~ LogNormal(log(35), 0.25)
+        tvvp ~ LogNormal(log(105), 0.5)
+        tvka ~ LogNormal(log(2.5), 1)
+        σ ~ truncated(Cauchy(0, 5), 0, Inf)
+        C ~ LKJCholesky(5, 1.0)
+        ω ∈ Constrained(
+            MvNormal(zeros(5), Diagonal(0.4^2 * ones(5))),
+            lower=zeros(5),
+            upper=fill(Inf, 5),
+            init=ones(5),
+        )
     end
+
+    @random begin
+        η ~ MvNormal(ω .* C .* ω)
+    end
+
+    @pre begin
+        # PK parameters
+        CL = tvcl * exp(η[1])
+        Q = tvq * exp(η[2])
+        Vc = tvvc * exp(η[3])
+        Vp = tvvp * exp(η[4])
+        Ka = tvka * exp(η[5])
+    end
+
+    @dynamics begin
+        Depot' = -Ka * Depot
+        Central' = Ka * Depot - (CL + Q) / Vc * Central + Q / Vp * Peripheral
+        Peripheral' = Q / Vc * Central - Q / Vp * Peripheral
+    end
+
     @derived begin
-        y ~ @. Normal(0, exp(x / 2))
+        cp := @. Central / Vc
+        dv ~ @. LogNormal(log(cp), σ)
     end
 end
 
-ncp = @model begin
+# NCP
+poppk2cpt_ncp = @model begin
     @param begin
-        x ~ Normal()
-        ystd ~ Normal()
+        tvcl ~ LogNormal(log(10), 0.25)
+        tvq ~ LogNormal(log(15), 0.5)
+        tvvc ~ LogNormal(log(35), 0.25)
+        tvvp ~ LogNormal(log(105), 0.5)
+        tvka ~ LogNormal(log(2.5), 1)
+        σ ~ truncated(Cauchy(0, 5), 0, Inf)
+        C ~ LKJCholesky(5, 1.0)
+        ω ∈ Constrained(
+            MvNormal(zeros(5), Diagonal(0.4^2 * ones(5))),
+            lower=zeros(5),
+            upper=fill(Inf, 5),
+            init=ones(5),
+        )
     end
+
+    @random begin
+        ηstd ~ MvNormal(I(5))
+    end
+
+    @pre begin
+        # compute the η from the ηstd
+        # using lower Cholesky triangular matrix
+        η = ω .* (getchol(C).L * ηstd)
+
+        # PK parameters
+        CL = tvcl * exp(η[1])
+        Q = tvq * exp(η[2])
+        Vc = tvvc * exp(η[3])
+        Vp = tvvp * exp(η[4])
+        Ka = tvka * exp(η[5])
+    end
+
+    @dynamics begin
+        Depot' = -Ka * Depot
+        Central' = Ka * Depot - (CL + Q) / Vc * Central + Q / Vp * Peripheral
+        Peripheral' = Q / Vc * Central - Q / Vp * Peripheral
+    end
+
     @derived begin
-        y = @. ystd * exp(x / 2)
+        cp := @. Central / Vc
+        dv ~ @. LogNormal(log(cp), σ)
     end
 end
 
-fit_cp = fit(
-    cp,
-    pop,
-    init_params(cp),
-    Pumas.BayesMCMC(
-        nsamples=2_000,
-        nadapts=1_000,
-    ),
+df = CSV.read("data/poppk2cpt.csv", DataFrame)
+pop = read_pumas(df)
+
+params = (;
+    tvcl=9.5,
+    tvq=19,
+    tvvc=67,
+    tvvp=102,
+    tvka=1.2,
+    σ=0.83,
+    C=float.(Matrix(I(5))),
+    ω=[0.8, 0.1, 1.8, 2.0, 0.5]
 )
 
-tfit_cp = Pumas.truncate(cp_fit; burnin=1_000)
-
-fit_ncp = fit(
-    ncp,
+poppk2cpt_cp_fit = fit(
+    poppk2cpt_cp,
     pop,
-    init_params(ncp),
+    params,
     Pumas.BayesMCMC(
-        nsamples=2_000,
-        nadapts=1_000,
-    ),
+        nsamples=100,
+        nadapts=10,
+    )
 )
 
-tfit_cp = Pumas.truncate(cp_fit; burnin=1_000)
+poppk2cpt_ncp_fit = fit(
+    poppk2cpt_ncp,
+    pop,
+    params,
+    Pumas.BayesMCMC(
+        nsamples=100,
+        nadapts=10,
+    )
+)
+
+poppk2cpt_cp_tfit = Pumas.truncate(poppk2cpt_cp_fit; burnin=10)
+poppk2cpt_ncp_tfit = Pumas.truncate(poppk2cpt_ncp_fit; burnin=10)
