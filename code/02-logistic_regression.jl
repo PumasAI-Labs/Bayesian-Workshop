@@ -1,5 +1,3 @@
-# TODO: rename me with an appropriate numbering system instead of `XX`
-
 using Pumas
 using PharmaDatasets
 using DataFramesMeta
@@ -45,6 +43,7 @@ pop = read_pumas(
     event_data=false
 )
 
+# 3. Fit the model
 nausea_fit = fit(
     logistic_model,
     pop,

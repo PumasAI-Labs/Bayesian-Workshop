@@ -51,7 +51,7 @@ end
 df = CSV.read("data/poppk2cpt.csv", DataFrame)
 pop = read_pumas(df)
 
-params = (;
+iparams = (;
     tvcl=9.5,
     tvq=19,
     tvvc=67,
@@ -65,7 +65,7 @@ params = (;
 poppk2cpt_fit = fit(
     poppk2cpt,
     pop,
-    params,
+    iparams,
     Pumas.BayesMCMC(
         nsamples=100,
         nadapts=10,

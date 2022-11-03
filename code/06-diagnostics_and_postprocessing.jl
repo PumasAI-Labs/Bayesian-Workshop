@@ -58,7 +58,7 @@ postprocess(prior_sims, stat = mean) do sim, data
     mean(sim.dv .> data.dv)
 end
 
-params = (;
+iparams = (;
     tvcl=9.5,
     tvq=19,
     tvvc=67,
@@ -72,7 +72,7 @@ params = (;
 poppk2cpt_fit = fit(
     poppk2cpt,
     pop,
-    params,
+    iparams,
     Pumas.BayesMCMC(
         nsamples=1000,
         nadapts=500,
