@@ -15,7 +15,7 @@ Double your think time!
   - Pumas Data Representation (NMTRAN datasets and Population)
   - Pumas model macro and dynamics block
   - Bayesian PK model in Pumas
-- Bayesian Exposure-Response Modelling using Logistic Regression
+- Bayesian Logistic Regression
 - Hands-on: Bayesian logistic regression in Pumas
 - Hierarchical Models in Pumas
 - Bayesian PopPK Model
