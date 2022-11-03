@@ -357,13 +357,13 @@
     The Heidelberger diagnostic only tests for the mean of the distribution. Therefore, it can only be used to detect lack of convergence and not to prove convergence. In other words, even if all the numbers seem normal, one cannot conclude that the chain converged to a stationary distribution or that it converged to the true posterior.
 \end{frame}
 
-\begin{frame}{Raftery and Lewis Diagnostic}
-    \begin{vfilleditems}
-        \item This diagnostic is used to determine the number of iterations required to estimate a specified quantile $q$ within a desired degree of accuracy.
-        \item The diagnostic is designed to determine the number of autocorrelated samples required to estimate a specified quantile $\theta_q$, such that $\Pr(\theta \le \theta_q) = q$, within a desired degree of accuracy.
-        \item In particular, if $\hat{\theta}_q$ is the estimand and $\Pr(\theta \le \hat{\theta}_q) = \hat{P}_q$ the estimated cumulative probability, then accuracy is specified in terms of $r$ and $s$, where $\Pr(q - r < \hat{P}_q < q + r) = s$. Sample sizes estimated by the diagnostic tend to be conservative (too large).
-    \end{vfilleditems}
-\end{frame}
+% \begin{frame}{Raftery and Lewis Diagnostic}
+%     \begin{vfilleditems}
+%         \item This diagnostic is used to determine the number of iterations required to estimate a specified quantile $q$ within a desired degree of accuracy.
+%         \item The diagnostic is designed to determine the number of autocorrelated samples required to estimate a specified quantile $\theta_q$, such that $\Pr(\theta \le \theta_q) = q$, within a desired degree of accuracy.
+%         \item In particular, if $\hat{\theta}_q$ is the estimand and $\Pr(\theta \le \hat{\theta}_q) = \hat{P}_q$ the estimated cumulative probability, then accuracy is specified in terms of $r$ and $s$, where $\Pr(q - r < \hat{P}_q < q + r) = s$. Sample sizes estimated by the diagnostic tend to be conservative (too large).
+%     \end{vfilleditems}
+% \end{frame}
 
 \subsection{What To Do If the Markov Chains Do Not Converge?}
 % \begin{frame}{What To Do If the Markov Chains Do Not Converge?}
