@@ -22,10 +22,10 @@ Double your think time!
 - Hands-on: population PK models
 - Bayesian PKPD model
 - Hands-on: population PKPD models
+- Posterior predictions and simulations
 - MCMC, marginal MCMC and NUTS
 - Convergence diagnostics
 - What to do if MCMC fails?
-- Posterior predictions and simulations
 - Hands-on: diagnostics, simulations, post-processing and plots
 - Crossvalidation and model evaluation
 - Hands-on: cross-validation
