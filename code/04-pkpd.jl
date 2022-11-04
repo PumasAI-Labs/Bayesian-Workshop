@@ -52,13 +52,13 @@ iv_2cmt_ir = @model begin
     end
 
     @vars begin
-        inh = (Central / Vc) / ic50 + (Central / Vc)
+        inh = (Central / Vc) / (ic50 + (Central / Vc))
     end
 
     @dynamics begin
         Central' = -(CL / Vc) * Central + (Q / Vp) * Peripheral - (Q / Vc) * Central
         Peripheral' = (Q / Vc) * Central - (Q / Vp) * Peripheral
-        Resp' = (Kin * (1 - inh)) - (Kout * Resp)
+        Resp' = (Kin * (1 - inh)) - (Kout * Resp) # idr: 0-order input and 1-order output
     end
 
     @derived begin
@@ -90,7 +90,7 @@ iparams = (;
     ω_PD=rand(LogNormal(log(0.3), 0.3), 3),
     σ_PD=rand(LogNormal(log(0.1), 0.3)),
     C=float.(Matrix(I(4))),
-    C_PD=float.(Matrix(I(3)))
+    C_PD=float.(Matrix(I(3))),
 )
 
 # fit
@@ -105,4 +105,5 @@ iv_2cmt_ir_fit = fit(
     )
 )
 
-Pumas.truncate(iv_2cmt_ir_fit; burnin=50)
+tfit = Pumas.truncate(iv_2cmt_ir_fit; burnin=50)
+println(DataFrame(summarystats(tfit)))
