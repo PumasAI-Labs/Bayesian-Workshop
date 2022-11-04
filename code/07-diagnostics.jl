@@ -12,7 +12,7 @@ poppk2cpt = @model begin
         tvka ~ LogNormal(log(2.5), 1)
         σ ~ truncated(Cauchy(0, 5), 0, Inf)
         C ~ LKJCholesky(5, 1.0)
-        ω ∈ Constrained(
+        ω ~ Constrained(
             MvNormal(zeros(5), Diagonal(0.4^2 * ones(5))),
             lower=zeros(5),
             upper=fill(Inf, 5),

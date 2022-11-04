@@ -14,7 +14,7 @@ pk2cpt = @model begin
         tvvc ~ LogNormal(log(70), 0.25)
         σ ~ truncated(Cauchy(), 0, Inf)
         C ~ LKJCholesky(2, 1.0)
-        ω ∈ Constrained(
+        ω ~ Constrained(
             MvNormal(zeros(2), Diagonal(0.4^2 * ones(2))),
             lower = zeros(2),
             upper = fill(Inf, 2),

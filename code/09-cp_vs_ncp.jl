@@ -12,7 +12,7 @@ poppk2cpt_cp = @model begin
         tvka ~ LogNormal(log(2.5), 1)
         σ ~ truncated(Cauchy(0, 5), 0, Inf)
         C ~ LKJCholesky(5, 1.0)
-        ω ∈ Constrained(
+        ω ~ Constrained(
             MvNormal(zeros(5), Diagonal(0.4^2 * ones(5))),
             lower=zeros(5),
             upper=fill(Inf, 5),
@@ -21,7 +21,7 @@ poppk2cpt_cp = @model begin
     end
 
     @random begin
-        η ~ MvNormal(ω .* C .* ω')
+        η ~ MvNormal(Diagonal(ω) * C * Diagonal(ω))
     end
 
     @pre begin
@@ -55,7 +55,7 @@ poppk2cpt_ncp = @model begin
         tvka ~ LogNormal(log(2.5), 1)
         σ ~ truncated(Cauchy(0, 5), 0, Inf)
         C ~ LKJCholesky(5, 1.0)
-        ω ∈ Constrained(
+        ω ~ Constrained(
             MvNormal(zeros(5), Diagonal(0.4^2 * ones(5))),
             lower=zeros(5),
             upper=fill(Inf, 5),
@@ -121,7 +121,7 @@ poppk2cpt_cp_fit = fit(
 poppk2cpt_ncp_fit = fit(
     poppk2cpt_ncp,
     pop[1:2],
-    params,
+    iparams,
     Pumas.BayesMCMC(
         nsamples=200,
         nadapts=100,

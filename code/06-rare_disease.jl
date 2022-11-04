@@ -11,10 +11,10 @@ bayes_model = @model begin
     symptomatic_trt_effect ~ Normal(0.2, 0.1)
     # mean(d::Gamma) = d.α * d.θ
     # var(d::Gamma) = mean(d) * d.θ
-    ω²_1 ∈ Gamma(1, 0.1) # mean = 0.1, var = 0.01
-    ω²_2 ∈ Gamma(1, 0.3) # mean = 0.3, var = 0.09
-    kdelay ∈ Gamma(20, 0.1) # mean = 2.0, var = 0.2
-    σ² ∈ Gamma(4, 0.25) # mean = 1.0, var = 0.25
+    ω²_1 ~ Gamma(1, 0.1) # mean = 0.1, var = 0.01
+    ω²_2 ~ Gamma(1, 0.3) # mean = 0.3, var = 0.09
+    kdelay ~ Gamma(20, 0.1) # mean = 2.0, var = 0.2
+    σ² ~ Gamma(4, 0.25) # mean = 1.0, var = 0.25
   end
   @random begin
     bsv_dispro ~ Normal(0.0, sqrt(ω²_1))
