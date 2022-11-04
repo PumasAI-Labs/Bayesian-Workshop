@@ -15,14 +15,14 @@ iv_2cmt_ir = @model begin
         σ_a ~ truncated(Normal(0, 1.0), 0, Inf)
         σ_PD ~ truncated(Normal(0, 0.4), 0, Inf)
         C ~ LKJCholesky(4, 2.0)
-        ω ∈ Constrained(
+        ω ~ Constrained(
             MvNormal(zeros(4), Diagonal(0.4^2 * ones(4))),
             lower=zeros(4),
             upper=fill(Inf, 4),
             init=ones(4),
         )
         C_PD ~ LKJCholesky(3, 0.2)
-        ω_PD ∈ Constrained(
+        ω_PD ~ Constrained(
             MvNormal(zeros(3), Diagonal(0.4^2 * ones(3))),
             lower=zeros(3),
             upper=fill(Inf, 3),
