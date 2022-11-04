@@ -21,7 +21,7 @@ poppk2cpt_cp = @model begin
     end
 
     @random begin
-        η ~ MvNormal(ω .* C .* ω')
+        η ~ MvNormal(Diagonal(ω) * C * Diagonal(ω))
     end
 
     @pre begin
@@ -121,7 +121,7 @@ poppk2cpt_cp_fit = fit(
 poppk2cpt_ncp_fit = fit(
     poppk2cpt_ncp,
     pop[1:2],
-    params,
+    iparams,
     Pumas.BayesMCMC(
         nsamples=200,
         nadapts=100,
