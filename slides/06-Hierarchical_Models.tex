@@ -50,7 +50,7 @@
 
 \begin{frame}{What are Hierarchical Models?\footnote{figure adapted from \href{https://betanalpha.github.io/assets/case_studies/hierarchical_modeling.html}{Michael Betancourt (CC-BY-SA-4.0)}}}
 	\small
-	Hyperparameter $\phi$ that parameterizes $\theta_1, \theta_2, \dots, \theta_K$,
+	Hyperparameter $\omega$ that parameterizes $\eta_1, \eta_2, \dots, \eta_K$,
 	that are used to define the distribution of some observations
 	$\mathbf{y} = y_1, y_2, \dots, y_K$
 	\begin{adjustbox}{max width=1.0\textwidth}
@@ -84,19 +84,19 @@
 			\draw[->, >=stealth, color=mid, line width=1.5] (12 + \dx, 3 + \r + \dy) -- (12 + \dx, 9 - \r + \dy);
 
 			\filldraw[fill=black, draw=dark, line width=1.5] (-12 + \dx, 3 + \dy) circle (\r)
-			node[color=white] { $\theta_{1}$ };
+			node[color=white] { $\eta_{1}$ };
 
 			\filldraw[fill=black, draw=dark, line width=1.5] (-6 + \dx, 3 + \dy) circle (\r)
 			node[color=white] { $\ldots$ };
 
 			\filldraw[fill=black, draw=dark, line width=1.5] (0 + \dx, 3 + \dy) circle (\r)
-			node[color=white] { $\theta_{k}$ };
+			node[color=white] { $\eta_{k}$ };
 
 			\filldraw[fill=black, draw=dark, line width=1.5] (6 + \dx, 3 + \dy) circle (\r)
 			node[color=white] { $\ldots$ };
 
 			\filldraw[fill=black, draw=dark, line width=1.5] (12 + \dx, 3 + \dy) circle (\r)
-			node[color=white] { $\theta_{K}$ };
+			node[color=white] { $\eta_{K}$ };
 
 			\draw[->, >=stealth, color=mid, line width=1.5] (0 + \dx, -3 + \r + \dy) -- (-12 + \dx, 3 - \r + \dy);
 			\draw[->, >=stealth, color=mid, line width=1.5] (0 + \dx, -3 + \r + \dy) -- (-6 + \dx, 3 - \r + \dy);
@@ -105,7 +105,7 @@
 			\draw[->, >=stealth, color=mid, line width=1.5] (0 + \dx, -3 + \r + \dy) -- (12 + \dx, 3 - \r + \dy);
 
 			\filldraw[fill=black, draw=dark, line width=1.5] (0 + \dx, -3 + \dy) circle (\r)
-			node[color=white] { $\phi$ };
+			node[color=white] { $\omega$ };
 
 		\end{tikzpicture}
 	\end{adjustbox}
@@ -145,19 +145,19 @@
 			\draw[<-, >=stealth, color=dark, line width=1.5] (0 + \dx, 3 + \r + \dy) -- (0 + \dx, 9 - \r + \dy);
 
 			\filldraw[fill=black, draw=dark, line width=1.5] (-12 + \dx, 3 + \dy) circle (\r)
-			node[color=white] { $\theta_{1}$ };
+			node[color=white] { $\eta_{1}$ };
 
 			\filldraw[fill=black, draw=dark, line width=1.5,] (-6 + \dx, 3 + \dy) circle (\r)
 			node[color=white] { $\ldots$ };
 
 			\filldraw[fill=black, draw=dark, line width=1.5] (0 + \dx, 3 + \dy) circle (\r)
-			node[color=white] { $\theta_{k}$ };
+			node[color=white] { $\eta_{k}$ };
 
 			\filldraw[fill=black, draw=dark, line width=1.5] (6 + \dx, 3 + \dy) circle (\r)
 			node[color=white] { $\ldots$ };
 
 			\filldraw[fill=black, draw=dark, line width=1.5] (12 + \dx, 3 + \dy) circle (\r)
-			node[color=white] { $\theta_{K}$ };
+			node[color=white] { $\eta_{K}$ };
 
 			\draw[->, >=stealth, color=dark, line width=1.5] (0 + \dx, -3 + \r + \dy) -- (-12 + \dx, 3 - \r + \dy);
 			\draw[->, >=stealth, color=dark, line width=1.5] (0 + \dx, -3 + \r + \dy) -- (-6 + \dx, 3 - \r + \dy);
@@ -166,7 +166,7 @@
 			\draw[->, >=stealth, color=dark, line width=1.5] (0 + \dx, -3 + \r + \dy) -- (12 + \dx, 3 - \r + \dy);
 
 			\filldraw[fill=black, draw=dark, line width=1.5] (0 + \dx, -3 + \dy) circle (\r)
-			node[color=white] { $\phi$ };
+			node[color=white] { $\omega$ };
 
 			% Left
 			\pgfmathsetmacro{\dx}{35}
@@ -195,19 +195,19 @@
 			\draw[<-, >=stealth, color=dark, line width=1.5] (12 + \dx, 3 + \r + \dy) -- (12 + \dx, 9 - \r + \dy);
 
 			\filldraw[fill=black, draw=dark, line width=1.5] (-12 + \dx, 3 + \dy) circle (\r)
-			node[color=white] { $\theta_{1}$ };
+			node[color=white] { $\eta_{1}$ };
 
 			\filldraw[fill=black, draw=dark, line width=1.5,] (-6 + \dx, 3 + \dy) circle (\r)
 			node[color=white] { $\ldots$ };
 
 			\filldraw[fill=black, draw=dark, line width=1.5] (0 + \dx, 3 + \dy) circle (\r)
-			node[color=white] { $\theta_{k}$ };
+			node[color=white] { $\eta_{k}$ };
 
 			\filldraw[fill=black, draw=dark, line width=1.5] (6 + \dx, 3 + \dy) circle (\r)
 			node[color=white] { $\ldots$ };
 
 			\filldraw[fill=black, draw=dark, line width=1.5] (12 + \dx, 3 + \dy) circle (\r)
-			node[color=white] { $\theta_{K}$ };
+			node[color=white] { $\eta_{K}$ };
 
 			\draw[<-, >=stealth, color=dark, line width=1.5] (-\r + \dx, -3 + \dy) -- (-12 + \dx, 3 - \r + \dy);
 			\draw[<-, >=stealth, color=dark, line width=1.5] ({-0.25 - \r * cos(45) + \dx}, {-3 + \r * cos(45) + \dy}) -- (-6 + \dx, 3 - \r + \dy);
@@ -216,16 +216,16 @@
 			\draw[<-, >=stealth, color=dark, line width=1.5] (\r + \dx, -3 + \dy) -- (12 + \dx, 3 - \r + \dy);
 
 			\filldraw[fill=black, draw=dark, line width=1.5] (0 + \dx, -3 + \dy) circle (\r)
-			node[color=white] { $\phi$ };
+			node[color=white] { $\omega$ };
 		\end{tikzpicture}
 	\end{adjustbox}
 
 	\footnotesize
 	For example, the observations from the $k$th group, $y_k$,
 	informs directly the parameters that quantify the $k$th group's behavior,
-	$\theta_k$.
+	$\eta_k$.
 	These parameters, however, inform directly the population-level parameters,
-	$\phi$, that, in turn, informs others group-level parameters.
+	$\omega$, that, in turn, informs others group-level parameters.
 	In the same manner, observations that informs directly other group's parameters
 	also provide indirectly information to population-level parameters,
 	which then informs other group-level parameters, and so on...
@@ -483,217 +483,50 @@
 	which is a prior's prior:
 	$$
 		\begin{aligned}
-			\mathbf{y}          & \sim \text{Normal}(10, \boldsymbol{\theta}) \\
-			\boldsymbol{\theta} & \sim \text{Normal}(0, \phi)                 \\
-			\phi                & \sim \text{Exponential(1)}
+			\mathbf{y}        & \sim \text{Normal}(10, \boldsymbol{\eta}) \\
+			\boldsymbol{\eta} & \sim \text{Normal}(0, \omega)             \\
+			\omega            & \sim \text{Normal}^+(1)
 		\end{aligned}
 	$$
 	Here $\mathbf{y}$ is a variable of interest that belongs to distinct groups.
-	$\boldsymbol{\theta}$, a prior for $\mathbf{y}$,
+	$\boldsymbol{\eta}$, a prior for $\mathbf{y}$,
 	is a vector of group-level parameters with their own prior
-	(which becomes a hyperprior) $\phi$.
+	(which becomes a hyperprior) $\omega$.
 \end{frame}
 
-% \subsection{Frequentist versus Bayesian Approaches}
-% \begin{frame}{Frequentist versus Bayesian Approaches}
-% 	There are also hierarchical models in frequentist statistics.
-% 	They are available in the \texttt{lme4} package \parencite{lme4}, \texttt{MixedModels.jl} \parencite{MixedModels} and \texttt{Pumas.jl}.
-% 	\begin{vfilleditems}
-% 		\item \textbf{optimization of the likelihood function} versus \textbf{posterior approximation via MCMC}.
-% 		Almost always lead to convergence failure for models that are not extremely simple.
-% 		\item \textbf{frequentist hierarchical models do not compute $p$-values for the group-level effects}\footnote{
-% 			see \href{https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html}
-% 			{Douglas Bates, creator of the \texttt{lme4} package explanation}.}.
-% 		This is due to the underlying assumptions of the approximations that frequentist
-% 		statistics has to to do in order to calculate the group-level effects $p$-values.
-% 		The main one being that the groups must be balanced.
-% 		In other words, the groups must be homogeneous in size.
-% 		Hence, any unbalance in group compositions results in pathological $p$-values
-% 		that should not be trusted.
-% 	\end{vfilleditems}
-% \end{frame}
-
-% \begin{frame}{Frequentist versus Bayesian Approaches}
-% 	To sum up, \textbf{frequentist approach for hierarchical models is not robust}
-% 	in both the \textbf{inference process}
-% 	(\textbf{convergence flaws} during the maximum likelihood estimation),
-% 	and also in the \textbf{results} from the inference process
-% 	(do not provide $p$-values due to
-% 	\textbf{strong assumptions that are almost always violated}).
-% \end{frame}
-
-\subsection{Approaches to Hierarchical Modeling}
-\begin{frame}{Approaches to Hierarchical Modeling}
-	\begin{vfilleditems}
-		\item \textbf{Varying-intercept} model:
-		One group-level intercept besides the population-level
-		intercept and coefficients.
-		\item \textbf{Varying-slope} model:
-		One or more group-level coefficient(s) besides the population-level
-		intercept and coefficients.
-		\item \textbf{Varying-intercept-slope} model:
-		One group-level intercept and one or more group-level coefficient(s) besides the population-level
-		intercept and coefficients.
-		\item \textbf{Correlated varying-intercept-slope} model:
-		One group-level intercept and one or more group-level coefficient(s) besides the population-level
-		intercept and coefficients.
-		Here the group-level intercept and coefficients priors
-		are \textbf{sampled from the same multivariate distribution}.
-	\end{vfilleditems}
-\end{frame}
-
+\subsection{Mathematical Specification of Hierarchical Models}
 \begin{frame}{Mathematical Specification of Hierarchical Models}
-	We have $N$ observations organized in $J$ groups with $K$ independent variables.
-	\vfill
-	Here we insert a column filled with $1$s in the data matrix $\mathbf{X}$.
-	\vfill
-	Mathematically, this makes the column behave like an ``identity'' variable
-	(because the number $1$ in the multiplication operation $1 \cdot \beta$ is the identity element.
-	It maps $x \to x$ keeping the value of $x$ intact) and, consequently,
-	we can interpret the column's coefficient as the model's intercept.
-\end{frame}
-
-\begin{frame}{Mathematical Specification of Hierarchical Models}
-	Hence, we have as a data matrix:
-	$$
-		\mathbf{X} =
-		\begin{bmatrix}
-			1      & x_{11} & x_{12} & \cdots & x_{1K} \\
-			1      & x_{21} & x_{22} & \cdots & x_{2K} \\
-			\vdots & \cdots & \cdots & \ddots & \vdots \\
-			1      & x_{N1} & x_{N2} & \cdots & x_{NK}
-		\end{bmatrix}
-	$$
-\end{frame}
-
-\begin{frame}{Mathematical Specification -- Varying-Intercept Model}
-	This example is for linear regression:
+	We have $N$ observations organized in $J$ groups with $K$ covariates.
 	$$
 		\begin{aligned}
-			\mathbf{y}         & \sim \text{Normal}\left( \alpha + \alpha_j + \mathbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
-			\alpha             & \sim \text{Normal}(\mu_\alpha, \sigma_\alpha)                                                    \\
-			\alpha_j           & \sim \text{Normal}(0, \tau)                                                                      \\
-			\boldsymbol{\beta} & \sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})                        \\
-			\tau               & \sim \text{Cauchy}^+(0, \psi_{\alpha})                                                           \\
-			\sigma             & \sim \text{Exponential}(\lambda_\sigma)
+			\mathbf{y}          & \sim \text{Normal}(\mathbf{X} \boldsymbol{\eta_{j}}, \sigma)                                                       \\
+			\boldsymbol{\eta_j} & \sim \text{Multivariate Normal}(\mathbf{0}, \boldsymbol{\Omega})
+			\quad \text{for}\quad j \in \{ 1, \dots, J \}                                                                                            \\
+			\boldsymbol{\Omega} & = \operatorname{Diagonal}(\boldsymbol{\omega}) \cdot \mathbf{C} \cdot \operatorname{Diagonal}(\boldsymbol{\omega}) \\
+			\boldsymbol{\omega} & \sim \text{Normal}(0, 0.4)                                                                                         \\
+			\mathbf{C}          & \sim \text{LKJ}(\eta)                                                                                              \\
+			\sigma              & \sim \text{Exponential}(1)
 		\end{aligned}
 	$$
-\end{frame}
-
-\begin{frame}{Mathematical Specification -- Varying-Intercept Model}
-	If you need to extend to more than one group,
-	such as $J_1, J_2, \dots$:
-	$$
-		\begin{aligned}
-			\mathbf{y}         & \sim \text{Normal}(\alpha + \alpha_{j1} + \alpha_{j2} + \mathbf{X} \boldsymbol{\beta}, \sigma) \\
-			\alpha             & \sim \text{Normal}(\mu_\alpha, \sigma_\alpha)                                                  \\
-			\alpha_{j1}        & \sim \text{Normal}(0, \tau_{\alpha j1})                                                        \\
-			\alpha_{j2}        & \sim \text{Normal}(0, \tau_{\alpha j2})                                                        \\
-			\boldsymbol{\beta} & \sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})                      \\
-			\tau_{\alpha j1}   & \sim \text{Cauchy}^+(0, \psi_{\alpha j1})                                                      \\
-			\tau_{\alpha j2}   & \sim \text{Cauchy}^+(0, \psi_{\alpha j2})                                                      \\
-			\sigma             & \sim \text{Exponential}(\lambda_\sigma)
-		\end{aligned}
-	$$
-\end{frame}
-
-\begin{frame}{Mathematical Specification -- Varying-Slope Model}
-	This example is for linear regression:
-	$$
-		\begin{aligned}
-			\mathbf{y}           & \sim \text{Normal}\left( \alpha + \mathbf{X} \cdot \boldsymbol{\beta}_j \cdot \boldsymbol{\tau}, \sigma \right) \\
-			\alpha               & \sim \text{Normal}(\mu_\alpha, \sigma_\alpha)                                                                   \\
-			\boldsymbol{\beta}_j & \sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})                                       \\
-			\boldsymbol{\tau}    & \sim \text{Cauchy}^+(0, \psi_{\beta})                                                                           \\
-			\sigma               & \sim \text{Exponential}(\lambda_\sigma)
-		\end{aligned}
-	$$
-	$\boldsymbol{\tau}$ is a vector of priors for the group-level coefficients'
-	standard deviation.
-\end{frame}
-
-\begin{frame}{Mathematical Specification -- Varying-Slope Model}
-	If you need to extend to more than one group,
-	such as $J_1, J_2, \dots$:
-	$$
-		\begin{aligned}
-			\mathbf{y}                   & \sim \text{Normal}(\alpha + \mathbf{X} \boldsymbol{\beta}_{j1} \cdot \boldsymbol{\tau}_{j1} + \mathbf{X} \boldsymbol{\beta}_{j2} \cdot \boldsymbol{\tau}_{j2}, \sigma) \\
-			\alpha                       & \sim \text{Normal}(\mu_\alpha, \sigma_\alpha)                                                                                                                          \\
-			\boldsymbol{\beta}_{j1}      & \sim \text{Normal}(\mu_{\boldsymbol{\beta j1}}, \sigma_{\boldsymbol{\beta j1}})                                                                                        \\
-			\boldsymbol{\beta}_{j2}      & \sim \text{Normal}(\mu_{\boldsymbol{\beta j2}}, \sigma_{\boldsymbol{\beta j2}})                                                                                        \\
-			\boldsymbol{\tau}_{\beta j1} & \sim \text{Cauchy}^+(0, \psi_{\beta j1})                                                                                                                               \\
-			\boldsymbol{\tau}_{\beta j2} & \sim \text{Cauchy}^+(0, \psi_{\beta j2})                                                                                                                               \\
-			\sigma                       & \sim \text{Exponential}(\lambda_\sigma)
-		\end{aligned}
-	$$
-\end{frame}
-
-\begin{frame}{Mathematical Specification -- Varying-Intercept-Slope Model}
-	This example is for linear regression:
-	$$
-		\begin{aligned}
-			\mathbf{y}              & \sim \text{Normal}\left( \alpha + \alpha_j + \mathbf{X} \cdot \boldsymbol{\beta}_j \cdot \boldsymbol{\tau}_\beta, \sigma \right) \\
-			\alpha                  & \sim \text{Normal}(\mu_\alpha, \sigma_\alpha)                                                                                    \\
-			\alpha_j                & \sim \text{Normal}(0, \tau_\alpha)                                                                                               \\
-			\boldsymbol{\beta}_j    & \sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})                                                        \\
-			\tau_\alpha             & \sim \text{Cauchy}^+(0, \psi_{\alpha})                                                                                           \\
-			\boldsymbol{\tau}_\beta & \sim \text{Cauchy}^+(0, \psi_{\beta})                                                                                            \\
-			\sigma                  & \sim \text{Exponential}(\lambda_\sigma)
-		\end{aligned}
-	$$
-	$\boldsymbol{\tau}_\beta$ is a vector of priors for the group-level coefficients'
-	standard deviation.
-\end{frame}
-
-\begin{frame}{Mathematical Specification -- Varying-Intercept-Slope Model}
-	If you need to extend to more than one group,
-	such as $J_1, J_2, \dots$:
-	$$
-		\begin{aligned}
-			\mathbf{y}                   & \sim \text{Normal}(\alpha + \alpha_j + \mathbf{X} \boldsymbol{\beta}_{j1} \cdot \boldsymbol{\tau}_{j1} + \mathbf{X} \boldsymbol{\beta}_{j2} \cdot \boldsymbol{\tau}_{j2}, \sigma) \\
-			\alpha                       & \sim \text{Normal}(\mu_\alpha, \sigma_\alpha)                                                                                                                                     \\
-			\alpha_j                     & \sim \text{Normal}(0, \tau_\alpha)                                                                                                                                                \\
-			\boldsymbol{\beta}_{j1}      & \sim \text{Normal}(\mu_{\boldsymbol{\beta j1}}, \sigma_{\boldsymbol{\beta j1}})                                                                                                   \\
-			\boldsymbol{\beta}_{j2}      & \sim \text{Normal}(\mu_{\boldsymbol{\beta j2}}, \sigma_{\boldsymbol{\beta j2}})                                                                                                   \\
-			\tau_\alpha                  & \sim \text{Cauchy}^+(0, \psi_{\alpha})                                                                                                                                            \\
-			\boldsymbol{\tau}_{\beta j1} & \sim \text{Cauchy}^+(0, \psi_{\beta j1})                                                                                                                                          \\
-			\boldsymbol{\tau}_{\beta j2} & \sim \text{Cauchy}^+(0, \psi_{\beta j2})                                                                                                                                          \\
-			\sigma                       & \sim \text{Exponential}(\lambda_\sigma)
-		\end{aligned}
-	$$
-\end{frame}
-
-\begin{frame}{Mathematical Specification -- Correlated Varying-Slope Model}
-	This example is for linear regression:
-	$$
-		\begin{aligned}
-			\mathbf{y}           & \sim \text{Normal}(\mathbf{X} \boldsymbol{\beta}_{j}, \sigma)            \\
-			\boldsymbol{\beta}_j & \sim \text{Multivariate Normal}(\boldsymbol{\mu}_j, \boldsymbol{\Sigma})
-			\quad \text{for}\quad j \in \{ 1, \dots, J \}                                                   \\
-			\boldsymbol{\Sigma}  & \sim \text{LKJ}(\eta)                                                    \\
-			\sigma               & \sim \text{Exponential}(\lambda_\sigma)
-		\end{aligned}
-	$$
-	Each coefficient vector $\boldsymbol{\beta}_j$ represents the
+	Each coefficient vector $\boldsymbol{\eta}_j$ represents the
 	model columns $\mathbf{X}$ coefficients for every group $j \in J$.
-	Also the first column of $\mathbf{X}$ is a column filled with $1$s
-	(intercept).
 \end{frame}
 
-\begin{frame}{Mathematical Specification -- Correlated Varying-Slope Model}
+\begin{frame}{Mathematical Specification of Hierarchical Models}
 	If you need to extend to more than one group,
 	such as $J_1, J_2, \dots$:
 	$$
 		\begin{aligned}
-			\mathbf{y}              & \sim \text{Normal}(\alpha + \mathbf{X} \boldsymbol{\beta}_{j1} + \mathbf{X} \boldsymbol{\beta}_{j2}, \sigma) \\
-			\boldsymbol{\beta}_{j1} & \sim \text{Multivariate Normal}(\boldsymbol{\mu}_{j1}, \boldsymbol{\Sigma}_1)
-			\quad \text{for}\quad j_1 \in \{ 1, \dots, J_1 \}                                                                                      \\
-			\boldsymbol{\beta}_{j2} & \sim \text{Multivariate Normal}(\boldsymbol{\mu}_{j2}, \boldsymbol{\Sigma}_2)
-			\quad \text{for}\quad j_2 \in \{ 1, \dots, J_2 \}                                                                                      \\
-			\boldsymbol{\Sigma}_1   & \sim \text{LKJ}(\eta_1)                                                                                      \\
-			\boldsymbol{\Sigma}_2   & \sim \text{LKJ}(\eta_2)                                                                                      \\
-			\alpha                  & \sim \text{Normal}(\mu_\alpha, \sigma_\alpha)                                                                \\
-			\sigma                  & \sim \text{Exponential}(\lambda_\sigma)
+			\mathbf{y}             & \sim \text{Normal}(\alpha + \mathbf{X} \boldsymbol{\eta_{j1}} + \mathbf{X} \boldsymbol{\eta_{j2}}, \sigma)               \\
+			\boldsymbol{\eta_{j1}} & \sim \text{Multivariate Normal}(\mathbf{0}, \boldsymbol{\Omega}_1)
+			\quad \text{for}\quad j_1 \in \{ 1, \dots, J_1 \}                                                                                                 \\
+			\boldsymbol{\eta_{j2}} & \sim \text{Multivariate Normal}(\mathbf{0}, \boldsymbol{\Omega}_2)
+			\quad \text{for}\quad j_2 \in \{ 1, \dots, J_2 \}                                                                                                 \\
+			\boldsymbol{\Omega_1}  & = \operatorname{Diagonal}(\boldsymbol{\omega_1}) \cdot \mathbf{C_1} \cdot \operatorname{Diagonal}(\boldsymbol{\omega_2}) \\
+			\boldsymbol{\Omega_1}  & = \operatorname{Diagonal}(\boldsymbol{\omega_1}) \cdot \mathbf{C_2} \cdot \operatorname{Diagonal}(\boldsymbol{\omega_2}) \\
+			\mathbf{C_1}           & \sim \text{LKJ}(\eta_1)                                                                                                  \\
+			\mathbf{C_2}           & \sim \text{LKJ}(\eta_2)                                                                                                  \\
+			\sigma                 & \sim \text{Exponential}(1)
 		\end{aligned}
 	$$
 \end{frame}
