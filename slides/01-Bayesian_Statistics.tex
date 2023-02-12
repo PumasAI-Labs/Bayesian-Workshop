@@ -1,4 +1,4 @@
-%!TEX root = slides.tex
+% !TeX root = slides.tex
 
 \section{Bayesian Statistics}
 
@@ -364,9 +364,9 @@
 
 \begin{frame}{Visualization of Joint Probability versus Conditional Probability} \centering
 	\begin{tikzpicture}[scale=0.9]
-		\begin{axis}[ domain = -3.5:3.5, domain y = -3.5:3.5, view = {-70}{20}, title={$P(X,Y)$ versus $P(X \mid Y=-0.75)$}, xlabel={$X$}, ylabel={$Y$}, zmin = -0, zticklabels=\empty, xtick=\empty, ytick={-0.75}, ztick=\empty, axis z line*=none, axis y line*=left, axis x line*= bottom] \addplot3 [ domain = -3.5:3.5, samples = 50, samples y = 0, thick, smooth, color = red, fill = orange, opacity = 0.75] (x, -0.75, {conditionalbinormal(-0.75, 0, 1, 0, 1, 0.75)}); 
+		\begin{axis}[ domain = -3.5:3.5, domain y = -3.5:3.5, view = {-70}{20}, title={$P(X,Y)$ versus $P(X \mid Y=-0.75)$}, xlabel={$X$}, ylabel={$Y$}, zmin = -0, zticklabels=\empty, xtick=\empty, ytick={-0.75}, ztick=\empty, axis z line*=none, axis y line*=left, axis x line*= bottom] \addplot3 [ domain = -3.5:3.5, samples = 50, samples y = 0, thick, smooth, color = red, fill = orange, opacity = 0.75] (x, -0.75, {conditionalbinormal(-0.75, 0, 1, 0, 1, 0.75)});
 
-			\draw (-3.5, -0.75, 0) -- (3.5, -0.75, 0); 
+			\draw (-3.5, -0.75, 0) -- (3.5, -0.75, 0);
 
 			\addplot3 [ surf, domain = -3.5:3.5, samples = 50, opacity = 0.15, faceted color = colorB, colormap = {blueblack}{ color = (colorB) color = (colorA!
 						%% Bivariate Normal adapted from: https://github.com/walmes/Tikz/blob/master/src/bivariate-normal.pgf% zlabel={$SSE(\beta_0, \beta_1)$},%xticklabels=\empty,%yticklabels=\empty,
@@ -464,7 +464,7 @@
 		\begin{aligned}
 			P(A,B) & = P(B,A) \\ P(A) \cdot P(B \mid A) & = P(B) \cdot P(A \mid B)
 		\end{aligned}
-	$$ 
+	$$
 
 	OK, now divide everything by $P(B)$: $$
 		\begin{aligned}

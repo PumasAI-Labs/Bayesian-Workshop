@@ -14,15 +14,15 @@
 % This will add an "Outline" Table of Contents for each section
 % uncomment if desired
 \AtBeginSection[]{
-  \begin{frame}
-  \vfill
-  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
-    \usebeamerfont{title}\insertsectionhead\par%
-  \end{beamercolorbox}
-  \vfill
-  \setcounter{tocdepth}{10}
-  \tableofcontents[currentsubsection, sectionstyle=hide/hide, subsectionstyle=show/show/hide, subsubsectionstyle=show/show/show/hide] % Show current section and current section's subsections, but hide other section's section and subsections!
-\end{frame}
+	\begin{frame}
+		\vfill
+		\begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+			\usebeamerfont{title}\insertsectionhead\par%
+		\end{beamercolorbox}
+		\vfill
+		\setcounter{tocdepth}{10}
+		\tableofcontents[currentsubsection, sectionstyle=hide/hide, subsectionstyle=show/show/hide, subsubsectionstyle=show/show/show/hide] % Show current section and current section's subsections, but hide other section's section and subsections!
+	\end{frame}
 }
 % \AtBeginSection[]{%
 % 	\frame<beamer>{
@@ -168,14 +168,12 @@
 \institute{\textcolor{pureminimalistic@text@pumasblue}{PumasAI}}
 \date{\today}
 
-
 %%%% Maths crap
 \newtheorem{theo}{Theorem}[]
 \newtheorem{defn}{Definition}[]
 \newtheorem{question}{Question}[]
 \newtheorem{idea}{Idea}[]
 \newtheorem{property}{Property}[]
-
 
 \begin{document}
 %--- Title Page -------------------------------------------------------%
