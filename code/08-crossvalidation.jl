@@ -48,7 +48,7 @@ iparams = (; tvcl = 1, tvvc = 70, σ = 0.6, C = float.(Matrix(I(2))), ω = [0.1,
 
 # 4 chains as default
 # Parallel as default across multiple subjects and chains
-pk2cpt_fit = fit(pk2cpt, pop, iparams, Pumas.BayesMCMC(nsamples = 600, nadapts = 300))
+pk2cpt_fit = fit(pk2cpt, pop, iparams, BayesMCMC(nsamples = 600, nadapts = 300))
 
 # Remove the warmup/adapt/burn-in samples
 tr_pk2cpt_fit = Pumas.truncate(pk2cpt_fit; burnin = 300)

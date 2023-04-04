@@ -98,7 +98,7 @@ iv_2cmt_ir_fit = fit(
     iv_2cmt_ir,
     pop,
     iparams,
-    Pumas.BayesMCMC(
+    BayesMCMC(
         nsamples=100,
         nadapts=50,
         target_accept=0.5,

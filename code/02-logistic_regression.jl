@@ -48,5 +48,5 @@ nausea_fit = fit(
     logistic_model,
     pop,
     init_params(logistic_model),
-    Pumas.BayesMCMC()
+    BayesMCMC()
 )
