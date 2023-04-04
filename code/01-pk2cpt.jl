@@ -48,7 +48,7 @@ pk2cpt_fit = fit(
     pk2cpt,
     pop,
     iparams,
-    Pumas.BayesMCMC(
+    BayesMCMC(
         nsamples=2_000,
         nadapts=1_000,
     ),
