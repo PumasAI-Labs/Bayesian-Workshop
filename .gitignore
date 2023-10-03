@@ -301,3 +301,6 @@ examples/
 # Pumas in the Cloud / JuliaHub
 Project.toml
 Manifest.toml
+
+# NixOS
+.direnv

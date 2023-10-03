@@ -1,0 +1,175 @@
+%--- Preamble ---------------------------------------------------------%
+% Load LaTeX packages
+\documentclass[aspectratio=169]{beamer}                    % supports floating text in any location
+%\usetheme[noto, showmaxslides, darkmode]{pureminimalistic}
+\usetheme[noto, lightmode]{pureminimalistic}
+\graphicspath{{logos/}}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{subsection in toc}[subsections numbered]
+
+% This will add an "Outline" Table of Contents for each section
+% uncomment if desired
+\AtBeginSection[]{
+	\begin{frame}
+		\vfill
+		\begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+			\usebeamerfont{title}\insertsectionhead\par%
+		\end{beamercolorbox}
+		\vfill
+		\setcounter{tocdepth}{10}
+		\tableofcontents[currentsubsection, sectionstyle=hide/hide, subsectionstyle=show/show/hide, subsubsectionstyle=show/show/show/hide] % Show current section and current section's subsections, but hide other section's section and subsections!
+	\end{frame}
+}
+% \AtBeginSection[]{%
+% 	\frame<beamer>{
+% 		\frametitle{\secname}
+% 		\setcounter{tocdepth}{10}
+% 		\tableofcontents[currentsubsection, sectionstyle=hide/hide, subsectionstyle=show/show/hide, subsubsectionstyle=show/show/show/hide] % Show current section and current section's subsections, but hide other section's section and subsections!
+% 	}
+% }
+
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes,xpatch}% recommended
+%\usepackage[english]{babel}
+\usepackage[american]{babel}
+\babelprovide[import, main]{english}
+\usepackage{tikz}
+\usepackage{hyphenat}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{bookmark}
+\usepackage{multicol} % for multicolumn Table of Contents
+
+% Hyperlinks
+\usepackage{hyperref}
+\hypersetup{%
+	colorlinks=true,
+	bookmarks=true,
+	bookmarksdepth=4,
+	bookmarksnumbered=true,
+	bookmarksopen=true,
+	linkbordercolor=black,
+	allcolors=pureminimalistic@text@pumasblue,
+	pdfborderstyle={/S/U/W 1}% border style will be underline of width 1pt
+}
+
+% Math
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{wasysym}
+
+% Algorithms
+\usepackage[ruled,vlined,english]{algorithm2e}
+\SetKwFor{For}{for}{}{}
+
+% Code
+\usepackage{listings}
+\usepackage{lstbayes} % Stan
+\lstset{
+	language=R,
+	moredelim=**[is][\color{blue}]{@}{@}}
+
+% strike through text
+\usepackage[normalem]{ulem}
+
+% Plots
+\usepackage{pgfplots}
+\graphicspath{{logos/}{images/}}
+\pgfplotsset{height=6cm, % only if needed
+	width=12cm,
+	compat=1.17,
+	legend style = {fill = white, draw = black},
+	contour/every contour label/.style={
+			every node/.style={mapped color!50!white,fill=white}}
+}
+\usepackage{tikz}
+\usepackage{tikzsymbols} % Metropolis Little Man
+\usetikzlibrary{shapes}
+\usetikzlibrary{arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+\usetikzlibrary{automata} % State in Markov Chains
+\usetikzlibrary{intersections}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{external}
+\tikzsetfigurename{fig}
+% Sample Space subfigures
+\usepackage{subfigure}
+\definecolor{gray80}{gray}{0.8}
+\definecolor{gray60}{gray}{0.6}
+\definecolor{colorA}{rgb}{102, 255, 255}
+\definecolor{colorB}{rgb}{0, 102, 255}
+\usepackage{transparent}
+% Multilevel Modeling
+\usepackage{adjustbox}
+\newcommand*{\offset}{0.025}
+\definecolor{light}{RGB}{188, 188, 220}
+\definecolor{mid}{RGB}{124, 124, 185}
+\definecolor{dark}{RGB}{39, 39, 143}
+\definecolor{highlight}{RGB}{180, 31, 180}
+% Animations
+\usepackage{media9}
+\usepackage{multimedia}
+\addmediapath{animations}
+
+% \renewcommand{\pageword}{}
+% \renewcommand{\logoheader}{\vspace{1.5em}}
+
+% Bibliography
+\usepackage[
+	natbib=true,
+	backend=bibtex,
+	%    style=abnt,
+	%    style=authoryear-comp,
+	%    style=authoryear,
+	%    style=ieee,
+	%    style=acm,
+	%    style=apalike,
+	%    style=siam,
+	%    style=ieeetr,
+	%    style=plain,
+	%    style=vancouver,
+	style=mla,
+	doi=true,
+	eprint=false,
+	hyperref=true,
+	url=true]
+{biblatex}
+\addbibresource{references.bib}
+% biblatex
+\renewcommand*{\bibfont}{\footnotesize}
+% natbib
+%\def\bibfont{\footnotesize}
+
+%% this makes it possible to add backup slides, without counting them
+\usepackage{appendixnumberbeamer}
+\renewcommand{\appendixname}{\texorpdfstring{\translate{appendix}}{appendix}}
+\renewcommand{\inserttotalframenumber}{\pageref{lastslide}}
+% logos
+
+% footer page
+\renewcommand{\pageword}{\secname~- Slide}
+
+% Math Font Default (Fira is strange)
+\renewcommand\mathfamilydefault{\rmdefault}
+
+% footnotes
+\renewcommand{\thefootnote}{\roman{footnote}}
+
+% if loaded after begin{document} a warning will appear: "pdfauthor already used"
+\title[Bayesian Workshop]{Bayesian Workshop: How to use Bayesian methods in Pumas}
+\author[\textcolor{pureminimalistic@text@pumasblue}{PumasAI}]{Jose Storopoli and Mohamed Tarek \texttt{\{jose.storopoli,mohamed\}@pumas.ai}}
+\institute{\textcolor{pureminimalistic@text@pumasblue}{PumasAI}}
+\date{\today}
+
+%%%% Maths crap
+\newtheorem{theo}{Theorem}[]
+\newtheorem{defn}{Definition}[]
+\newtheorem{question}{Question}[]
+\newtheorem{idea}{Idea}[]
+\newtheorem{property}{Property}[]
+
+\begin{document}

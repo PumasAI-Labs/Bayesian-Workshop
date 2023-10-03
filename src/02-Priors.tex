@@ -1,0 +1,211 @@
+% !TeX root = slides.tex
+
+\section{Priors}
+
+\subsection{Recommended References}
+\begin{frame}{Priors and Posteriors - Recommended References}
+	\begin{vfilleditems}
+		\item \textcite{gelman2013bayesian}:
+		\begin{vfilleditems}
+			\item Chapter 2: Single-parameter models
+			\item Chapter 3: Introduction to multiparameter models
+		\end{vfilleditems}
+		\item \textcite{mcelreath2020statistical} - Chapter 4: Geocentric Models
+		\item \textcite{gelman2020regression}:
+		\begin{vfilleditems}
+			\item Chapter 9, Section 9.3: Prior information and Bayesian synthesis
+			\item Chapter 9, Section 9.5: Uniform, weakly informative, and informative priors in regression
+		\end{vfilleditems}
+		\item \textcite{vandeschootBayesianStatisticsModelling2021}
+	\end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Prior Probability }
+	Bayesian statistics is characterized by the use of prior information
+	as the prior probability $P(\theta)$, often just prior:
+	$$
+		\underbrace{P(\theta \mid y)}_{\text{Posterior}} = \frac{\overbrace{P(y \mid  \theta)}^{\text{Likelihood}} \cdot \overbrace{P(\theta)}^{\text{Prior}}}{\underbrace{P(y)}_{\text{Normalizing Constant}}}
+	$$
+\end{frame}
+
+\subsection{The subjectivity of the Prior}
+\begin{frame}{The subjectivity of the Prior}
+	\begin{vfilleditems}
+		\item Many criticisms to Bayesian statistics are due the subjectivity
+		in eliciting priors probability on certain hypothesis or model parameter's values.
+		\item Subjectivity is something unwanted in the ideal picture of the
+		scientist and the scientific method.
+	\end{vfilleditems}
+	\textbf{Counter-arguments}:
+	\begin{vfilleditems}
+		\item Very weak priors avoid subjectivity.
+		\item Anything that involves human action will never be free from
+		subjectivity.
+		We have subjectivity in everything and science is \textcolor{red}{no} exception.
+		% \item The creative and deductive process of theory and hypotheses formulations
+		% is \textbf{not} objective.
+		\item Frequentist statistics is also subjective, since there is \textbf{A LOT} of subjectivity in
+		choosing the model and target p-value \parencite{jaynesProbabilityTheoryLogic2003, vandeschootBayesianStatisticsModelling2021}
+	\end{vfilleditems}
+\end{frame}
+
+% \begin{frame}{How to Incorporate Subjectivity}
+% 	\begin{vfilleditems}
+% 		\item Bayesian statistics \textbf{embraces} subjectivity while
+% 		frequentist statistics \textbf{bans} it.
+% 		\item For Bayesian statistics, \textbf{subjectivity guides our inferences}
+% 		and leads to more robust and reliable models that can assist in
+% 		decision making.
+% 		\item Whereas, for frequentist statistics, \textbf{subjectivity is a taboo}
+% 		and all inferences should be objective,
+% 		even if it resorts to \textbf{hiding and omitting model assumptions}.
+% 		\item Bayesian statistics also has assumptions and subjectivity,
+% 		but these are \textbf{declared and formalized}
+% 	\end{vfilleditems}
+% \end{frame}
+
+\subsection{Types of Priors}
+
+\begin{frame}{Types of Priors}
+	In general, we can have 3 main types of priors in a Bayesian approach
+	\parencite{gelman2013bayesian, mcelreath2020statistical, vandeschootBayesianStatisticsModelling2021}:
+	\begin{vfilleditems}
+		\item \textbf{uniform (flat)}: not recommended.
+		\item \textbf{weakly informative}: little domain knowledge added.
+		\item \textbf{informative}: medium to high domain knowledge.
+	\end{vfilleditems}
+\end{frame}
+
+% \subsubsection{Uniform Prior (Flat)}
+% \begin{frame}{Uniform Prior (Flat)}
+% 	Starts from the premise that ``everything is possible''.
+% 	There is no limits in the degree of beliefs that the distribution of certain
+% 	values must be or any sort of restrictions.
+% 	\vfill
+% 	Flat and super-vague priors are not usually recommended and some thought
+% 	should included to have at least weakly informative priors.
+% 	\vfill
+% 	Formally, an uniform prior is an uniform distribution over all the
+% 	possible support of the possible values:
+% 	\begin{vfilleditems}
+% 		\item \textbf{model parameters}: $\{\theta \in \mathbb{R} : -\infty < \theta < \infty\}$
+% 		\item \textbf{model error or residuals}: $\{\sigma \in \mathbb{R}^+ : 0 \leq \theta < \infty\}$
+% 	\end{vfilleditems}
+% \end{frame}
+
+\subsubsection{Prior Selection}
+\begin{frame}{Prior Selection}
+	\begin{center}
+	\begin{tabular}{||p{0.2\linewidth} p{0.7\linewidth}||} 
+	 \hline
+	 Support & Distributions \\ [0.5ex] 
+	 \hline\hline
+	 (0, 1) & \lstinline{Beta}, \lstinline{KSOneSided}, \lstinline{NoncentralBeta}, \lstinline{LogitNormal} \\ 
+	 \hline
+	 $\mathcal{R}^+$ & \lstinline{BetaPrime}, \lstinline{Chi}, \lstinline{Chisq}, \lstinline{Erlang}, \lstinline{Exponential}, \lstinline{FDist}, \lstinline{Frechet}, \lstinline{Gamma}, \lstinline{InverseGamma}, \lstinline{InverseGaussian}, \lstinline{Kolmogorov}, \lstinline{LogNormal}, \lstinline{NoncentralChisq}, \lstinline{NoncentralF}, \lstinline{Rayleigh}, \lstinline{Weibull} \\
+	 \hline
+	 $\mathcal{R}$ & \lstinline{Cauchy}, \lstinline{Gumbel}, \lstinline{Laplace}, \lstinline{Logistic}, \lstinline{Normal}, \lstinline{NormalCanon}, \lstinline{NormalInverseGaussian}, \lstinline{PGeneralizedGaussian}, \lstinline{TDist} \\  [1ex] 
+	 \hline
+	\end{tabular}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Prior Selection}
+	\begin{center}
+	\begin{tabular}{||p{0.2\linewidth} p{0.7\linewidth}||} 
+	 \hline
+	 Support & Distributions \\ [0.5ex] 
+	 \hline\hline
+	 $\mathcal{R}$ vectors & \lstinline{MvNormal} \\
+	 \hline
+	 $\mathcal{R}^+$ vectors & \lstinline{MvLogNormal} \\
+	 \hline
+	 PD mats & \lstinline{Wishart}, \lstinline{InverseWishart} \\
+	 \hline
+	 Corr mats & \lstinline{LKJ}, \lstinline{LKJCholesky} \\
+	 \hline
+	 Other & \lstinline{Constrained}, \lstinline{truncated}, \lstinline{LocationScale}, \lstinline{Uniform}, \lstinline{Arcsine}, \lstinline{Biweight}, \lstinline{Cosine}, \lstinline{Epanechnikov}, \lstinline{Semicircle}, \lstinline{SymTriangularDist}, \lstinline{Triweight}, \lstinline{Pareto}, \lstinline{GeneralizedPareto}, \lstinline{GeneralizedExtremeValue}, \lstinline{Levy} \\ [1ex] 
+	 \hline
+	\end{tabular}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Prior Selection}
+  \vfill
+  Check \textbf{similar} models from literature. If you really have to choose a new prior, follow the following process:
+  \vfill
+  \begin{vfilleditems}
+	 \item Decide the \textbf{support} of the prior. The support of the prior distribution must match the the domain of the parameter.
+	 \item Decide the \textbf{center} of the prior, e.g. mean, median or mode.
+	 \item Decide the \textbf{strength} of the prior. This is often controlled by a standard deviation or scale parameter in the distribution constructor.
+	 \item Decide the \textbf{shape} of the probability density function (PDF) of the prior. Left skewed, right skewed, centered, heavy tail, etc.
+  \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Prior Selection}
+  A prior too strong around the wrong parameter values can negatively hurt your study.
+  \vfill
+  It will then require many more observations to infer a posterior distribution centered around the true data generating parameter values.
+  \vfill
+  A prior too weak can often hinder the performance of the inference.
+\end{frame}
+
+% \subsubsection{Weekly Informative Prior}
+% \begin{frame}{Weekly Informative Prior}
+% 	Here we start to have ``educated'' guess about our parameter values.
+% 	Hence, we don't start from the premise that ``anything is possible''.
+% 	\vfill
+% 	I recommend always to transform the priors of the problem at hand into
+% 	something centered in $0$ with standard deviation of $1$\footnote{
+% 		this is called standardization,
+% 		transforming all variables into $\mu=0$ and $\sigma=1$.}:
+% 	\vfill
+% 	\begin{vfilleditems}
+% 		\item $\theta \sim \text{Normal}(0, 1)$ (Andrew Gelman's preferred choice\footnote{
+% 			see more about prior choices in the
+% 			\href{https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations}{\texttt{Stan}'s GitHub wiki}.})
+% 		\item $\theta \sim \text{Student}(\nu=3, 0, 1)$ (Aki Vehtari's preferred choice)
+% 	\end{vfilleditems}
+% \end{frame}
+
+\subsubsection{Priors for Covariance Matrices}
+\begin{frame}{Priors for Covariance Matrices}
+	We can specify a prior for a covariance matrix
+	$\boldsymbol{\Sigma}$.
+	\vfill
+	For computational efficiency,
+	we can make the covariance matrix $\boldsymbol{\Sigma}$ into a correlation matrix.
+	Every covariance matrix can be decomposed into:
+	$$
+		\boldsymbol{\Sigma}=\text{diag}_\text{matrix}(\boldsymbol{\tau}) \cdot \mathbf{C} \cdot \text{diag}_\text{matrix}(\boldsymbol{\tau})
+	$$
+	where $\mathbf{C}$ is a correlation matrix with
+	$1$s in the diagonal and the off-diagonal elements between -1 and 1 $\rho \in (-1, 1)$.
+	$\boldsymbol{\tau}$ is a vector composed of the variables' variances from
+	$\boldsymbol{\Sigma}$ (is is the $\boldsymbol{\Sigma}$'s diagonal).
+\end{frame}
+
+\begin{frame}{Priors for Covariance Matrices}
+	\small
+	Additionally, the correlation matrix $\mathbf{C}$
+	can be decomposed once more for greater computational efficiency.
+	Since all correlations matrices are symmetric and positive definite
+	(all of its eigenvalues are real numbers $\mathbb{R}$ and positive $>0$),
+	we can use the \href{https://en.wikipedia.org/wiki/Cholesky_decomposition}
+	{Cholesky Decomposition}
+	to decompose it into a triangular matrix
+	(which is much more computational efficient to handle):
+	$$
+		\mathbf{C} = \mathbf{L}_{\mathbf{C}} \mathbf{L}^T_{\mathbf{C}}
+	$$
+	where $\mathbf{L}_{\mathbf{C}}$ is a lower-triangular matrix.
+	\vfill
+	What we are missing is to define a prior for the correlation matrix $\mathbf{C}$.
+\end{frame}
+
+\subsubsection{Simulating from the prior}
+\begin{frame}{Simulating from the prior}
+It can be useful sometimes to simulate from the model propagating the uncertainty from the prior distributions to the model predictions.
+\vfill
+Predictions from the model can further be plotted against the observations to get a feel for the behavior of the prior model. 
+\end{frame}
