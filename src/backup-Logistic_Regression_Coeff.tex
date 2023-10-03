@@ -1,0 +1,81 @@
+% !TeX root = slides.tex
+
+\section{How to Interpret Logistic Regression Coefficients}
+\begin{frame}[noframenumbering]{How to Interpret Logistic Regression Coefficients}
+    If we revisit logistic transformation mathematical expression,
+    we see that, in order to interpret coefficients $\boldsymbol{\beta}$,
+    we need to perform a transformation.
+    \vfill
+    Specifically, we need to undo the logistic transformation.
+    We are looking for its inverse function.
+\end{frame}
+
+\subsection*{Probability versus Odds}
+\begin{frame}[noframenumbering]{Probability versus Odds}
+    \small
+    But before that, we need to discern between
+    \textbf{probability and odds}\footnote{mathematically speaking.}.
+    \begin{vfilleditems}
+        \item \small \textbf{Probability}: a real number between $0$ and $1$
+        that represents the certainty that an event will occur,
+        either by long-term frequencies (frequentist approach) or
+        degrees of belief (Bayesian approach).
+        \item \small \textbf{Odds}: a positive real number ($\mathbb{R}^+$)
+        that also measures the certainty of an event happening.
+        However this measure is not expressed as a probability
+        (between $0$ and $1$),
+        but as the \textbf{ratio between the number of results that
+            generate our desired event and the number of results that
+            \textit{do not} generate our desired event}:
+        $$
+            \text{odds} = \frac{p}{1-p}
+        $$
+        where $p$ is the probability.
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}[noframenumbering]{Probability versus Odds}
+    $$
+        \text{odds} = \frac{p}{1-p}
+    $$
+    where $p$ is the probability.
+    \vfill
+    \begin{vfilleditems}
+        \item Odds with a value of $1$ is a neutral odds,
+        similar to a fair coin: $p = \frac{1}{2}$
+        \item Odds below $1$ decrease the probability of seeing a certain event.
+        \item Odds over $1$ increase the probability of seeing a certain event.
+    \end{vfilleditems}
+\end{frame}
+
+\subsection*{Logodds}
+\begin{frame}[noframenumbering]{Logodds}
+    If you revisit the logistic function, you'll se that the intercept $\alpha$
+    and coefficients $\boldsymbol{\beta}$ are literally the \textbf{log of the odds}
+    (logodds):
+    $$
+        \begin{aligned}
+            p                  & = \text{logistic}(\alpha +  \mathbf{X} \boldsymbol{\beta} )                 \\
+            p                  & = \text{logistic}(\alpha) + \text{logistic}( \mathbf{X} \boldsymbol{\beta}) \\
+            p                  & = \frac{1}{1 + e^{(-\boldsymbol{\beta})}}                                   \\
+            \boldsymbol{\beta} & = \log(\text{odds})
+        \end{aligned}
+    $$
+\end{frame}
+
+\begin{frame}[noframenumbering]{Logodds}
+    Hence, the coefficients of a logistic regression are expressed in logodds,
+    in which $0$ is the neutral element,
+    and any number above or below it increases or decreases, respectively,
+    the changes of obtaining a ``success'' in $\mathbf{y}$.
+    To have a more intuitive interpretation (similar to the betting houses),
+    we need to \textbf{convert the logodds into chances} by undoing the $\log$ function.
+    We need to perform an \textbf{exponentiation} of $\alpha$ and $\boldsymbol{\beta}$
+    values:
+    $$
+        \begin{aligned}
+            \text{odds}(\alpha)               & = e^\alpha               \\
+            \text{odds}({\boldsymbol{\beta}}) & = e^{\boldsymbol{\beta}}
+        \end{aligned}
+    $$
+\end{frame}

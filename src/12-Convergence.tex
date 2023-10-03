@@ -1,0 +1,522 @@
+% !TeX root = slides.tex
+
+\section{Convergence Diagnostics}
+
+\subsection{MCMC Convergence}
+\begin{frame}{Markov Chain Convergence}
+    MCMC has an interesting property that it will
+    \textbf{asymptotically converge to the target distribution}\footnote{
+        this property is not present on neural networks.}.
+    \vfill
+    That means, if we have all the time in the world, it is guaranteed,
+    irrelevant of the target distribution posterior geometry,
+    \textbf{MCMC will give you the right answer}.
+    \vfill
+    However, we don't have all the time in the world
+    Different MCMC algorithms, like HMC and NUTS,
+    can reduce the sampling (and warmup) time necessary for convergence to the target distribution.
+\end{frame}
+
+\begin{frame}{Can We Prove Convergence?}
+    \begin{vfilleditems}
+        \item In the ideal scenario, the NUTS sampler converges to the true posterior and doesn't miss on any mode.
+        \item Unfortunately, this is not easy to prove in general.
+        \item All the convergence diagnostics are only tests for symptoms of lack of convergence.
+        \item In other words if all the diagnostics look normal, then we can't prove that the sampler didn't converge.
+        \item But we also can't prove that the sampler actually converged.
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Signs of Lack of Convergence}
+    \begin{vfilleditems}
+        \item Some signs of lack of convergence are:
+            \begin{vfilleditems}
+                \item Any of the moments (e.g. the mean or standard deviation) is changing with time. This is diagnosed using stationarity tests by comparing different parts of a single chain to each other.
+                \item Any of the moments is sensitive to the initial parameter values. This is diagnosed using multiple chains by comparing their summary statistics to each other.
+            \end{vfilleditems}
+        \item While high auto-correlation is not strictly a sign of lack of convergence, samplers with high auto-correlation will require many more samples to get to the same ESS as another sampler with low auto-correlation. So a low auto-correlation is usually more desirable.
+    \end{vfilleditems}
+\end{frame}
+
+\subsection{Diagnostic Plots}
+
+\begin{frame}{Trace Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{trace_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            The trace plot of a parameter shows the value of the parameter in each iteration of the MCMC algorithm.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Trace Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{trace_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            A good trace plot is one that:
+            \vfill
+            \begin{vfilleditems}
+                \item Is noisy, not an increasing or decreasing line for example.
+                \item Has a fixed mean.
+                \item Has a fixed variance.
+                \item Shows all chains overlapping with each other, aka chain mixing.
+            \end{vfilleditems}
+            \vfill
+            This is an example of somewhat well mixed chains that don't indicate non-convergence.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Cumulative Mean Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{cummean_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            The cumulative mean plot of a parameter shows the mean of the parameter value in each MCMC chain up to a certain iteration.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Cumulative Mean Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{cummean_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            An MCMC chain converging to a stationary posterior distribution should have the cumulative mean of each parameter converge to a fixed value.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Cumulative Mean Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{cummean_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            All the chains should be converging to the same mean for a given parameter, the posterior mean.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Density Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{density_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{vfilleditems}
+                \item The density plot of a parameter shows a smoothed version of the histogram of the parameter values, giving an approximate probability density function for the marginal posterior of the parameter considered.
+                \item This helps us visualize the shape of the marginal posterior of each parameter.
+            \end{vfilleditems}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Auto-correlation Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{corplot_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{vfilleditems}
+                \item MCMC chains are prone to auto-correlation between the samples because each sample in the chain is a function of the previous sample.
+                \item The auto-correlation plot shows the correlation between every sample with index $s$ and the corresponding sample with index $s + \text{lag}$ for all $s \in 1:N-\text{lag}$ where $N$ is the total number of samples.
+            \end{vfilleditems}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Auto-correlation Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{corplot_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{vfilleditems}
+                \item For each value of $\text{lag}$, we can compute a correlation measure between the samples and their $\text{lag}$-steps-ahead counterparts.
+                \item The correlation is usually a value between 0 and 1 but can sometimes be between -1 and 0 as well.
+            \end{vfilleditems}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Auto-correlation Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{corplot_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{vfilleditems}
+                \item The auto-correlation plot shows the $\text{lag}$ on the x-axis and the correlation value on the y-axis.
+                \item For well behaving MCMC chains when $\text{lag}$ increases, the corresponding correlation gets closer to 0.
+            \end{vfilleditems}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Auto-correlation Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{corplot_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{vfilleditems}
+                \item This means that there is less and less correlation between any 2 samples further away from each other.
+                \item The value of $\text{lag}$ where the correlation becomes close to 0 can be used to guide the thinning of the MCMC samples to extract mostly independent samples from the auto-correlated samples.
+            \end{vfilleditems}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Ridge Line Plot}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{ridge_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            The ridge line plot shows similar information as the density plot in addition to the credible interval and quantile information.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Corner Plot}
+    \centering
+    \includegraphics[width=0.6\textwidth]{corner_1.png}
+\end{frame}
+
+\subsection{Other Diagnostics}
+\begin{frame}{Convergence Metrics}
+    There are a few metrics and diagnostics usually used to assess and diagnose the Markov chains:
+    \begin{vfilleditems}
+        \item \textbf{Effective Sample Size} (ESS):
+        an approximation of the ``number of independent samples'' generated by a Markov chain.
+        \item $\widehat{R}$ (\textbf{Rhat}):
+        potential scale reduction factor,
+        a metric to measure if the Markov chain have mixed,
+        and, potentially, converged.
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Effective Sample Size \parencite{gelman2013bayesian}}
+    $$\widehat{n}_{\text{eff}} = \frac{mn}{1 + \sum_{t=1}^T \widehat{\rho}_t}$$
+    Where:
+    \begin{vfilleditems}
+        \item $m$: number of Markov chains.
+        \item $n$: total samples per Markov chain (discarding warmup).
+        \item $\widehat{\rho}_t$: an autocorrelation estimate.
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Rhat \parencite{gelman2013bayesian}}
+    $$\widehat{R} = \sqrt{\frac{\widehat{\text{var}}^+(\psi \mid y)}{W}}$$
+    where $\widehat{\text{var}}^+(\psi \mid y)$ is the Markov chains' sample variance
+    for a certain parameter $\psi$.
+    We calculate it by using a weighted sum of the within-chain $W$
+    and between-chain $B$ variances:
+    $$\widehat{\text{var}}^+(\psi \mid y) = \frac{n-1}{n} W + \frac{1}{n} B$$
+    \vfill
+    Intuitively, the value is $1.0$ if all chains are totally convergent.
+    As a heuristic, if $\widehat{R} > 1.1$,
+    you need to worry because probably the chains have not converged adequate.
+\end{frame}
+
+% % plots taken from script:
+% % slides/images/bad_chains_traceplot.tex
+% \begin{frame}{Traceplot -- Convergent Markov Chains}
+%     \begin{figure}
+%         \centering
+%         \resizebox{.4\linewidth}{!}{\input{images/good_chains_traceplot.tex}}
+%         \caption{A convergent Markov chains traceplot}
+%     \end{figure}
+% \end{frame}
+
+% \begin{frame}{Traceplot -- Divergent Markov Chains}
+%     \begin{figure}
+%         \centering
+%         \resizebox{.4\linewidth}{!}{\input{images/bad_chains_traceplot.tex}}
+%         \caption{A divergent Markov chains traceplot}
+%     \end{figure}
+% \end{frame}
+
+% \subsubsection{What To Do If the Markov Chains Do Not Converge?}
+% \begin{frame}[fragile]{\texttt{Stan}'s Warning Messages\footnote{also see \href{https://mc-stan.org/misc/warnings.html}{\texttt{Stan}'s \textcolor{red}{warnings} guide}.}}
+%     \begin{lstlisting}[basicstyle=\footnotesize\color{red}]
+% Warning messages:
+% 1: There were 275 divergent transitions after warmup. See
+% http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+% to find out why this is a problem and how to eliminate them.
+% 2: Examine the pairs() plot to diagnose sampling problems
+
+% 3: The largest R-hat is 1.12, indicating chains have not mixed.
+% Running the chains for more iterations may help. See
+% http://mc-stan.org/misc/warnings.html#r-hat
+% 4: Bulk Effective Samples Size (ESS) is too low, indicating posterior
+% means and medians may be unreliable.
+% Running the chains for more iterations may help. See
+% http://mc-stan.org/misc/warnings.html#bulk-ess
+% 5: Tail Effective Samples Size (ESS) is too low, indicating posterior
+% variances and tail quantiles may be unreliable.
+% Running the chains for more iterations may help. See
+% http://mc-stan.org/misc/warnings.html#tail-ess
+%   \end{lstlisting}
+% \end{frame}
+% % https://mc-stan.org/misc/warnings.html
+
+% \begin{frame}[fragile]{\texttt{Turing.jl}'s Warning Messages}
+%     \textbf{\texttt{Turing.jl} does not give warning messages!}
+%     But you can check divergent transitions with $\texttt{summarize(chn; sections=[:internals])}$:
+%     \vfill
+%     %@model function funnel_cp()
+%     %    y ~ Normal(0, 3)
+%     %    x ~ Normal(0, exp(y/2))
+%     % end
+%     %chn = sample(funnel_cp(), NUTS(1_000, 0.8), MCMCThreads(), 1_000, 4)
+%     \begin{lstlisting}[basicstyle=\footnotesize]
+% Summary Statistics
+%       parameters     mean      std  naive_se     mcse      ess     rhat  ess_per_sec
+%           Symbol  Float64  Float64   Float64  Float64  Float64  Float64  Float64
+
+%               lp  -3.9649   1.7887   0.0200   0.1062  179.1235  1.0224   6.4133
+%          n_steps   9.1275  11.1065   0.1242   0.7899   38.3507  1.3012   1.3731
+%  acceptance_rate   0.5944   0.4219   0.0047   0.0322   40.5016  1.2173   1.4501
+%       tree_depth   2.2444   1.3428   0.0150   0.1049   32.8514  1.3544   1.1762
+%  numerical_error   0.1975   0.3981   0.0045   0.0273   59.8853  1.1117   2.1441
+%   \end{lstlisting}
+% \end{frame}
+
+\begin{frame}{Geweke Diagnostic}
+    \begin{vfilleditems}
+        \item The Geweke diagnostic compares the sample means of two disjoint sub-chains $X_1$ and $X_2$ of the entire chain.
+        \item It uses a difference of means hypothesis test where the null and alternative hypotheses are:
+            \begin{vfilleditems}
+                \item $H_0: \mu_1 = \mu_2$
+                \item $H_1: \mu_1 \neq \mu_2$
+            \end{vfilleditems}
+        where $\mu_1$ and $\mu_2$ are the means of $X_1$ and $X_2$ respectively.
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Geweke Diagnostic}
+    \begin{vfilleditems}
+        \item The first sub-chain $X_1$ is taken as the first $(\text{first} \times 100)\%$ of the samples in the chain. The second sub-chain $X_2$ is taken as the last $(\text{last} \times 100)\%$ of the samples in the chain.
+        \item The test statistic used is: $z_0 = (\bar{x}_1 - \bar{x}_2) / \sqrt{s_1^2 + s_2^2}$ where $\bar{x}_1$ and $\bar{x}_2$ are the sample means of $X_1$ and $X_2$ respectively, and $s_1$ and $s_2$ are the Markov Chain standard error (MCSE) estimates of $X_1$ and $X_2$ respectively.
+        \item Auto-correlation is assumed within the samples of each individual sub-chain, but the samples in $X_1$ are assumed to be independent of the samples in $X_2$.
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Geweke Diagnostic}
+    \begin{vfilleditems}
+        \item The p-value output is an estimate of $P(|z| > |z_0|)$, where $z$ is a standard normally distributed random variable.
+        \item Low p-values indicate one of the following:
+            \begin{vfilleditems}
+                \item The first and last parts of the chain are sampled from distributions with different means, i.e. non-convergence,
+                \item The need to discard some initial samples as burn-in, or
+                \item The need to run the sampling for longer due to lack of samples or high auto-correlation.
+            \end{vfilleditems}
+        \item High p-values (desirable) indicate the inability to conclude that the means of the first and last parts of the chain are different with statistical significance.
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Geweke Diagnostic}
+    \begin{vfilleditems}
+        \item However, this alone does not guarantee convergence to a fixed posterior distribution because:
+            \begin{vfilleditems}
+                \item Either the standard deviations or higher moments of $X_1$ and $X_2$ may be different, or
+                \item The independence assumption between $X_1$ and $X_2$ may not be satisfied when high auto-correlation exists.
+            \end{vfilleditems}
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Heidelberger and Welch Diagnostic}
+    The Heidelberger diagnostic attempts to:
+        \begin{enumerate}
+            \item Identify a cutoff point for the initial transient phase for each parameter, after which the samples can be assumed to come from a steady-state posterior distribution. Can be treated as burn-in.
+            \item Estimate the relative confidence interval for the mean of the steady-state posterior distribution of each parameter, assuming such steady-state distribution exists in the samples. A large confidence interval implies either the lack of convergence to a stationary distribution or lack of samples.
+            \item Quantify the extent to which the distribution of the samples is stationary using a hypothesis test. The returned p-value can be considered a measure of mean stationarity. A p-value lower than $\alpha$ (e.g. $\alpha = 0.05$) implies lack of stationarity of the mean.
+        \end{enumerate}
+\end{frame}
+
+\begin{frame}{Heidelberger and Welch Diagnostic}
+    The Heidelberger diagnostic only tests for the mean of the distribution. Therefore, it can only be used to detect lack of convergence and not to prove convergence. In other words, even if all the numbers seem normal, one cannot conclude that the chain converged to a stationary distribution or that it converged to the true posterior.
+\end{frame}
+
+% \begin{frame}{Raftery and Lewis Diagnostic}
+%     \begin{vfilleditems}
+%         \item This diagnostic is used to determine the number of iterations required to estimate a specified quantile $q$ within a desired degree of accuracy.
+%         \item The diagnostic is designed to determine the number of autocorrelated samples required to estimate a specified quantile $\theta_q$, such that $\Pr(\theta \le \theta_q) = q$, within a desired degree of accuracy.
+%         \item In particular, if $\hat{\theta}_q$ is the estimand and $\Pr(\theta \le \hat{\theta}_q) = \hat{P}_q$ the estimated cumulative probability, then accuracy is specified in terms of $r$ and $s$, where $\Pr(q - r < \hat{P}_q < q + r) = s$. Sample sizes estimated by the diagnostic tend to be conservative (too large).
+%     \end{vfilleditems}
+% \end{frame}
+
+\subsection{What To Do If the Markov Chains Do Not Converge?}
+% \begin{frame}{What To Do If the Markov Chains Do Not Converge?}
+%     \textbf{First}: before making any fine adjustments in the number of Markov chains
+%     or the number of iterations per chain, etc.
+%     Acknowledge that both \texttt{Stan}'s and \texttt{Turing.jl}'s NUTS sampler is
+%     \textbf{very efficient and effective in exploring the
+%         most crazy and diverse target posterior densities}.
+%     \vfill
+%     And the standard settings, \textbf{2,000 iterations and 4 chains},
+%     works perfectly for 99\% of the time.
+% \end{frame}
+
+\begin{frame}{What To Do If the Markov Chains Do Not Converge?}
+    \vfill
+    \begin{quotation}
+        When you have computational problems,
+        often there’s a problem with your model.
+    \end{quotation}
+    \vfill \vfill
+    \textcite{gelmanFolkTheoremStatistical2008} (Folk Theorem)
+\end{frame}
+
+% \begin{frame}{What To Do If the Markov Chains Do Not Converge?}
+%     If you are experiencing convergence issues,
+%     \textbf{and you've discarded that something is wrong with you model},
+%     here is a few steps to try\footnote{
+%         besides that,
+%         maybe should be worth to do a QR decomposition in the data matrix $\mathbf{X}$,
+%         thus having an orthogonal basis (non-correlated) for the sampler to explore.
+%         This makes the target distribution's geometry much more friendlier,
+%         in the topological/geometrical sense,
+%         for the MCMC sampler explore.
+%         Check the \hyperlink{appendixqr}{backup slides}.}.
+%     Here listed in increasing complexity:
+%     \begin{vfilleditems}
+%         \item[1.] \textbf{Increase the number of iterations and chains}:
+%         try first increasing the number of iterations,
+%         then try increasing the number of chains.
+%         (remember the default is 2,000 iterations and 4 chains).
+%     \end{vfilleditems}
+% \end{frame}
+
+% \begin{frame}{What To Do If the Markov Chains Do Not Converge?}
+%     \begin{vfilleditems}
+%         \item[2.] \textbf{Change the HMC's warmup adaptation routine}:
+%         make the HMC sampler to be more conservative in the proposals.
+%         This can be changed by increasing the hyperparameter
+%         \textbf{target acceptance rate of Metropolis proposals}\footnote{
+%             \texttt{Stan}'s default is \texttt{0.8} and
+%             \texttt{Turing.jl}'s default is \texttt{0.65}.}.
+%         The maximum value is $1.0$ (not recommended).
+%         Então qualquer valor entre $0.8$ e $1.0$ o torna mais conservador.
+%         \item[3.] \textbf{Model reparameterization}:
+%         there are two approaches.
+%         Centered parameterization (CP) and non-centered parameterization (NCP).
+%     \end{vfilleditems}
+% \end{frame}
+
+% \begin{frame}{What To Do If the Markov Chains Do Not Converge?}
+%     \begin{vfilleditems}
+%         \item[4.] \textbf{Collect more data}:
+%         sometimes the model is too complex and we need a higher sample size for stable estimates.
+%         \item[5.] \textbf{Rethink the model}:
+%         convergence issues with an adequate sample size might be due to
+%         incompatibility between priors and likelihood function(s).
+%         In this case you need to rethink the whole data generating process
+%         underlying the model, in which the model assumptions stems from.
+%     \end{vfilleditems}
+% \end{frame}
+
+\begin{frame}{What To Do If the Markov Chains Do Not Converge?}
+    \begin{vfilleditems}
+        \item Dynamics-based models with complicated stiff differential equations often suffer from sensitivity to parameter values in 2 ways:
+            \begin{vfilleditems}
+                \item First, small changes in the parameter values may lead to extremely different dynamics and wrong predictions thus leading to rejections.
+                \item And second, changes in the parameter values may make the differential equation highly stiff thus slowing down convergence or even causing divergence of the solver.
+            \end{vfilleditems}
+        \item In other words, MCMC for some complicated models can often run slow and fail to give good ESS values at the end.
+        \item In such cases, NUTS may not always be computationally feasible.
+        \item But you can try any of the following remedies and workarounds to poke at the model.
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{What To Do If the Markov Chains Do Not Converge?}
+    \begin{vfilleditems}
+        \item Lower the target acceptance ratio. This may alleviate the need for a small step size and a full tree exploration.
+        \item Re-parameterize your model to have less parameter dependence.
+        \item Fix some parameter values to known good values, e.g. values obtained by maximum-a-posteriori (MAP) optimization.
+        \item Initialize the sampling from good parameter values.
+        \item Use a stronger prior around suspected good parameter values.
+        \item Simplify your model, e.g. using simpler dynamics.
+        \item Try the marginal MCMC algorithm \lstinline{MarginalMCMC} instead of the full joint MCMC algorithm \lstinline{BayesMCMC}.
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{What To Do If the Markov Chains Do Not Converge?}
+    \begin{vfilleditems}
+        \item If you find the sampler regularly hitting the maximum tree depth of 10 in the initial exploration phase, it might make sense to decrease that initially to have quicker iterations when in the exploration phase of the study.
+        \item This is effectively limiting the level of exploration in the sampling so it might make sense to use good initial values when doing this.
+        \item However in the final phase of the study, it is best to make sure that the maximum tree depth is not reached by the sampler (increasing it if necessary).
+        \item This might also slow down your sampling significantly so there can be a tradeoff here.
+        \item It's also best to ensure that the sampler converges to the posterior when starting from multiple different random initial points using different chains.
+    \end{vfilleditems}
+\end{frame}
+
+\subsection{Is Convergence Important?}
+
+\begin{frame}{Is Convergence Important?}
+    \begin{vfilleditems}
+        \item Since we can't prove that the sampler explored the full posterior in general, is exploring the full posterior always absolutely necessary?
+        \item That depends on what you want to do. If you are trying to answer questions about the parameters, e.g. estimating the probability that an effect is greater than or less than 0 for a go/no-go decision, then you need your sampler to sample from the true posterior.
+        \item Of course, we cannot prove this in general anyways but you should generally follow all the best practices and you should not ignore signs of lack of convergence.
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Is Convergence Important?}
+    \begin{vfilleditems}
+        \item Some bad signs to watch out for if you want to sample from the true posterior are:
+            \begin{vfilleditems}
+                \item Non-stationarity of the samples' distribution
+                \item Dependence of the samples' distribution on the initial parameters after the adaptation steps
+                \item High auto-correlation in the samples after the adaptation steps
+                \item Too many rejections and ODE solver divergences
+                \item Low ESS values relative to the number of samples 
+                \item Extremely small step sizes and hitting the maximum tree depth often
+            \end{vfilleditems}
+    \end{vfilleditems}
+\end{frame}
+\begin{frame}{Is Convergence Important?}
+    \begin{vfilleditems}
+        \item On the other hand, if your goal is not to answer questions about the parameters but only to make predictions using the posterior predictive distribution as an ensemble of predictions, then sampling from the true posterior may not be strictly necessary in this case.
+        \item If the posterior predictive distribution gives enough accuracy and uncertainty in the predictions to reflect the uncertainty in the unseen data, then that may suffice and we can live with some imperfections in the sampling.
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Is Convergence Important?}
+    \begin{vfilleditems}
+        \item Some imperfections in the sampling include:
+            \begin{vfilleditems}
+                \item Having to initialize the sampler from a mode to get the sampler to work
+                \item Using a low maximum tree depth and allowing the maximum to be reached
+                \item Using a high target acceptance ratio to decrease exploration and sample around a mode
+                \item High auto-correlation in the samples even after the adaptation steps and low relative ESS
+                \item Using a few adaptation steps `nadapts`
+            \end{vfilleditems}
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Is Convergence Important?}
+    \begin{vfilleditems}
+        \item If doing any or all of the above resulted in fast sampling that gives a good enough posterior predictive distribution but potentially bad posterior exploration and if predictions are what you care the most about then perhaps you don't need to sample from the true posterior in your use case.
+        \item Such an imperfect solution is often satisfactory in the context of Bayesian neural networks for example where parameters are generally meaningless and we only care about predictions.
+        \item Of course, we don't advocate for doing this in general since this goes against the best practices of MCMC but it's an option you have.
+    \end{vfilleditems}
+\end{frame}

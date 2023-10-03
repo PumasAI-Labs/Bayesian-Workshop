@@ -1,0 +1,78 @@
+%--- Title Page -------------------------------------------------------%
+\maketitle
+
+%--- Table of Contents-------------------------------------------------%
+% For longer table of contents, I find it cleaner to
+% use no footline.
+\setcounter{tocdepth}{1}
+\begin{frame}[plain, noframenumbering]{Outline}
+	\begin{multicols}{2}
+		\tableofcontents
+	\end{multicols}
+\end{frame}
+
+%--- Distributions ----------------------------------------------------%
+
+\tikzset{
+	declare function={
+			discreteuniform(\a,\b)=1/(\b-\a+1);%
+			binomial(\n,\p)=\n!/(x!*(\n-x)!)*\p^x*(1-\p)^(\n-x);%
+			poisson(\l)=(\l^x)*exp(-\l)/(x!);%
+			negativebinomial(\r,\p)=((x+\r-1)!/((\r-1)!*x!))*((1-\p)^x*\p^\r);%
+			continuousuniform(\a,\b)=1/(\b-\a);%
+			gaussian(\m,\s)=1/(\s*sqrt(2*pi))*exp(-((x-\m)^2)/(2*\s^2));%
+			lognormal(\m,\s)=1/(x*\s*sqrt(2*pi))*exp(-((ln(x)-\m)^2)/(2*\s^2));%
+			exponential(\l)=\l*exp(-\l*x);%
+			gamma(\z)=2.506628274631*sqrt(1/\z)+ 0.20888568*(1/\z)^(1.5)+ 0.00870357*(1/\z)^(2.5)- (174.2106599*(1/\z)^(3.5))/25920- (715.6423511*(1/\z)^(4.5))/1244160)*exp((-ln(1/\z)-1)*\z;%
+			gammadist(\a,\t)=(x^(\a-1))*exp(-x/\t)*gamma(\a)*\t^\a;%
+			student(\n)=gamma((\n+1)/2.)/(sqrt(\n*pi)*gamma(\n/2.))*((1+(x*x)/\n)^(-(\n+1)/2.));%
+			cauchy(\m,\s)=(1/(pi*\s*(1+((x-\m)/\s)^2)));%
+			beta(\a,\b)=(x^(\a-1)*(1-x)^(\b-1)/((gamma(\a)*gamma(\b))/gamma(\a+\b));%
+			binormal(\ma,\sa,\mb,\sb,\ro)=exp(-(((x-\ma)/\sa)^2+((y-\mb)/\sb)^2-(2*\ro)*((x-\ma)/\sa)*((y-\mb)/\sb))/(2*(1-\ro^2)))/(2*pi*\sa*\sb*(1-\ro^2)^0.5);%
+			conditionalbinormal(\yc,\ma,\sa,\mb,\sb,\ro)=exp(-(((x-\ma)/\sa)^2+((\yc-\mb)/\sb)^2-(2*\ro)*((x-\ma)/\sa)*((\yc-\mb)/\sb))/(2*(1-\ro^2)))/(2*pi*\sa*\sb*(1-\ro^2)^0.5);%
+			sumtwonormals(\ma,\sa,\wa,\mb,\sb,\wb)=(\wa*gaussian(\ma,\sa))+(\wb*gaussian(\mb,\sb));%
+			normcdf(\m,\s)=1/(1 + exp(-0.07056*((x-\m)/\s)^3 - 1.5976*(x-\m)/\s));%
+		}
+}
+
+%--- Files ----------------------------------------------------------%
+\include{00-Pumas}
+\include{01-Bayesian_Statistics}
+\include{02-Priors}
+\include{03-Pumas_Setup}
+\include{04-Bayesian_PK}
+\include{05-Bayesian_Logistic_Regression}
+\include{06-Hierarchical_Models}
+\include{07-Bayesian_PopPK}
+\include{08-Bayesian_PopPKPD}
+\include{09-Posterior_Postprocessing}
+\include{10-MCMC}
+\include{11-Marginal_MCMC}
+\include{12-Convergence}
+\include{13-Model_Comparison_and_Cross-Validation}
+\include{14-Software-Comparison}
+\label{lastslide}
+
+%--- References ----------------------------------------------------------%
+\begingroup
+\renewcommand{\insertframenumber}{}
+\renewcommand{\pageword}{}
+\begin{frame}[allowframebreaks, noframenumbering]{References}
+	\printbibliography
+\end{frame}
+
+%--- Appendix ----------------------------------------------------------%
+\appendix % do not count the following slides for the total number
+\section*{Backup Slides}
+\begin{frame}[noframenumbering]
+	\centering
+	\vfill
+	{\fontsize{40}{50}\selectfont Backup Slides}
+	\vfill
+\end{frame}
+
+%--- Backup Files ----------------------------------------------------------%
+\include{backup-Statistical_Distributions}
+\include{backup-Logistic_Regression_Coeff}
+\include{backup-misc}
+\endgroup
